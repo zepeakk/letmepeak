@@ -33,6 +33,11 @@
 
         body {
             background-color: var(--bg-paper);
+            /* 손그림 요소(우주선, 컵케이크, 달) 배경 적용 */
+            background-image: 
+                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200"><g stroke="%23e88a99" stroke-width="1.2" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="0.25"><path d="M140 25 C145 15, 155 15, 160 25 C165 35, 155 45, 140 25 Z" fill="%23fdf3f4"/><path d="M140 25 Q130 35 125 45 Q145 50 160 25"/><circle cx="150" cy="30" r="2"/><path d="M130 45 Q120 55 125 60 L135 50"/><path d="M155 40 Q165 50 160 55 L150 45"/><path d="M40 140 A15 15 0 1 1 65 140 A15 15 0 0 1 40 140 Z"/><path d="M38 140 Q52.5 130 67 140" stroke-dasharray="2 2"/><path d="M40 140 L43 160 Q52.5 165 62 160 L65 140 Z"/><circle cx="52.5" cy="122" r="3" fill="%23e88a99"/><path d="M150 150 A 15 15 0 1 0 165 165 A 12 12 0 1 1 150 150 Z" fill="%23fdf3f4"/><polygon points="125,130 127,135 132,135 128,138 130,143 125,140 120,143 122,138 118,135 123,135" fill="%23e88a99"/><polygon points="170,130 171,133 174,133 172,135 173,138 170,136 167,138 168,135 166,133 169,133" fill="%23e88a99"/></g></svg>');
+            background-repeat: repeat;
+            background-size: 220px 220px;
             color: var(--text-dark);
             display: flex;
             justify-content: center;
@@ -44,9 +49,10 @@
         .container {
             width: 100%;
             max-width: 440px;
+            position: relative;
+            z-index: 1;
         }
 
-        /* 핑크색 배경/테두리 제거 및 기본 배경 통일 */
         header {
             text-align: center;
             padding: 10px 0;
@@ -57,7 +63,7 @@
             align-items: center;
         }
 
-        /* 로고 원본 크기 유지 */
+        /* 로고 원본 크기 유지 (이전 상태로 복구) */
         .header-logo {
             max-width: 100%;
             height: auto;
@@ -78,6 +84,7 @@
             padding: 12px;
             margin-bottom: 10px;
             border: 1px solid #ebdcd0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
         }
 
         details summary {
@@ -340,7 +347,7 @@
             border-radius: 3px;
             padding: 1px 2px;
             background: #fff;
-            margin-left: 4px;
+            margin-right: 4px;
             outline: none;
             cursor: pointer;
         }
@@ -494,33 +501,33 @@
 
 <script>
     const schedules = [
-        { date: "10.06(화)", time: "19:30", cast: ["오의식", "김지현", "안지환", "나하나"], evt: "첫공/프리뷰" },
-        { date: "10.07(수)", time: "19:30", cast: ["안재욱", "배해선", "윤재호", "홍지희"], evt: "프리뷰" },
-        { date: "10.08(목)", time: "19:30", cast: ["이희준", "윤공주", "윤소호", "이수빈"], evt: "프리뷰" },
-        { date: "10.09(금)", time: "14:00", cast: ["이형훈", "배해선", "안지환", "박슬기"], evt: "프리뷰" },
-        { date: "10.09(금)", time: "18:00", cast: ["안재욱", "배해선", "윤소호", "나하나"], evt: "프리뷰" },
-        { date: "10.10(토)", time: "15:00", cast: ["오의식", "윤공주", "윤재호", "홍지희"], evt: "프리뷰" },
-        { date: "10.10(토)", time: "19:00", cast: ["이형훈", "윤공주", "안지환", "박슬기"], evt: "프리뷰" },
-        { date: "10.11(일)", time: "14:00", cast: ["안재욱", "김지현", "윤소호", "이수빈"], evt: "프리뷰" },
-        { date: "10.11(일)", time: "18:00", cast: ["이희준", "김지현", "윤재호", "나하나"], evt: "프리뷰" },
-        { date: "10.13(화)", time: "19:30", cast: ["오의식", "윤공주", "윤소호", "박슬기"], evt: "-" },
-        { date: "10.14(수)", time: "15:00", cast: ["이희준", "김지현", "안지환", "이수빈"], evt: "마티네" },
-        { date: "10.14(수)", time: "19:30", cast: ["안재욱", "김지현", "윤재호", "나하나"], evt: "-" },
-        { date: "10.15(목)", time: "19:30", cast: ["안재욱", "윤공주", "안지환", "홍지희"], evt: "-" },
-        { date: "10.16(금)", time: "19:30", cast: ["이희준", "배해선", "윤소호", "나하나"], evt: "-" },
-        { date: "10.17(토)", time: "15:00", cast: ["이형훈", "배해선", "윤재호", "이수빈"], evt: "전관" },
-        { date: "10.17(토)", time: "19:00", cast: ["오의식", "김지현", "안지환", "박슬기"], evt: "-" },
-        { date: "10.18(일)", time: "14:00", cast: ["안재욱", "배해선", "윤소호", "이수빈"], evt: "-" },
-        { date: "10.18(일)", time: "18:00", cast: ["이희준", "윤공주", "윤재호", "홍지희"], evt: "-" },
-        { date: "10.20(화)", time: "19:30", cast: ["오의식", "김지현", "안지환", "나하나"], evt: "전관" },
-        { date: "10.21(수)", time: "15:00", cast: ["이희준", "윤공주", "윤소호", "박슬기"], evt: "전관" },
-        { date: "10.21(수)", time: "19:30", cast: ["안재욱", "배해선", "윤재호", "홍지희"], evt: "전관" },
-        { date: "10.22(목)", time: "19:30", cast: ["이형훈", "김지현", "윤소호", "이수빈"], evt: "-" },
-        { date: "10.23(금)", time: "19:30", cast: ["안재욱", "김지현", "안지환", "홍지희"], evt: "-" },
-        { date: "10.24(토)", time: "15:00", cast: ["오의식", "배해선", "윤재호", "이수빈"], evt: "-" },
-        { date: "10.24(토)", time: "19:00", cast: ["이희준", "배해선", "윤소호", "홍지희"], evt: "-" },
-        { date: "10.25(일)", time: "14:00", cast: ["안재욱", "윤공주", "윤재호", "박슬기"], evt: "-" },
-        { date: "10.25(일)", time: "18:00", cast: ["이형훈", "윤공주", "안지환", "나하나"], evt: "-" }
+        { date: "10/06(화)", time: "19:30", cast: ["오의식", "김지현", "안지환", "나하나"], evt: "첫공/프리뷰" },
+        { date: "10/07(수)", time: "19:30", cast: ["안재욱", "배해선", "윤재호", "홍지희"], evt: "프리뷰" },
+        { date: "10/08(목)", time: "19:30", cast: ["이희준", "윤공주", "윤소호", "이수빈"], evt: "프리뷰" },
+        { date: "10/09(금)", time: "14:00", cast: ["이형훈", "배해선", "안지환", "박슬기"], evt: "프리뷰" },
+        { date: "10/09(금)", time: "18:00", cast: ["안재욱", "배해선", "윤소호", "나하나"], evt: "프리뷰" },
+        { date: "10/10(토)", time: "15:00", cast: ["오의식", "윤공주", "윤재호", "홍지희"], evt: "프리뷰" },
+        { date: "10/10(토)", time: "19:00", cast: ["이형훈", "윤공주", "안지환", "박슬기"], evt: "프리뷰" },
+        { date: "10/11(일)", time: "14:00", cast: ["안재욱", "김지현", "윤소호", "이수빈"], evt: "프리뷰" },
+        { date: "10/11(일)", time: "18:00", cast: ["이희준", "김지현", "윤재호", "나하나"], evt: "프리뷰" },
+        { date: "10/13(화)", time: "19:30", cast: ["오의식", "윤공주", "윤소호", "박슬기"], evt: "-" },
+        { date: "10/14(수)", time: "15:00", cast: ["이희준", "김지현", "안지환", "이수빈"], evt: "마티네" },
+        { date: "10/14(수)", time: "19:30", cast: ["안재욱", "김지현", "윤재호", "나하나"], evt: "-" },
+        { date: "10/15(목)", time: "19:30", cast: ["안재욱", "윤공주", "안지환", "홍지희"], evt: "-" },
+        { date: "10/16(금)", time: "19:30", cast: ["이희준", "배해선", "윤소호", "나하나"], evt: "-" },
+        { date: "10/17(토)", time: "15:00", cast: ["이형훈", "배해선", "윤재호", "이수빈"], evt: "전관" },
+        { date: "10/17(토)", time: "19:00", cast: ["오의식", "김지현", "안지환", "박슬기"], evt: "-" },
+        { date: "10/18(일)", time: "14:00", cast: ["안재욱", "배해선", "윤소호", "이수빈"], evt: "-" },
+        { date: "10/18(일)", time: "18:00", cast: ["이희준", "윤공주", "윤재호", "홍지희"], evt: "-" },
+        { date: "10/20(화)", time: "19:30", cast: ["오의식", "김지현", "안지환", "나하나"], evt: "전관" },
+        { date: "10/21(수)", time: "15:00", cast: ["이희준", "윤공주", "윤소호", "박슬기"], evt: "전관" },
+        { date: "10/21(수)", time: "19:30", cast: ["안재욱", "배해선", "윤재호", "홍지희"], evt: "전관" },
+        { date: "10/22(목)", time: "19:30", cast: ["이형훈", "김지현", "윤소호", "이수빈"], evt: "-" },
+        { date: "10/23(금)", time: "19:30", cast: ["안재욱", "김지현", "안지환", "홍지희"], evt: "-" },
+        { date: "10/24(토)", time: "15:00", cast: ["오의식", "배해선", "윤재호", "이수빈"], evt: "-" },
+        { date: "10/24(토)", time: "19:00", cast: ["이희준", "배해선", "윤소호", "홍지희"], evt: "-" },
+        { date: "10/25(일)", time: "14:00", cast: ["안재욱", "윤공주", "윤재호", "박슬기"], evt: "-" },
+        { date: "10/25(일)", time: "18:00", cast: ["이형훈", "윤공주", "안지환", "나하나"], evt: "-" }
     ];
 
     let filter = [];
@@ -727,7 +734,7 @@
     function applySeatColors() {
         const seatCounts = {};
         historyData.forEach(h => {
-            if (h.seat) {
+            if (h.seat && h.status !== '양도') {
                 seatCounts[h.seat] = (seatCounts[h.seat] || 0) + 1;
             }
         });
@@ -809,23 +816,31 @@
         const list = document.getElementById('history-list');
         list.innerHTML = '';
         let total = 0;
+        let activeCount = 0;
         
         historyData.forEach(h => {
-            total += h.price;
+            if (h.status !== '양도') {
+                total += h.price;
+                activeCount++;
+            }
+
             const item = document.createElement('div');
             item.className = 'history-item';
             
+            const isTransferred = h.status === '양도';
+            const priceTextStyle = isTransferred ? 'text-decoration: line-through; color:#aaa;' : '';
+
             item.innerHTML = `
                 <div class="history-row">
                     <b style="color:var(--text-dark);">${h.date}</b>
                     <div>
-                        <b>${h.price.toLocaleString()}원</b>
                         <select class="status-select" onchange="updateStatus(${h.id}, this.value)">
                             <option value="-" ${h.status==='-'?'selected':''}>-</option>
                             <option value="양도" ${h.status==='양도'?'selected':''}>양도</option>
                             <option value="양수" ${h.status==='양수'?'selected':''}>양수</option>
                             <option value="나눔" ${h.status==='나눔'?'selected':''}>나눔</option>
                         </select>
+                        <b style="${priceTextStyle}">${h.price.toLocaleString()}원</b>
                     </div>
                 </div>
                 <div class="history-row" style="margin-top:4px;">
@@ -836,7 +851,7 @@
             list.appendChild(item);
         });
 
-        document.getElementById('cnt').textContent = historyData.length + '회';
+        document.getElementById('cnt').textContent = activeCount + '회';
         document.getElementById('amt').textContent = total.toLocaleString() + '원';
     }
 
@@ -845,10 +860,12 @@
         if (target) {
             target.status = newStatus;
         }
+        renderHistory();
+        applySeatColors();
     }
 
     function delHist(id) {
-        historyData = historyData.filter(h => h.id === id);
+        historyData = historyData.filter(h => h.id !== id);
         sortAndRenderHistory();
         applySeatColors();
     }
