@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>뮤지컬 렛미플라이 관극 정산판</title>
+    <style>
+        :root {
+            --bg-paper: #f5efe6;
+            --card-bg: #ffffff;
+            --stitch-border: #e88a99;
+            --main-pink: #d9536f;
+            --text-dark: #3e3636;
+            --text-sub: #7d7373;
+            --seat-r: #70a1ff;
+            --seat-s: #ff7675;
+            --seat-hold: #b2bec3;
+            
+            /* 관람 횟수별 좌석 색상 */
+            --seat-v1: #c8d6e5;
+            --seat-v2: #9b59b6;
+            --seat-v3: #ff7f50;
+            
+            --radius: 8px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-paper);
+            color: var(--text-dark);
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 10px;
+            border: 2px dashed var(--stitch-border);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 440px;
+        }
+
+        /* 핑크색 배경/테두리 제거 및 기본 배경 통일 */
+        header {
+            text-align: center;
+            padding: 10px 0;
+            margin-bottom: 12px;
+            background: transparent;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* 로고 원본 크기 유지 */
+        .header-logo {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .contact-info {
+            font-size: 8px;
+            color: #a09999;
+            margin-top: 6px;
+            letter-spacing: -0.2px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 12px;
+            margin-bottom: 10px;
+            border: 1px solid #ebdcd0;
+        }
+
+        details summary {
+            font-size: 0.88rem;
+            font-weight: 700;
+            cursor: pointer;
+            color: var(--main-pink);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            outline: none;
+            user-select: none;
+        }
+
+        /* 스케줄 테이블 */
+        .table-container {
+            max-height: 200px;
+            overflow-y: auto;
+            margin-top: 10px;
+            border: 1px solid #ebdcd0;
+            border-radius: 6px;
+        }
+
+        table.schedule-tbl {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.68rem;
+            white-space: nowrap;
+            text-align: center;
+        }
+
+        table.schedule-tbl th {
+            position: sticky;
+            top: 0;
+            background: #f0eae1;
+            padding: 8px 4px;
+            z-index: 1;
+            border-bottom: 1px solid #dcd1c4;
+            font-weight: 700;
+        }
+
+        table.schedule-tbl td {
+            padding: 8px 4px;
+            border-bottom: 1px solid #f2e8df;
+            cursor: pointer;
+            line-height: 1.3;
+        }
+
+        table.schedule-tbl tr:hover { background: #fff0f2; }
+
+        .badge-evt {
+            font-size: 0.58rem;
+            padding: 2px 4px;
+            border-radius: 3px;
+            color: white;
+            font-weight: bold;
+        }
+        .bg-first { background: #d9536f; }
+        .bg-prev { background: #8e44ad; }
+        .bg-mat { background: #27ae60; }
+        .bg-all { background: #2980b9; }
+
+        /* 배우 필터 */
+        .filter-box {
+            margin-top: 10px;
+            padding-top: 8px;
+            border-top: 1px dashed #ebdcd0;
+        }
+
+        .filter-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 3px;
+            margin-top: 6px;
+        }
+
+        .btn-filter {
+            background: #f0eae1;
+            border: 1px solid #dcd1c4;
+            font-size: 0.55rem;
+            padding: 4px 0;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        .btn-filter.active {
+            background: var(--main-pink);
+            color: white;
+            border-color: var(--main-pink);
+            font-weight: bold;
+        }
+
+        /* 입력 폼 */
+        .form-row {
+            display: flex;
+            gap: 6px;
+            margin-top: 8px;
+        }
+
+        .form-group {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            font-size: 0.65rem;
+            color: var(--text-sub);
+            margin-bottom: 3px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 6px;
+            font-size: 0.72rem;
+            border: 1px solid #dcd1c4;
+            border-radius: 4px;
+            background: #faf8f5;
+        }
+
+        .btn-sub {
+            width: 100%;
+            background: var(--main-pink);
+            color: white;
+            border: none;
+            padding: 8px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 0.78rem;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+
+        /* 좌석 배치도 */
+        .stage {
+            background: #d8ceca;
+            color: #fff;
+            text-align: center;
+            font-size: 0.7rem;
+            font-weight: bold;
+            padding: 3px;
+            margin: 6px 0;
+            border-radius: 4px;
+            letter-spacing: 2px;
+        }
+
+        .seat-legend {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 6px 10px;
+            margin-bottom: 8px;
+            padding: 5px;
+            background: #fdfaf7;
+            border-radius: 4px;
+            font-size: 0.58rem;
+            border: 1px solid #f0eae1;
+        }
+        .leg-item { display: flex; align-items: center; gap: 3px; }
+        .leg-box { width: 8px; height: 8px; border-radius: 2px; }
+
+        .floor-header {
+            font-size: 0.7rem;
+            font-weight: bold;
+            color: var(--main-pink);
+            margin: 6px 0 4px 0;
+        }
+
+        .map-container {
+            background: #faf8f5;
+            padding: 6px 2px;
+            border-radius: 6px;
+            border: 1px solid #ebdcd0;
+            overflow-x: auto;
+        }
+
+        .sec-header-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.65rem;
+            font-weight: bold;
+            color: #555;
+            margin-bottom: 4px;
+            text-align: center;
+        }
+
+        .seat-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1px;
+            margin-bottom: 1.5px;
+            height: 9.5px;
+        }
+
+        .row-label {
+            font-size: 0.5rem;
+            color: #888;
+            width: 10px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .s-btn {
+            width: 8.5px;
+            height: 8.5px;
+            border-radius: 1px;
+            cursor: pointer;
+            border: none;
+            padding: 0;
+            font-size: 0.38rem;
+            line-height: 8.5px;
+            text-align: center;
+            color: #ffffff;
+            font-weight: bold;
+            transition: transform 0.1s;
+        }
+        .s-btn:hover { transform: scale(1.5); z-index: 2; }
+        
+        .s-btn.r { background-color: var(--seat-r); }
+        .s-btn.s { background-color: var(--seat-s); }
+        .s-btn.h { background-color: var(--seat-hold); cursor: not-allowed; color: #fff; }
+        .s-btn.e { background-color: transparent; cursor: default; }
+
+        .s-btn.v1 { background-color: var(--seat-v1) !important; color: #222; }
+        .s-btn.v2 { background-color: var(--seat-v2) !important; color: #fff; }
+        .s-btn.v3 { background-color: var(--seat-v3) !important; color: #fff; }
+
+        /* 관극 정산 내역 */
+        .summary {
+            display: flex;
+            justify-content: space-around;
+            background: #fdf3f4;
+            padding: 8px;
+            border-radius: 4px;
+            margin-top: 8px;
+            text-align: center;
+        }
+        .sum-val { font-size: 0.85rem; font-weight: bold; color: var(--main-pink); }
+        .sum-lbl { font-size: 0.6rem; color: var(--text-sub); }
+
+        .history-item {
+            background: #faf8f5;
+            border: 1px solid #ebdcd0;
+            padding: 6px 8px;
+            border-radius: 4px;
+            margin-top: 5px;
+            font-size: 0.68rem;
+        }
+        .history-row { display: flex; justify-content: space-between; align-items: center; }
+
+        .status-select {
+            font-size: 0.62rem;
+            color: var(--main-pink);
+            font-weight: bold;
+            border: 1px solid var(--stitch-border);
+            border-radius: 3px;
+            padding: 1px 2px;
+            background: #fff;
+            margin-left: 4px;
+            outline: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <img src="letmeflyrogo.png" alt="LET ME FLY 로고" class="header-logo">
+        <p class="contact-info">문의는 @hillpeakk 로 연락 주세요.</p>
+    </header>
+
+    <!-- 스케줄 -->
+    <div class="card">
+        <details open>
+            <summary>회차별 스케줄</summary>
+
+            <div class="table-container">
+                <table class="schedule-tbl">
+                    <thead>
+                        <tr>
+                            <th>일자</th>
+                            <th>시간</th>
+                            <th>노인남원</th>
+                            <th>선희</th>
+                            <th>청년남원</th>
+                            <th>정분</th>
+                            <th>이벤트</th>
+                        </tr>
+                    </thead>
+                    <tbody id="sch-tbody"></tbody>
+                </table>
+            </div>
+
+            <div class="filter-box">
+                <div style="font-size: 0.65rem; display: flex; justify-content: space-between;">
+                    <span>배우 필터 (최대 2명)</span>
+                    <span style="color: var(--main-pink); cursor: pointer; font-weight:bold;" onclick="clearFilter()">초기화</span>
+                </div>
+                <div class="filter-grid" id="filter-btns"></div>
+            </div>
+        </details>
+    </div>
+
+    <!-- 기록 추가 -->
+    <div class="card">
+        <details open>
+            <summary>기록 추가</summary>
+            <form id="record-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>일자/시간</label>
+                        <input type="text" id="f-date" class="form-control" placeholder="스케줄 클릭" required>
+                    </div>
+                    <div class="form-group">
+                        <label>좌석</label>
+                        <input type="text" id="f-seat" class="form-control" placeholder="좌석 클릭" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>등급</label>
+                        <select id="f-grade" class="form-control" onchange="calcPrice()">
+                            <option value="R석">R석 (88,000원)</option>
+                            <option value="S석">S석 (66,000원)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>할인 권종</label>
+                        <select id="f-discount" class="form-control" onchange="calcPrice()">
+                            <option value="0">정가</option>
+                            <option value="20">프리뷰 할인 (20%)</option>
+                            <option value="20">조기예매 할인 (20%)</option>
+                            <option value="20">재관람 할인 (20%)</option>
+                            <option value="20">마티네 할인 (20%)</option>
+                            <option value="custom">직접 입력</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>최종 결제액</label>
+                        <input type="number" id="f-price" class="form-control" placeholder="+2,000원 자동" required>
+                    </div>
+                    <div class="form-group">
+                        <label>캐스팅</label>
+                        <input type="text" id="f-cast" class="form-control">
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-sub">저장하기</button>
+            </form>
+        </details>
+    </div>
+
+    <!-- 관극 정산 내역 -->
+    <div class="card">
+        <details open>
+            <summary>관극 정산 내역</summary>
+            <div class="summary">
+                <div><div class="sum-lbl">총 횟수</div><div class="sum-val" id="cnt">0회</div></div>
+                <div><div class="sum-lbl">총 금액</div><div class="sum-val" id="amt">0원</div></div>
+            </div>
+            <div id="history-list"></div>
+        </details>
+    </div>
+
+    <!-- 좌석 배치도 -->
+    <div class="card">
+        <details open>
+            <summary>좌석 배치도</summary>
+            
+            <div class="stage">STAGE</div>
+
+            <div class="seat-legend">
+                <div class="leg-item"><div class="leg-box" style="background:var(--seat-r);"></div> R석</div>
+                <div class="leg-item"><div class="leg-box" style="background:var(--seat-s);"></div> S석</div>
+                <div class="leg-item"><div class="leg-box" style="background:var(--seat-hold);"></div> 미판매보류석</div>
+                <div class="leg-item"><div class="leg-box" style="background:var(--seat-v1);"></div> 1회 관람</div>
+                <div class="leg-item"><div class="leg-box" style="background:var(--seat-v2);"></div> 2회 관람</div>
+                <div class="leg-item"><div class="leg-box" style="background:var(--seat-v3);"></div> 3회+ 관람</div>
+            </div>
+
+            <!-- 1층 -->
+            <div class="floor-header">1F</div>
+            <div class="map-container">
+                <div class="sec-header-row">
+                    <span style="flex:1;">A</span>
+                    <span style="flex:2;">B</span>
+                    <span style="flex:1;">C</span>
+                </div>
+                <div id="map-1f"></div>
+            </div>
+
+            <!-- 2층 -->
+            <div class="floor-header">2F</div>
+            <div class="map-container">
+                <div class="sec-header-row">
+                    <span style="flex:1;">D</span>
+                    <span style="flex:2;">E</span>
+                    <span style="flex:1;">F</span>
+                </div>
+                <div id="map-2f"></div>
+            </div>
+        </details>
+    </div>
+</div>
+
+<script>
+    const schedules = [
+        { date: "10.06(화)", time: "19:30", cast: ["오의식", "김지현", "안지환", "나하나"], evt: "첫공/프리뷰" },
+        { date: "10.07(수)", time: "19:30", cast: ["안재욱", "배해선", "윤재호", "홍지희"], evt: "프리뷰" },
+        { date: "10.08(목)", time: "19:30", cast: ["이희준", "윤공주", "윤소호", "이수빈"], evt: "프리뷰" },
+        { date: "10.09(금)", time: "14:00", cast: ["이형훈", "배해선", "안지환", "박슬기"], evt: "프리뷰" },
+        { date: "10.09(금)", time: "18:00", cast: ["안재욱", "배해선", "윤소호", "나하나"], evt: "프리뷰" },
+        { date: "10.10(토)", time: "15:00", cast: ["오의식", "윤공주", "윤재호", "홍지희"], evt: "프리뷰" },
+        { date: "10.10(토)", time: "19:00", cast: ["이형훈", "윤공주", "안지환", "박슬기"], evt: "프리뷰" },
+        { date: "10.11(일)", time: "14:00", cast: ["안재욱", "김지현", "윤소호", "이수빈"], evt: "프리뷰" },
+        { date: "10.11(일)", time: "18:00", cast: ["이희준", "김지현", "윤재호", "나하나"], evt: "프리뷰" },
+        { date: "10.13(화)", time: "19:30", cast: ["오의식", "윤공주", "윤소호", "박슬기"], evt: "-" },
+        { date: "10.14(수)", time: "15:00", cast: ["이희준", "김지현", "안지환", "이수빈"], evt: "마티네" },
+        { date: "10.14(수)", time: "19:30", cast: ["안재욱", "김지현", "윤재호", "나하나"], evt: "-" },
+        { date: "10.15(목)", time: "19:30", cast: ["안재욱", "윤공주", "안지환", "홍지희"], evt: "-" },
+        { date: "10.16(금)", time: "19:30", cast: ["이희준", "배해선", "윤소호", "나하나"], evt: "-" },
+        { date: "10.17(토)", time: "15:00", cast: ["이형훈", "배해선", "윤재호", "이수빈"], evt: "전관" },
+        { date: "10.17(토)", time: "19:00", cast: ["오의식", "김지현", "안지환", "박슬기"], evt: "-" },
+        { date: "10.18(일)", time: "14:00", cast: ["안재욱", "배해선", "윤소호", "이수빈"], evt: "-" },
+        { date: "10.18(일)", time: "18:00", cast: ["이희준", "윤공주", "윤재호", "홍지희"], evt: "-" },
+        { date: "10.20(화)", time: "19:30", cast: ["오의식", "김지현", "안지환", "나하나"], evt: "전관" },
+        { date: "10.21(수)", time: "15:00", cast: ["이희준", "윤공주", "윤소호", "박슬기"], evt: "전관" },
+        { date: "10.21(수)", time: "19:30", cast: ["안재욱", "배해선", "윤재호", "홍지희"], evt: "전관" },
+        { date: "10.22(목)", time: "19:30", cast: ["이형훈", "김지현", "윤소호", "이수빈"], evt: "-" },
+        { date: "10.23(금)", time: "19:30", cast: ["안재욱", "김지현", "안지환", "홍지희"], evt: "-" },
+        { date: "10.24(토)", time: "15:00", cast: ["오의식", "배해선", "윤재호", "이수빈"], evt: "-" },
+        { date: "10.24(토)", time: "19:00", cast: ["이희준", "배해선", "윤소호", "홍지희"], evt: "-" },
+        { date: "10.25(일)", time: "14:00", cast: ["안재욱", "윤공주", "윤재호", "박슬기"], evt: "-" },
+        { date: "10.25(일)", time: "18:00", cast: ["이형훈", "윤공주", "안지환", "나하나"], evt: "-" }
+    ];
+
+    let filter = [];
+    const mainActors = ["안재욱", "이희준", "오의식", "이형훈", "배해선", "윤공주", "김지현", "윤소호", "안지환", "윤재호", "홍지희", "나하나", "이수빈", "박슬기❤️"];
+
+    const filterBox = document.getElementById('filter-btns');
+    mainActors.forEach(act => {
+        const rawName = act.replace('❤️', '');
+        const btn = document.createElement('button');
+        btn.className = 'btn-filter';
+        btn.textContent = act;
+        btn.onclick = () => {
+            if(filter.includes(rawName)) filter = filter.filter(a => a !== rawName);
+            else if(filter.length < 2) filter.push(rawName);
+            btn.classList.toggle('active', filter.includes(rawName));
+            renderSch();
+        };
+        filterBox.appendChild(btn);
+    });
+
+    function clearFilter() {
+        filter = [];
+        document.querySelectorAll('.btn-filter').forEach(b => b.classList.remove('active'));
+        renderSch();
+    }
+
+    function renderSch() {
+        const tbody = document.getElementById('sch-tbody');
+        tbody.innerHTML = '';
+        schedules.filter(s => filter.every(a => s.cast.includes(a))).forEach(s => {
+            const tr = document.createElement('tr');
+            tr.onclick = () => {
+                document.getElementById('f-date').value = `${s.date} ${s.time}`;
+                document.getElementById('f-cast').value = s.cast.join(', ');
+            };
+
+            let badgeHtml = s.evt;
+            if(s.evt.includes('첫공')) badgeHtml = `<span class="badge-evt bg-first">${s.evt}</span>`;
+            else if(s.evt.includes('프리뷰')) badgeHtml = `<span class="badge-evt bg-prev">${s.evt}</span>`;
+            else if(s.evt.includes('마티네')) badgeHtml = `<span class="badge-evt bg-mat">${s.evt}</span>`;
+            else if(s.evt.includes('전관')) badgeHtml = `<span class="badge-evt bg-all">${s.evt}</span>`;
+
+            tr.innerHTML = `
+                <td><b>${s.date}</b></td>
+                <td>${s.time}</td>
+                <td>${s.cast[0]}</td>
+                <td>${s.cast[1]}</td>
+                <td>${s.cast[2]}</td>
+                <td>${s.cast[3]}</td>
+                <td>${badgeHtml}</td>
+            `;
+            tbody.appendChild(tr);
+        });
+    }
+
+    function pickSeat(seat, grade) {
+        document.getElementById('f-seat').value = seat;
+        document.getElementById('f-grade').value = grade;
+        calcPrice();
+    }
+
+    function calcPrice() {
+        const dis = document.getElementById('f-discount').value;
+        const priceEl = document.getElementById('f-price');
+        
+        if(dis === 'custom') {
+            priceEl.readOnly = false;
+            priceEl.focus();
+            return;
+        }
+        
+        priceEl.readOnly = true;
+        const grade = document.getElementById('f-grade').value;
+        const base = (grade === 'R석') ? 88000 : 66000;
+        priceEl.value = (base * (1 - Number(dis)/100)) + 2000;
+    }
+
+    function renderMap() {
+        const map1f = document.getElementById('map-1f');
+        map1f.innerHTML = '';
+
+        const f1Data = [
+            { r:1,  a:[{t:'e'},{t:'e'},{t:'r',n:11},{t:'r',n:12},{t:'r',n:13}], c:[{t:'r',n:1},{t:'r',n:2},{t:'r',n:3}] },
+            { r:2,  a:[{t:'e'},{t:'h'},{t:'h'},{t:'r',n:11},{t:'r',n:12},{t:'r',n:13}], c:[{t:'r',n:1},{t:'r',n:2},{t:'r',n:3},{t:'h'},{t:'h'}] },
+            { r:3,  a:[{t:'e'},{t:'h'},{t:'r',n:7},{t:'r',n:8},{t:'r',n:9},{t:'r',n:10},{t:'r',n:11},{t:'r',n:12},{t:'r',n:13}], c:[{t:'r',n:1},{t:'r',n:2},{t:'r',n:3},{t:'r',n:4},{t:'r',n:5},{t:'r',n:6},{t:'r',n:7},{t:'h'},{t:'h'}] },
+            { r:4,  a:[{t:'h'},{t:'h'},{t:'r',n:5},{t:'r',n:6},{t:'r',n:7},{t:'r',n:8},{t:'r',n:9},{t:'r',n:10},{t:'r',n:11},{t:'r',n:12},{t:'r',n:13}], c:[{t:'r',n:1},{t:'r',n:2},{t:'r',n:3},{t:'r',n:4},{t:'r',n:5},{t:'r',n:6},{t:'r',n:7},{t:'h'},{t:'h'},{t:'h'}] },
+            { r:5,  a:[{t:'e'},{t:'e'},{t:'r',n:5},{t:'r',n:6},{t:'r',n:7},{t:'r',n:8},{t:'r',n:9},{t:'r',n:10},{t:'r',n:11},{t:'r',n:12},{t:'r',n:13}], c:[{t:'r',n:1},{t:'r',n:2},{t:'r',n:3},{t:'r',n:4},{t:'r',n:5},{t:'r',n:6},{t:'r',n:7},{t:'h'},{t:'h'}] },
+            { r:6,  a:[{t:'h'},{t:'h'},{t:'r',n:5},{t:'r',n:6},{t:'r',n:7},{t:'r',n:8},{t:'r',n:9},{t:'r',n:10},{t:'r',n:11},{t:'r',n:12},{t:'r',n:13}], c:[{t:'r',n:1},{t:'r',n:2},{t:'r',n:3},{t:'r',n:4},{t:'r',n:5},{t:'r',n:6},{t:'r',n:7},{t:'r',n:8},{t:'h'},{t:'h'},{t:'h'}] },
+            { r:7,  a:[{t:'h',lbl:'♿'},{t:'h',lbl:'♿'},{t:'r',n:5},{t:'r',n:6},{t:'r',n:7},{t:'r',n:8},{t:'r',n:9},{t:'r',n:10},{t:'r',n:11},{t:'r',n:12},{t:'r',n:13}], c:[{t:'r',n:1},{t:'r',n:2},{t:'r',n:3},{t:'r',n:4},{t:'r',n:5},{t:'r',n:6},{t:'r',n:7}] },
+            { r:8,  a:[{t:'e'},{t:'e'},{t:'r',n:3},{t:'r',n:4},{t:'r',n:5},{t:'r',n:6},{t:'r',n:7},{t:'r',n:8},{t:'r',n:9},{t:'r',n:10},{t:'r',n:11},{t:'r',n:12},{t:'r',n:13}], c:[{t:'r',n:1},{t:'r',n:2},{t:'r',n:3},{t:'r',n:4},{t:'r',n:5},{t:'r',n:6},{t:'r',n:7}] },
+            { r:9,  a:[{t:'h'},{t:'r',n:2},{t:'r',n:3},{t:'r',n:4},{t:'r',n:5},{t:'r',n:6},{t:'r',n:7},{t:'r',n:8},{t:'r',n:9},{t:'r',n:10},{t:'r',n:11},{t:'r',n:12},{t:'r',n:13}], c:[{t:'r',n:1},{t:'r',n:2},{t:'r',n:3},{t:'r',n:4},{t:'r',n:5},{t:'r',n:6},{t:'r',n:7}] },
+            { r:10, a:[{t:'h'},{t:'r',n:2},{t:'r',n:3},{t:'r',n:4},{t:'r',n:5},{t:'r',n:6},{t:'r',n:7},{t:'r',n:8},{t:'r',n:9},{t:'r',n:10},{t:'r',n:11},{t:'r',n:12},{t:'r',n:13}], c:[{t:'r',n:1},{t:'r',n:2},{t:'r',n:3},{t:'r',n:4},{t:'r',n:5},{t:'r',n:6},{t:'r',n:7},{t:'r',n:8}] },
+            { r:11, a:[{t:'r',n:1},{t:'r',n:2},{t:'r',n:3},{t:'r',n:4},{t:'r',n:5},{t:'r',n:6},{t:'r',n:7},{t:'r',n:8},{t:'r',n:9},{t:'r',n:10},{t:'r',n:11},{t:'r',n:12},{t:'r',n:13}], c:[{t:'r',n:1},{t:'r',n:2},{t:'r',n:3},{t:'r',n:4},{t:'r',n:5},{t:'r',n:6},{t:'r',n:7},{t:'r',n:8}] },
+            { r:12, a:[{t:'r',n:1},{t:'r',n:2},{t:'r',n:3},{t:'r',n:4},{t:'r',n:5},{t:'r',n:6},{t:'r',n:7},{t:'r',n:8},{t:'r',n:9},{t:'r',n:10},{t:'r',n:11},{t:'r',n:12},{t:'r',n:13}], c:[{t:'r',n:1},{t:'r',n:2},{t:'r',n:3},{t:'r',n:4},{t:'r',n:5},{t:'r',n:6},{t:'r',n:7},{t:'r',n:8},{t:'r',n:9}] }
+        ];
+
+        f1Data.forEach(row => {
+            const rowDiv = document.createElement('div');
+            rowDiv.className = 'seat-row';
+
+            const aDiv = document.createElement('div');
+            aDiv.style.cssText = "display:flex; gap:1px; justify-content:flex-end; width:100px;";
+            row.a.forEach(st => aDiv.appendChild(createSeatBtn(st, '1층 A구역', row.r, 'R석')));
+
+            const bDiv = document.createElement('div');
+            bDiv.style.cssText = "display:flex; gap:1px; justify-content:center; width:135px;";
+            for(let n=1; n<=14; n++) bDiv.appendChild(createSeatBtn({t:'r', n:n}, '1층 B구역', row.r, 'R석'));
+
+            const cDiv = document.createElement('div');
+            cDiv.style.cssText = "display:flex; gap:1px; justify-content:flex-start; width:100px;";
+            row.c.forEach(st => cDiv.appendChild(createSeatBtn(st, '1층 C구역', row.r, 'R석')));
+
+            rowDiv.appendChild(aDiv);
+            rowDiv.appendChild(createRowLabel(row.r));
+            rowDiv.appendChild(bDiv);
+            rowDiv.appendChild(createRowLabel(row.r));
+            rowDiv.appendChild(cDiv);
+
+            map1f.appendChild(rowDiv);
+        });
+
+        const map2f = document.getElementById('map-2f');
+        map2f.innerHTML = '';
+
+        const f2Data = [
+            { r:1, d:[{t:'h'},{t:'h'},{t:'h'},{t:'h'},{t:'h'},{t:'h'},{t:'h'},{t:'h'},{t:'h'},{t:'h'},{t:'h'}], f:[{t:'h'},{t:'h'},{t:'h'},{t:'h'},{t:'h'},{t:'h'},{t:'h'},{t:'h'},{t:'h'},{t:'h'},{t:'h'}] },
+            { r:2, d:[{t:'e'},{t:'h'},{t:'h'},{t:'s',n:4},{t:'s',n:5},{t:'s',n:6},{t:'s',n:7},{t:'s',n:8},{t:'s',n:9},{t:'s',n:10},{t:'s',n:11}], f:[{t:'s',n:1},{t:'s',n:2},{t:'s',n:3},{t:'s',n:4},{t:'s',n:5},{t:'s',n:6},{t:'s',n:7},{t:'s',n:8},{t:'s',n:9},{t:'s',n:10},{t:'h'},{t:'h'},{t:'h'}] },
+            { r:3, d:[{t:'e'},{t:'e'},{t:'e'},{t:'s',n:4},{t:'s',n:5},{t:'s',n:6},{t:'s',n:7},{t:'s',n:8},{t:'s',n:9},{t:'s',n:10},{t:'s',n:11}], f:[{t:'s',n:1},{t:'s',n:2},{t:'s',n:3},{t:'s',n:4},{t:'s',n:5},{t:'s',n:6},{t:'s',n:7},{t:'s',n:8},{t:'s',n:9},{t:'s',n:10},{t:'h'},{t:'h'},{t:'h'}] },
+            { r:4, d:[{t:'e'},{t:'e'},{t:'e'},{t:'e'},{t:'s',n:5},{t:'s',n:6},{t:'s',n:7},{t:'s',n:8},{t:'s',n:9},{t:'s',n:10},{t:'s',n:11}], f:[{t:'s',n:1},{t:'s',n:2},{t:'s',n:3},{t:'s',n:4},{t:'s',n:5},{t:'s',n:6},{t:'s',n:7},{t:'s',n:8},{t:'s',n:9},{t:'s',n:10},{t:'h'},{t:'h'},{t:'h'},{t:'h'}] },
+            { r:5, d:[{t:'e'},{t:'h'},{t:'h'},{t:'s',n:4},{t:'s',n:5},{t:'s',n:6},{t:'s',n:7},{t:'s',n:8},{t:'s',n:9},{t:'s',n:10},{t:'s',n:11}], f:[{t:'e'},{t:'e'},{t:'s',n:3},{t:'s',n:4},{t:'s',n:5},{t:'s',n:6},{t:'s',n:7},{t:'s',n:8},{t:'s',n:9},{t:'s',n:10},{t:'h'},{t:'h'},{t:'h'},{t:'h'}] },
+            { r:6, d:[{t:'h'},{t:'h'},{t:'s',n:3},{t:'s',n:4},{t:'s',n:5},{t:'s',n:6},{t:'s',n:7},{t:'s',n:8},{t:'s',n:9},{t:'s',n:10},{t:'s',n:11}], f:[{t:'e'},{t:'e'},{t:'h'},{t:'h'},{t:'h'},{t:'h'},{t:'h'},{t:'h'},{t:'h'},{t:'h'},{t:'h'},{t:'h'},{t:'h'},{t:'h'}] }
+        ];
+
+        f2Data.forEach(row => {
+            const rowDiv = document.createElement('div');
+            rowDiv.className = 'seat-row';
+
+            const dDiv = document.createElement('div');
+            dDiv.style.cssText = "display:flex; gap:1px; justify-content:flex-end; width:100px;";
+            row.d.forEach(st => dDiv.appendChild(createSeatBtn(st, '2층 D구역', row.r, 'S석')));
+
+            const eDiv = document.createElement('div');
+            eDiv.style.cssText = "display:flex; gap:1px; justify-content:center; width:170px;";
+            
+            for(let n=1; n<=18; n++) {
+                if(row.r === 1) {
+                    eDiv.appendChild(createSeatBtn({t:'h', n:n}, '2층 E구역', 1, 'S석'));
+                } else if(row.r === 5) {
+                    if(n < 3) eDiv.appendChild(createSeatBtn({t:'e'}, '2층 E구역', 5, 'S석'));
+                    else eDiv.appendChild(createSeatBtn({t:'s', n:n}, '2층 E구역', 5, 'S석'));
+                } else if(row.r === 6) {
+                    if(n >= 3 && n <= 14) eDiv.appendChild(createSeatBtn({t:'h', n:n}, '2층 E구역', 6, 'S석'));
+                    else eDiv.appendChild(createSeatBtn({t:'e'}, '2층 E구역', 6, 'S석'));
+                } else {
+                    eDiv.appendChild(createSeatBtn({t:'s', n:n}, '2층 E구역', row.r, 'S석'));
+                }
+            }
+
+            const fDiv = document.createElement('div');
+            fDiv.style.cssText = "display:flex; gap:1px; justify-content:flex-start; width:100px;";
+            row.f.forEach(st => fDiv.appendChild(createSeatBtn(st, '2층 F구역', row.r, 'S석')));
+
+            rowDiv.appendChild(dDiv);
+            rowDiv.appendChild(createRowLabel(row.r));
+            rowDiv.appendChild(eDiv);
+            rowDiv.appendChild(createRowLabel(row.r));
+            rowDiv.appendChild(fDiv);
+
+            map2f.appendChild(rowDiv);
+        });
+
+        applySeatColors();
+    }
+
+    function createRowLabel(num) {
+        const span = document.createElement('span');
+        span.className = 'row-label';
+        span.textContent = num;
+        return span;
+    }
+
+    function createSeatBtn(st, areaName, rowNum, defaultGrade) {
+        const btn = document.createElement('button');
+        if (st.t === 'e') {
+            btn.className = 's-btn e';
+        } else {
+            btn.className = `s-btn ${st.t}`;
+            if (st.lbl) {
+                btn.textContent = st.lbl;
+            } else if (st.n) {
+                btn.textContent = st.n;
+            }
+            if (st.n) {
+                const seatId = `${areaName} ${rowNum}열 ${st.n}번`;
+                btn.dataset.seatId = seatId;
+            }
+            if (st.t !== 'h') {
+                btn.onclick = () => pickSeat(`${areaName} ${rowNum}열 ${st.n}번`, defaultGrade);
+            }
+        }
+        return btn;
+    }
+
+    function applySeatColors() {
+        const seatCounts = {};
+        historyData.forEach(h => {
+            if (h.seat) {
+                seatCounts[h.seat] = (seatCounts[h.seat] || 0) + 1;
+            }
+        });
+
+        document.querySelectorAll('.s-btn[data-seat-id]').forEach(btn => {
+            const sid = btn.dataset.seatId;
+            btn.classList.remove('v1', 'v2', 'v3');
+            if (seatCounts[sid]) {
+                const count = seatCounts[sid];
+                if (count === 1) btn.classList.add('v1');
+                else if (count === 2) btn.classList.add('v2');
+                else if (count >= 3) btn.classList.add('v3');
+            }
+        });
+    }
+
+    let historyData = [];
+
+    document.getElementById('record-form').onsubmit = function(e) {
+        e.preventDefault();
+        
+        const date = document.getElementById('f-date').value;
+        const seat = document.getElementById('f-seat').value;
+        const price = Number(document.getElementById('f-price').value) || 0;
+        const cast = document.getElementById('f-cast').value;
+
+        historyData.push({
+            id: Date.now(),
+            date: date,
+            seat: seat,
+            status: "-",
+            price: price,
+            cast: cast
+        });
+
+        sortAndRenderHistory();
+        applySeatColors();
+
+        document.getElementById('f-seat').value = '';
+        document.getElementById('f-date').value = '';
+        document.getElementById('f-cast').value = '';
+    };
+
+    function parseSeatInfo(seatStr) {
+        if (!seatStr) return { floor: 99, area: 'Z', row: 99, num: 99 };
+        
+        const floorMatch = seatStr.match(/(\d+)층/);
+        const areaMatch = seatStr.match(/([A-Z])구역/);
+        const rowMatch = seatStr.match(/(\d+)열/);
+        const numMatch = seatStr.match(/(\d+)번/);
+
+        return {
+            floor: floorMatch ? parseInt(floorMatch[1], 10) : 99,
+            area: areaMatch ? areaMatch[1] : 'Z',
+            row: rowMatch ? parseInt(rowMatch[1], 10) : 99,
+            num: numMatch ? parseInt(numMatch[1], 10) : 99
+        };
+    }
+
+    function sortAndRenderHistory() {
+        historyData.sort((a, b) => {
+            if (a.date !== b.date) {
+                return a.date.localeCompare(b.date);
+            }
+
+            const sA = parseSeatInfo(a.seat);
+            const sB = parseSeatInfo(b.seat);
+
+            if (sA.floor !== sB.floor) return sA.floor - sB.floor;
+            if (sA.row !== sB.row) return sA.row - sB.row;
+            if (sA.area !== sB.area) return sA.area.localeCompare(sB.area);
+            return sA.num - sB.num;
+        });
+
+        renderHistory();
+    }
+
+    function renderHistory() {
+        const list = document.getElementById('history-list');
+        list.innerHTML = '';
+        let total = 0;
+        
+        historyData.forEach(h => {
+            total += h.price;
+            const item = document.createElement('div');
+            item.className = 'history-item';
+            
+            item.innerHTML = `
+                <div class="history-row">
+                    <b style="color:var(--text-dark);">${h.date}</b>
+                    <div>
+                        <b>${h.price.toLocaleString()}원</b>
+                        <select class="status-select" onchange="updateStatus(${h.id}, this.value)">
+                            <option value="-" ${h.status==='-'?'selected':''}>-</option>
+                            <option value="양도" ${h.status==='양도'?'selected':''}>양도</option>
+                            <option value="양수" ${h.status==='양수'?'selected':''}>양수</option>
+                            <option value="나눔" ${h.status==='나눔'?'selected':''}>나눔</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="history-row" style="margin-top:4px;">
+                    <span style="color:var(--text-sub);">${h.seat} | ${h.cast}</span>
+                    <span style="color:#d9536f; cursor:pointer; font-weight:bold;" onclick="delHist(${h.id})">삭제</span>
+                </div>
+            `;
+            list.appendChild(item);
+        });
+
+        document.getElementById('cnt').textContent = historyData.length + '회';
+        document.getElementById('amt').textContent = total.toLocaleString() + '원';
+    }
+
+    function updateStatus(id, newStatus) {
+        const target = historyData.find(h => h.id === id);
+        if (target) {
+            target.status = newStatus;
+        }
+    }
+
+    function delHist(id) {
+        historyData = historyData.filter(h => h.id === id);
+        sortAndRenderHistory();
+        applySeatColors();
+    }
+
+    renderSch();
+    calcPrice();
+    renderMap();
+</script>
+</body>
+</html>
