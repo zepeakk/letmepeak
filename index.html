@@ -17,7 +17,7 @@
             --seat-hold: #b2bec3;
             
             /* 관람 횟수별 좌석 색상 */
-            --seat-v1: #c8d6e5;
+            --seat-v1: #2ecc71;
             --seat-v2: #9b59b6;
             --seat-v3: #ff7f50;
             
@@ -29,11 +29,25 @@
             margin: 0;
             padding: 0;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            
+            /* 텍스트 드래그 및 길게 누르기 메뉴 방지 */
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-touch-callout: none;
+        }
+
+        /* 입력 폼에서는 텍스트 선택 허용 */
+        input, select, textarea {
+            -webkit-user-select: auto;
+            -moz-user-select: auto;
+            -ms-user-select: auto;
+            user-select: auto;
         }
 
         body {
             background-color: var(--bg-paper);
-            /* 손그림st: 컵케이크, 우주선, 달, 바느질(점선/바늘), 실 패턴 */
             background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="220" height="220" viewBox="0 0 220 220"><g stroke="%23e88a99" stroke-width="1.2" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="0.3"><path d="M30 40 C30 25, 50 25, 50 40 C50 25, 70 25, 70 40 L65 60 L35 60 Z" fill="%23fdf3f4"/><path d="M35 60 L40 80 L60 80 L65 60"/><circle cx="50" cy="25" r="2.5" fill="%23e88a99"/><path d="M140 30 C140 30, 160 20, 170 35 C180 50, 160 70, 140 60 C130 55, 125 40, 140 30 Z"/><path d="M135 65 L125 75 M155 25 L165 15"/><path d="M130 45 Q150 45 165 50" stroke-dasharray="2 2"/><path d="M45 145 C35 135, 45 120, 55 130 C65 140, 75 125, 65 115" stroke-width="1.5"/><ellipse cx="55" cy="130" rx="12" ry="7" transform="rotate(-30 55 130)" fill="%23fdf3f4"/><path d="M150 130 L180 160 M180 160 L175 168 M180 160 L188 155"/><circle cx="145" cy="125" r="2"/><path d="M150 145 Q160 140 170 145"/><path d="M15 110 Q50 110 80 100" stroke-dasharray="3 3"/><path d="M110 190 Q150 185 200 200" stroke-dasharray="3 3"/><circle cx="185" cy="90" r="1.5" fill="%23e88a99"/><circle cx="90" cy="30" r="1.5" fill="%23e88a99"/><circle cx="100" cy="150" r="1.5" fill="%23e88a99"/></g></svg>');
             background-repeat: repeat;
             background-size: 220px 220px;
@@ -62,11 +76,14 @@
             align-items: center;
         }
 
+        /* 이미지 터치 및 드래그 방지 */
         .header-logo {
             max-width: 100%;
             height: auto;
             display: block;
             margin: 0 auto;
+            pointer-events: none;
+            -webkit-user-drag: none;
         }
 
         .contact-info {
@@ -94,15 +111,13 @@
             justify-content: space-between;
             align-items: center;
             outline: none;
-            user-select: none;
-            list-style: none; /* 기본 화살표 제거 */
+            list-style: none;
         }
 
         details summary::-webkit-details-marker {
-            display: none; /* Safari 대응 */
+            display: none;
         }
 
-        /* 펼침/접기 커스텀 표시 */
         details summary::after {
             content: '▼';
             font-size: 0.7rem;
@@ -158,10 +173,16 @@
             color: white;
             font-weight: bold;
         }
-        .bg-first { background: #d9536f; }
         .bg-prev { background: #8e44ad; }
         .bg-mat { background: #27ae60; }
         .bg-all { background: #2980b9; }
+
+        .tag-first {
+            color: var(--main-pink);
+            font-weight: bold;
+            font-size: 0.60rem;
+            margin-left: 2px;
+        }
 
         /* 배우 필터 */
         .filter-box {
@@ -282,7 +303,6 @@
 
         .sec-header-row {
             display: flex;
-            justify-content: space-between;
             font-size: 0.65rem;
             font-weight: bold;
             color: #555;
@@ -300,15 +320,18 @@
         }
 
         .spacer-row {
-            height: 8px;
+            height: 12px;
         }
 
         .row-label {
             font-size: 0.5rem;
             color: #888;
-            width: 10px;
+            width: 14px;
+            min-width: 14px;
+            max-width: 14px;
             text-align: center;
             font-weight: bold;
+            flex-shrink: 0;
         }
 
         .s-btn {
@@ -324,15 +347,17 @@
             color: #ffffff;
             font-weight: bold;
             transition: transform 0.1s;
+            flex-shrink: 0;
         }
         .s-btn:hover { transform: scale(1.5); z-index: 2; }
         
         .s-btn.r { background-color: var(--seat-r); }
         .s-btn.s { background-color: var(--seat-s); }
+        .s-btn.wc { background-color: var(--seat-r); cursor: pointer; }
         .s-btn.h { background-color: var(--seat-hold); cursor: not-allowed; color: #ffffff; }
         .s-btn.e { background-color: transparent; cursor: default; }
 
-        .s-btn.v1 { background-color: var(--seat-v1) !important; color: #222; }
+        .s-btn.v1 { background-color: var(--seat-v1) !important; color: #fff; }
         .s-btn.v2 { background-color: var(--seat-v2) !important; color: #fff; }
         .s-btn.v3 { background-color: var(--seat-v3) !important; color: #fff; }
 
@@ -373,11 +398,11 @@
         }
     </style>
 </head>
-<body>
+<body oncontextmenu="return false;" ondragstart="return false;" onselectstart="return false;">
 
 <div class="container">
     <header>
-        <img src="letmeflyrogo.png" alt="LET ME FLY 로고" class="header-logo">
+        <img src="letmeflyrogo.png" alt="LET ME FLY 로고" class="header-logo" oncontextmenu="return false;">
         <p class="contact-info">문의는 @hillpeakk 로 연락 주세요.</p>
     </header>
 
@@ -498,9 +523,11 @@
             <div class="floor-header">1F</div>
             <div class="map-container">
                 <div class="sec-header-row">
-                    <span style="flex:1;">A</span>
-                    <span style="flex:2;">B</span>
-                    <span style="flex:1;">C</span>
+                    <span style="width:105px;">A</span>
+                    <span style="width:14px;"></span>
+                    <span style="width:135px;">B</span>
+                    <span style="width:14px;"></span>
+                    <span style="width:105px;">C</span>
                 </div>
                 <div id="map-1f"></div>
             </div>
@@ -509,9 +536,11 @@
             <div class="floor-header">2F</div>
             <div class="map-container">
                 <div class="sec-header-row">
-                    <span style="flex:1;">D</span>
-                    <span style="flex:2;">E</span>
-                    <span style="flex:1;">F</span>
+                    <span style="width:105px;">D</span>
+                    <span style="width:14px;"></span>
+                    <span style="width:170px;">E</span>
+                    <span style="width:14px;"></span>
+                    <span style="width:120px;">F</span>
                 </div>
                 <div id="map-2f"></div>
             </div>
@@ -520,8 +549,21 @@
 </div>
 
 <script>
+    /* 보안 강화: 우클릭, 개발자 도구 단축키 방지 */
+    document.addEventListener('contextmenu', e => e.preventDefault());
+    document.addEventListener('keydown', e => {
+        if (
+            e.keyCode === 123 || // F12
+            (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74 || e.keyCode === 67)) || // Ctrl+Shift+I/J/C
+            (e.ctrlKey && (e.keyCode === 85 || e.keyCode === 83)) // Ctrl+U / Ctrl+S
+        ) {
+            e.preventDefault();
+            return false;
+        }
+    });
+
     const schedules = [
-        { date: "10/06(화)", time: "19:30", cast: ["오의식", "김지현", "안지환", "나하나"], evt: "첫공/프리뷰" },
+        { date: "10/06(화)", time: "19:30", cast: ["오의식", "김지현", "안지환", "나하나"], evt: "프리뷰" },
         { date: "10/07(수)", time: "19:30", cast: ["안재욱", "배해선", "윤재호", "홍지희"], evt: "프리뷰" },
         { date: "10/08(목)", time: "19:30", cast: ["이희준", "윤공주", "윤소호", "이수빈"], evt: "프리뷰" },
         { date: "10/09(금)", time: "14:00", cast: ["이형훈", "배해선", "안지환", "박슬기"], evt: "프리뷰" },
@@ -550,6 +592,17 @@
         { date: "10/25(일)", time: "18:00", cast: ["이형훈", "윤공주", "안지환", "나하나"], evt: "-" }
     ];
 
+    const firstShowIndices = {};
+    const firstPeriodSchedules = schedules.slice(0, 4);
+
+    firstPeriodSchedules.forEach((sch, idx) => {
+        sch.cast.forEach(actor => {
+            if (!(actor in firstShowIndices)) {
+                firstShowIndices[actor] = idx;
+            }
+        });
+    });
+
     let filter = [];
     const mainActors = ["안재욱", "이희준", "오의식", "이형훈", "배해선", "윤공주", "김지현", "윤소호", "안지환", "윤재호", "홍지희", "나하나", "이수빈", "박슬기❤️"];
 
@@ -577,7 +630,8 @@
     function renderSch() {
         const tbody = document.getElementById('sch-tbody');
         tbody.innerHTML = '';
-        schedules.filter(s => filter.every(a => s.cast.includes(a))).forEach(s => {
+        schedules.filter(s => filter.every(a => s.cast.includes(a))).forEach((s) => {
+            const originalIndex = schedules.indexOf(s);
             const tr = document.createElement('tr');
             tr.onclick = () => {
                 document.getElementById('f-date').value = `${s.date} ${s.time}`;
@@ -585,18 +639,24 @@
             };
 
             let badgeHtml = s.evt;
-            if(s.evt.includes('첫공')) badgeHtml = `<span class="badge-evt bg-first">${s.evt}</span>`;
-            else if(s.evt.includes('프리뷰')) badgeHtml = `<span class="badge-evt bg-prev">${s.evt}</span>`;
+            if(s.evt.includes('프리뷰')) badgeHtml = `<span class="badge-evt bg-prev">${s.evt}</span>`;
             else if(s.evt.includes('마티네')) badgeHtml = `<span class="badge-evt bg-mat">${s.evt}</span>`;
             else if(s.evt.includes('전관')) badgeHtml = `<span class="badge-evt bg-all">${s.evt}</span>`;
+
+            const castHtmls = s.cast.map(actor => {
+                if (originalIndex <= 3 && firstShowIndices[actor] === originalIndex) {
+                    return `${actor}<span class="tag-first">첫공</span>`;
+                }
+                return actor;
+            });
 
             tr.innerHTML = `
                 <td><b>${s.date}</b></td>
                 <td>${s.time}</td>
-                <td>${s.cast[0]}</td>
-                <td>${s.cast[1]}</td>
-                <td>${s.cast[2]}</td>
-                <td>${s.cast[3]}</td>
+                <td>${castHtmls[0]}</td>
+                <td>${castHtmls[1]}</td>
+                <td>${castHtmls[2]}</td>
+                <td>${castHtmls[3]}</td>
                 <td>${badgeHtml}</td>
             `;
             tbody.appendChild(tr);
@@ -629,7 +689,6 @@
         const map1f = document.getElementById('map-1f');
         map1f.innerHTML = '';
 
-        /* 1층 좌석 데이터 */
         const f1Data = [
             { r:1,  a:[{t:'e'},{t:'e'},{t:'h'},{t:'r',n:12},{t:'r',n:13}], c:[{t:'r',n:1},{t:'r',n:2},{t:'h'}] },
             { r:2,  a:[{t:'e'},{t:'h'},{t:'h'},{t:'r',n:11},{t:'r',n:12},{t:'r',n:13}], c:[{t:'r',n:1},{t:'r',n:2},{t:'r',n:3},{t:'h'},{t:'h'}] },
@@ -637,8 +696,7 @@
             { r:4,  a:[{t:'h'},{t:'h'},{t:'h'},{t:'r',n:6},{t:'r',n:7},{t:'r',n:8},{t:'r',n:9},{t:'r',n:10},{t:'r',n:11},{t:'r',n:12},{t:'r',n:13}], c:[{t:'r',n:1},{t:'r',n:2},{t:'r',n:3},{t:'r',n:4},{t:'r',n:5},{t:'r',n:6},{t:'r',n:7},{t:'h'},{t:'h'},{t:'h'}] },
             { r:5,  a:[{t:'e'},{t:'e'},{t:'h'},{t:'r',n:6},{t:'r',n:7},{t:'r',n:8},{t:'r',n:9},{t:'r',n:10},{t:'r',n:11},{t:'r',n:12},{t:'r',n:13}], c:[{t:'r',n:1},{t:'r',n:2},{t:'r',n:3},{t:'r',n:4},{t:'r',n:5},{t:'r',n:6},{t:'r',n:7},{t:'r',n:8},{t:'h'}] },
             { r:6,  a:[{t:'h'},{t:'h'},{t:'h'},{t:'r',n:6},{t:'r',n:7},{t:'r',n:8},{t:'r',n:9},{t:'r',n:10},{t:'r',n:11},{t:'r',n:12},{t:'r',n:13}], c:[{t:'r',n:1},{t:'r',n:2},{t:'r',n:3},{t:'r',n:4},{t:'r',n:5},{t:'r',n:6},{t:'r',n:7},{t:'r',n:8},{t:'h'},{t:'h'},{t:'h'}] },
-            /* 1층 A구역 7열: 총 11칸 (휠체어 이모티콘 2개, 미판매보류석 1개, 6~13번 8개) */
-            { r:7,  a:[{t:'h',lbl:'♿'},{t:'h',lbl:'♿'},{t:'h'},{t:'r',n:6},{t:'r',n:7},{t:'r',n:8},{t:'r',n:9},{t:'r',n:10},{t:'r',n:11},{t:'r',n:12},{t:'r',n:13}], c:[{t:'r',n:1},{t:'r',n:2},{t:'r',n:3},{t:'r',n:4},{t:'r',n:5},{t:'r',n:6},{t:'r',n:7}] },
+            { r:7,  a:[{t:'wc',lbl:'♿',n:'h1'},{t:'wc',lbl:'♿',n:'h2'},{t:'h'},{t:'r',n:6},{t:'r',n:7},{t:'r',n:8},{t:'r',n:9},{t:'r',n:10},{t:'r',n:11},{t:'r',n:12},{t:'r',n:13}], c:[{t:'r',n:1},{t:'r',n:2},{t:'r',n:3},{t:'r',n:4},{t:'r',n:5},{t:'r',n:6},{t:'r',n:7}] },
             { r:8,  a:[{t:'e'},{t:'e'},{t:'h'},{t:'h'},{t:'r',n:5},{t:'r',n:6},{t:'r',n:7},{t:'r',n:8},{t:'r',n:9},{t:'r',n:10},{t:'r',n:11},{t:'r',n:12},{t:'r',n:13}], c:[{t:'r',n:1},{t:'r',n:2},{t:'r',n:3},{t:'r',n:4},{t:'r',n:5},{t:'r',n:6},{t:'r',n:7}] },
             { r:9,  a:[{t:'h'},{t:'r',n:3},{t:'r',n:4},{t:'r',n:5},{t:'r',n:6},{t:'r',n:7},{t:'r',n:8},{t:'r',n:9},{t:'r',n:10},{t:'r',n:11},{t:'r',n:12},{t:'r',n:13}], c:[{t:'r',n:1},{t:'r',n:2},{t:'r',n:3},{t:'r',n:4},{t:'r',n:5},{t:'r',n:6},{t:'r',n:7}] },
             { r:10, a:[{t:'r',n:2},{t:'r',n:3},{t:'r',n:4},{t:'r',n:5},{t:'r',n:6},{t:'r',n:7},{t:'r',n:8},{t:'r',n:9},{t:'r',n:10},{t:'r',n:11},{t:'r',n:12},{t:'r',n:13}], c:[{t:'r',n:1},{t:'r',n:2},{t:'r',n:3},{t:'r',n:4},{t:'r',n:5},{t:'r',n:6},{t:'r',n:7},{t:'r',n:8}] },
@@ -651,15 +709,15 @@
             rowDiv.className = 'seat-row';
 
             const aDiv = document.createElement('div');
-            aDiv.style.cssText = "display:flex; gap:1px; justify-content:flex-end; width:100px;";
+            aDiv.style.cssText = "display:flex; gap:1px; justify-content:flex-end; width:105px; flex-shrink:0;";
             row.a.forEach(st => aDiv.appendChild(createSeatBtn(st, '1층 A구역', row.r, 'R석')));
 
             const bDiv = document.createElement('div');
-            bDiv.style.cssText = "display:flex; gap:1px; justify-content:center; width:135px;";
+            bDiv.style.cssText = "display:flex; gap:1px; justify-content:center; width:135px; flex-shrink:0;";
             for(let n=1; n<=14; n++) bDiv.appendChild(createSeatBtn({t:'r', n:n}, '1층 B구역', row.r, 'R석'));
 
             const cDiv = document.createElement('div');
-            cDiv.style.cssText = "display:flex; gap:1px; justify-content:flex-start; width:100px;";
+            cDiv.style.cssText = "display:flex; gap:1px; justify-content:flex-start; width:105px; flex-shrink:0;";
             row.c.forEach(st => cDiv.appendChild(createSeatBtn(st, '1층 C구역', row.r, 'R석')));
 
             rowDiv.appendChild(aDiv);
@@ -680,7 +738,6 @@
         const map2f = document.getElementById('map-2f');
         map2f.innerHTML = '';
 
-        /* 2층 좌석 데이터 */
         const f2Data = [
             { 
                 r:1, 
@@ -714,16 +771,16 @@
             }
         ];
 
-        f2Data.forEach((row, idx) => {
+        f2Data.forEach((row) => {
             const rowDiv = document.createElement('div');
             rowDiv.className = 'seat-row';
 
             const dDiv = document.createElement('div');
-            dDiv.style.cssText = "display:flex; gap:1px; justify-content:flex-end; width:100px;";
+            dDiv.style.cssText = "display:flex; gap:1px; justify-content:flex-end; width:105px; flex-shrink:0;";
             row.d.forEach(st => dDiv.appendChild(createSeatBtn(st, '2층 D구역', row.r, 'S석')));
 
             const eDiv = document.createElement('div');
-            eDiv.style.cssText = "display:flex; gap:1px; justify-content:center; width:170px;";
+            eDiv.style.cssText = "display:flex; gap:1px; justify-content:center; width:170px; flex-shrink:0;";
             
             for(let n=1; n<=18; n++) {
                 if(row.r === 1) {
@@ -740,7 +797,7 @@
             }
 
             const fDiv = document.createElement('div');
-            fDiv.style.cssText = "display:flex; gap:1px; justify-content:flex-start; width:120px;";
+            fDiv.style.cssText = "display:flex; gap:1px; justify-content:flex-start; width:120px; flex-shrink:0;";
             row.f.forEach(st => fDiv.appendChild(createSeatBtn(st, '2층 F구역', row.r, 'S석')));
 
             rowDiv.appendChild(dDiv);
@@ -750,12 +807,6 @@
             rowDiv.appendChild(fDiv);
 
             map2f.appendChild(rowDiv);
-
-            if (row.r === 6) {
-                const spacer = document.createElement('div');
-                spacer.className = 'spacer-row';
-                map2f.appendChild(spacer);
-            }
         });
 
         applySeatColors();
@@ -782,11 +833,15 @@
             }
 
             if (st.n) {
-                const seatId = `${areaName} ${rowNum}열 ${st.n}번`;
+                const isWcNum = typeof st.n === 'string' && st.n.startsWith('h');
+                const seatLabel = isWcNum ? `${st.n}번` : `${st.n}번`;
+                const seatId = `${areaName} ${rowNum}열 ${seatLabel}`;
                 btn.dataset.seatId = seatId;
             }
             if (st.t !== 'h') {
-                btn.onclick = () => pickSeat(`${areaName} ${rowNum}열 ${st.n}번`, defaultGrade);
+                const isWcNum = typeof st.n === 'string' && st.n.startsWith('h');
+                const seatLabel = isWcNum ? `${st.n}번` : `${st.n}번`;
+                btn.onclick = () => pickSeat(`${areaName} ${rowNum}열 ${seatLabel}`, defaultGrade);
             }
         }
         return btn;
@@ -812,7 +867,17 @@
         });
     }
 
-    let historyData = [];
+    /* LocalStorage 관련 데이터 로드 및 저장 함수 */
+    function loadData() {
+        const saved = localStorage.getItem('lmf_history_data');
+        return saved ? JSON.parse(saved) : [];
+    }
+
+    function saveData() {
+        localStorage.setItem('lmf_history_data', JSON.stringify(historyData));
+    }
+
+    let historyData = loadData();
 
     document.getElementById('record-form').onsubmit = function(e) {
         e.preventDefault();
@@ -831,6 +896,7 @@
             cast: cast
         });
 
+        saveData();
         sortAndRenderHistory();
         applySeatColors();
 
@@ -845,13 +911,22 @@
         const floorMatch = seatStr.match(/(\d+)층/);
         const areaMatch = seatStr.match(/([A-Z])구역/);
         const rowMatch = seatStr.match(/(\d+)열/);
-        const numMatch = seatStr.match(/(\d+)번/);
+        const numMatch = seatStr.match(/(\d+|h\d+)번/);
+
+        let numVal = 99;
+        if (numMatch) {
+            if (numMatch[1].startsWith('h')) {
+                numVal = parseInt(numMatch[1].replace('h', ''), 10) - 100;
+            } else {
+                numVal = parseInt(numMatch[1], 10);
+            }
+        }
 
         return {
             floor: floorMatch ? parseInt(floorMatch[1], 10) : 99,
             area: areaMatch ? areaMatch[1] : 'Z',
             row: rowMatch ? parseInt(rowMatch[1], 10) : 99,
-            num: numMatch ? parseInt(numMatch[1], 10) : 99
+            num: numVal
         };
     }
 
@@ -920,13 +995,15 @@
         const target = historyData.find(h => h.id === id);
         if (target) {
             target.status = newStatus;
+            saveData();
         }
         renderHistory();
         applySeatColors();
     }
 
     function delHist(id) {
-        historyData = historyData.filter(h => h.id === id);
+        historyData = historyData.filter(h => h.id !== id);
+        saveData();
         sortAndRenderHistory();
         applySeatColors();
     }
@@ -934,6 +1011,7 @@
     renderSch();
     calcPrice();
     renderMap();
+    sortAndRenderHistory();
 </script>
 </body>
 </html>
