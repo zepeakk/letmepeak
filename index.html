@@ -81,7 +81,6 @@
             padding: 4px 0;
         }
 
-        /* 시원하게 확대한 로고 스타일 */
         .header-logo {
             width: auto;
             max-width: 240px;
@@ -651,12 +650,11 @@
 <div class="container">
     <header>
         <div class="header-logo-wrap" id="logo-wrap">
-            <img src="letmeflyrogo.png" alt="LET ME FLY" class="header-logo" id="header-logo-img" onerror="handleLogoError()">
+            <img src="./letmeflyrogo.png" alt="LET ME FLY" class="header-logo" id="header-logo-img" onerror="handleLogoError()">
         </div>
         <p class="contact-info">문의는 @hillpeakk 로 연락 주세요.</p>
     </header>
 
-    <!-- 스케줄 -->
     <div class="card">
         <details open>
             <summary>🧁 회차별 스케줄</summary>
@@ -688,7 +686,6 @@
         </details>
     </div>
 
-    <!-- 기록 추가 -->
     <div class="card">
         <details open>
             <summary>🧁 기록 추가</summary>
@@ -741,7 +738,6 @@
         </details>
     </div>
 
-    <!-- 관극 정산 내역 -->
     <div class="card">
         <details open>
             <summary>🧁 관극 정산 내역</summary>
@@ -753,7 +749,6 @@
         </details>
     </div>
 
-    <!-- 좌석 배치도 -->
     <div class="card">
         <details open>
             <summary>🧁 좌석 배치도</summary>
@@ -795,7 +790,6 @@
         </details>
     </div>
 
-    <!-- 캐스팅 보드 -->
     <div class="card">
         <details open>
             <summary>🧁 캐스팅 보드</summary>
@@ -804,7 +798,6 @@
     </div>
 </div>
 
-<!-- 미래탐사 꾸러미 증정 모달 팝업 -->
 <div class="modal-overlay" id="gift-modal">
     <div class="modal-content">
         <button class="modal-close-btn" onclick="closeGiftModal()">×</button>
@@ -1349,13 +1342,30 @@
         { roleName: "정분", actors: ["홍지희", "나하나", "이수빈", "박슬기"] }
     ];
 
+    // 배우 한글 이름 -> 영문 이미지 파일명 매핑
+    const actorImageMap = {
+        "안재욱": "ahn.png",
+        "이희준": "lee.png",
+        "오의식": "oh.png",
+        "이형훈": "lee2.png",
+        "배해선": "bae.png",
+        "윤공주": "yoon.png",
+        "김지현": "kim.png",
+        "윤소호": "soho.png",
+        "안지환": "ahn2.png",
+        "윤재호": "jaeho.png",
+        "홍지희": "hong.png",
+        "나하나": "na.png",
+        "이수빈": "subin.png",
+        "박슬기": "park.png"
+    };
+
     function renderCastBoard() {
         const container = document.getElementById('cast-board-container');
         if (!container) return;
         
         container.innerHTML = '';
 
-        // 회차별 총 공연 횟수
         const totalActorShows = {};
         schedules.forEach(sch => {
             sch.cast.forEach(act => {
@@ -1363,15 +1373,13 @@
             });
         });
 
-        // 사용자 관극 횟수 (같은 날짜/시간 회차는 무조건 1번만 카운팅)
         const userActorShows = {};
-        const visitedShows = new Set(); // 이미 카운트한 회차(일자/시간) 저장
+        const visitedShows = new Set();
 
         historyData.forEach(h => {
             if (h.status !== '양도' && h.cast && h.date) {
-                const dateKey = h.date.trim(); // 일자/시간을 고유 키로 사용
+                const dateKey = h.date.trim();
                 
-                // 동일한 회차가 아직 계산되지 않은 경우에만 카운팅
                 if (!visitedShows.has(dateKey)) {
                     visitedShows.add(dateKey);
                     
@@ -1399,7 +1407,10 @@
                 const card = document.createElement('div');
                 card.className = 'cast-card';
 
-                const imgSrc = `${actorName}.png`;
+                // 매핑된 영문 이미지 파일명 사용 (상대 경로 ./ 명시)
+                const fileName = actorImageMap[actorName] || `${actorName}.png`;
+                const imgSrc = `./${fileName}`;
+                
                 const totalCount = totalActorShows[actorName] || 0;
                 const watchedCount = userActorShows[actorName] || 0;
 
