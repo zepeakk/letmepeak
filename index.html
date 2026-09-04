@@ -16,7 +16,6 @@
             --seat-s: #ff7675;
             --seat-hold: #b2bec3;
             
-            /* 관람 횟수별 좌석 색상 */
             --seat-v1: #2ecc71;
             --seat-v2: #9b59b6;
             --seat-v3: #ff7f50;
@@ -30,7 +29,6 @@
             padding: 0;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             
-            /* 텍스트 드래그 및 길게 누르기 메뉴 방지 */
             -webkit-user-select: none;
             -moz-user-select: none;
             -ms-user-select: none;
@@ -38,7 +36,6 @@
             -webkit-touch-callout: none;
         }
 
-        /* 입력 폼에서는 텍스트 선택 허용 */
         input, select, textarea {
             -webkit-user-select: auto;
             -moz-user-select: auto;
@@ -55,35 +52,54 @@
             display: flex;
             justify-content: center;
             min-height: 100vh;
-            padding: 10px;
+            padding: 8px;
             border: 2px dashed var(--stitch-border);
         }
 
         .container {
             width: 100%;
-            max-width: 440px;
+            max-width: 400px;
             position: relative;
             z-index: 1;
         }
 
         header {
             text-align: center;
-            padding: 10px 0;
-            margin-bottom: 12px;
+            padding: 10px 0 6px 0;
+            margin-bottom: 10px;
             background: transparent;
             display: flex;
             flex-direction: column;
             align-items: center;
         }
 
-        /* 이미지 터치 및 드래그 방지 */
+        .header-logo-wrap {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 4px 0;
+        }
+
+        /* 시원하게 확대한 로고 스타일 */
         .header-logo {
-            max-width: 100%;
+            width: auto;
+            max-width: 240px;
             height: auto;
+            max-height: 100px;
+            object-fit: contain;
             display: block;
             margin: 0 auto;
             pointer-events: none;
             -webkit-user-drag: none;
+        }
+
+        .fallback-title {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--main-pink);
+            letter-spacing: 1px;
+            text-transform: uppercase;
         }
 
         .contact-info {
@@ -96,14 +112,14 @@
         .card {
             background: var(--card-bg);
             border-radius: var(--radius);
-            padding: 12px;
-            margin-bottom: 10px;
+            padding: 10px;
+            margin-bottom: 8px;
             border: 1px solid #ebdcd0;
             box-shadow: 0 2px 5px rgba(0,0,0,0.02);
         }
 
         details summary {
-            font-size: 0.88rem;
+            font-size: 0.85rem;
             font-weight: 700;
             cursor: pointer;
             color: var(--main-pink);
@@ -114,26 +130,21 @@
             list-style: none;
         }
 
-        details summary::-webkit-details-marker {
-            display: none;
-        }
-
+        details summary::-webkit-details-marker { display: none; }
         details summary::after {
             content: '▼';
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             color: var(--main-pink);
             transition: transform 0.2s;
         }
-
-        details[open] summary::after {
-            content: '▲';
-        }
+        details[open] summary::after { content: '▲'; }
 
         /* 스케줄 테이블 */
         .table-container {
-            max-height: 200px;
+            max-height: 220px;
             overflow-y: auto;
-            margin-top: 10px;
+            overflow-x: hidden;
+            margin-top: 8px;
             border: 1px solid #ebdcd0;
             border-radius: 6px;
             background: #ffffff;
@@ -142,52 +153,81 @@
         table.schedule-tbl {
             width: 100%;
             border-collapse: collapse;
-            font-size: 0.68rem;
-            white-space: nowrap;
+            font-size: 0.60rem;
             text-align: center;
+            table-layout: fixed;
         }
 
         table.schedule-tbl th {
             position: sticky;
             top: 0;
             background: #f0eae1;
-            padding: 8px 4px;
+            padding: 5px 1px;
             z-index: 1;
             border-bottom: 1px solid #dcd1c4;
             font-weight: 700;
         }
 
+        table.schedule-tbl th:nth-child(1) { width: 15%; }
+        table.schedule-tbl th:nth-child(2) { width: 11%; }
+        table.schedule-tbl th:nth-child(3),
+        table.schedule-tbl th:nth-child(4),
+        table.schedule-tbl th:nth-child(5),
+        table.schedule-tbl th:nth-child(6) { width: 15%; }
+        table.schedule-tbl th:nth-child(7) { width: 14%; }
+
         table.schedule-tbl td {
-            padding: 8px 4px;
+            padding: 5px 1px;
             border-bottom: 1px solid #f2e8df;
             cursor: pointer;
-            line-height: 1.3;
+            line-height: 1.15;
+            word-break: keep-all;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            vertical-align: middle;
         }
 
         table.schedule-tbl tr:hover { background: #fff0f2; }
 
         .badge-evt {
-            font-size: 0.58rem;
-            padding: 2px 4px;
+            font-size: 0.48rem;
+            padding: 1px 3px;
             border-radius: 3px;
             color: white;
             font-weight: bold;
+            display: inline-block;
+            cursor: pointer;
         }
-        .bg-prev { background: #8e44ad; }
+        .bg-gift { background: #16a085; }
+        .bg-ccall { background: #8e44ad; }
         .bg-mat { background: #27ae60; }
         .bg-all { background: #2980b9; }
 
-        .tag-first {
-            color: var(--main-pink);
+        .tag-first-box {
+            display: inline-block;
+            border: 1px dashed #d9536f;
+            background-color: #fffafb;
+            color: #d9536f;
+            padding: 1px 3px;
+            border-radius: 4px;
             font-weight: bold;
-            font-size: 0.60rem;
+            position: relative;
+        }
+        .tag-first-box::after {
+            content: '첫공';
+            font-size: 0.40rem;
+            color: #ffffff;
+            background-color: #d9536f;
+            border-radius: 2px;
+            padding: 0 2px;
             margin-left: 2px;
+            vertical-align: middle;
         }
 
         /* 배우 필터 */
         .filter-box {
-            margin-top: 10px;
-            padding-top: 8px;
+            margin-top: 8px;
+            padding-top: 6px;
             border-top: 1px dashed #ebdcd0;
         }
 
@@ -195,13 +235,13 @@
             display: grid;
             grid-template-columns: repeat(7, 1fr);
             gap: 3px;
-            margin-top: 6px;
+            margin-top: 5px;
         }
 
         .btn-filter {
             background: #f0eae1;
             border: 1px solid #dcd1c4;
-            font-size: 0.55rem;
+            font-size: 0.52rem;
             padding: 4px 0;
             border-radius: 4px;
             cursor: pointer;
@@ -221,7 +261,7 @@
         .form-row {
             display: flex;
             gap: 6px;
-            margin-top: 8px;
+            margin-top: 6px;
         }
 
         .form-group {
@@ -231,15 +271,15 @@
         }
 
         .form-group label {
-            font-size: 0.65rem;
+            font-size: 0.62rem;
             color: var(--text-sub);
-            margin-bottom: 3px;
+            margin-bottom: 2px;
         }
 
         .form-control {
             width: 100%;
-            padding: 6px;
-            font-size: 0.72rem;
+            padding: 5px 6px;
+            font-size: 0.70rem;
             border: 1px solid #dcd1c4;
             border-radius: 4px;
             background: #faf8f5;
@@ -250,11 +290,11 @@
             background: var(--main-pink);
             color: white;
             border: none;
-            padding: 8px;
+            padding: 7px;
             border-radius: 4px;
             font-weight: bold;
-            font-size: 0.78rem;
-            margin-top: 10px;
+            font-size: 0.75rem;
+            margin-top: 8px;
             cursor: pointer;
         }
 
@@ -263,10 +303,10 @@
             background: #d8ceca;
             color: #fff;
             text-align: center;
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             font-weight: bold;
-            padding: 3px;
-            margin: 6px 0;
+            padding: 2px;
+            margin: 4px 0;
             border-radius: 4px;
             letter-spacing: 2px;
         }
@@ -275,81 +315,96 @@
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 6px 10px;
-            margin-bottom: 8px;
-            padding: 5px;
+            gap: 4px 8px;
+            margin-bottom: 6px;
+            padding: 4px;
             background: #fdfaf7;
             border-radius: 4px;
-            font-size: 0.58rem;
+            font-size: 0.55rem;
             border: 1px solid #f0eae1;
         }
-        .leg-item { display: flex; align-items: center; gap: 3px; }
-        .leg-box { width: 8px; height: 8px; border-radius: 2px; }
+        .leg-item { display: flex; align-items: center; gap: 2px; }
+        .leg-box { width: 7px; height: 7px; border-radius: 2px; }
 
         .floor-header {
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             font-weight: bold;
             color: var(--main-pink);
-            margin: 6px 0 4px 0;
+            margin: 4px 0 2px 0;
         }
 
         .map-container {
             background: #faf8f5;
-            padding: 6px 2px;
+            padding: 4px 1px;
             border-radius: 6px;
             border: 1px solid #ebdcd0;
-            overflow-x: auto;
+            overflow: hidden;
+            width: 100%;
         }
 
         .sec-header-row {
             display: flex;
-            font-size: 0.65rem;
+            font-size: 0.60rem;
             font-weight: bold;
             color: #555;
-            margin-bottom: 4px;
+            margin-bottom: 2px;
             text-align: center;
+            justify-content: space-between;
         }
 
         .seat-row {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 1px;
-            margin-bottom: 1.5px;
-            height: 9.5px;
+            gap: 0.5px;
+            margin-bottom: 1px;
+            height: 8px;
+            width: 100%;
         }
 
-        .spacer-row {
-            height: 12px;
-        }
+        .spacer-row { height: 8px; }
 
         .row-label {
-            font-size: 0.5rem;
+            font-size: 0.45rem;
             color: #888;
-            width: 14px;
-            min-width: 14px;
-            max-width: 14px;
+            width: 10px;
+            min-width: 10px;
+            max-width: 10px;
             text-align: center;
             font-weight: bold;
             flex-shrink: 0;
         }
 
+        .sec-group {
+            display: flex;
+            gap: 0.5px;
+            flex-shrink: 0;
+        }
+
+        .sec-group.sec-a { width: 28%; justify-content: flex-end; }
+        .sec-group.sec-b { width: 36%; justify-content: center; }
+        .sec-group.sec-c { width: 28%; justify-content: flex-start; }
+
+        .sec-group.sec-d { width: 28%; justify-content: flex-end; }
+        .sec-group.sec-e { width: 44%; justify-content: center; }
+        .sec-group.sec-f { width: 28%; justify-content: flex-start; }
+
         .s-btn {
-            width: 8.5px;
-            height: 8.5px;
+            width: 6.8px;
+            height: 7.2px;
             border-radius: 1px;
             cursor: pointer;
             border: none;
             padding: 0;
-            font-size: 0.38rem;
-            line-height: 8.5px;
+            font-size: 0.32rem;
+            line-height: 7.2px;
             text-align: center;
             color: #ffffff;
             font-weight: bold;
             transition: transform 0.1s;
             flex-shrink: 0;
         }
-        .s-btn:hover { transform: scale(1.5); z-index: 2; }
+        .s-btn:hover { transform: scale(1.6); z-index: 2; }
         
         .s-btn.r { background-color: var(--seat-r); }
         .s-btn.s { background-color: var(--seat-s); }
@@ -361,40 +416,233 @@
         .s-btn.v2 { background-color: var(--seat-v2) !important; color: #fff; }
         .s-btn.v3 { background-color: var(--seat-v3) !important; color: #fff; }
 
+        /* 캐스팅 보드 */
+        .cast-board-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 10px;
+        }
+
+        .cast-role-section {
+            background: transparent;
+            border: none;
+            padding: 0;
+        }
+
+        .cast-role-title {
+            font-size: 0.65rem;
+            font-weight: bold;
+            color: var(--main-pink);
+            margin-bottom: 6px;
+            text-align: center;
+            letter-spacing: -0.2px;
+        }
+
+        .cast-role-grid {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: nowrap;
+        }
+
+        .cast-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .cast-img-wrap {
+            position: relative;
+            width: 72px;
+            height: 82px;
+            border-radius: 50px; 
+            border: 2px dashed var(--stitch-border);
+            overflow: hidden;
+            background: #fdf3f4;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.06);
+        }
+
+        .cast-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center top;
+        }
+
+        .cast-name {
+            font-size: 0.62rem;
+            font-weight: bold;
+            margin-top: 4px;
+            color: var(--text-dark);
+        }
+
+        .cast-count-text {
+            font-size: 0.48rem;
+            color: var(--main-pink);
+            font-weight: bold;
+            margin-top: 1px;
+            background: #fdf3f4;
+            padding: 1px 5px;
+            border-radius: 8px;
+            border: 1px solid #f8d7da;
+        }
+
         /* 관극 정산 내역 */
         .summary {
             display: flex;
             justify-content: space-around;
             background: #fdf3f4;
-            padding: 8px;
+            padding: 6px;
             border-radius: 4px;
-            margin-top: 8px;
+            margin-top: 6px;
             text-align: center;
         }
-        .sum-val { font-size: 0.85rem; font-weight: bold; color: var(--main-pink); }
-        .sum-lbl { font-size: 0.6rem; color: var(--text-sub); }
+        .sum-val { font-size: 0.80rem; font-weight: bold; color: var(--main-pink); }
+        .sum-lbl { font-size: 0.58rem; color: var(--text-sub); }
 
         .history-item {
             background: #faf8f5;
             border: 1px solid #ebdcd0;
-            padding: 6px 8px;
+            padding: 5px 7px;
             border-radius: 4px;
-            margin-top: 5px;
-            font-size: 0.68rem;
+            margin-top: 4px;
+            font-size: 0.65rem;
+            transition: all 0.2s;
         }
+        
+        .history-item.past {
+            background: #f5f5f5;
+            border-color: #e0e0e0;
+            color: #aaa !important;
+        }
+        .history-item.past .hist-date,
+        .history-item.past .hist-info,
+        .history-item.past .hist-price {
+            color: #aaa !important;
+        }
+
         .history-row { display: flex; justify-content: space-between; align-items: center; }
 
         .status-select {
-            font-size: 0.62rem;
+            font-size: 0.60rem;
             color: var(--main-pink);
             font-weight: bold;
             border: 1px solid var(--stitch-border);
             border-radius: 3px;
-            padding: 1px 2px;
+            padding: 1px;
             background: #fff;
-            margin-right: 4px;
+            margin-right: 3px;
             outline: none;
             cursor: pointer;
+        }
+
+        /* 팝업 모달 스타일 */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+        }
+        .modal-overlay.active { display: flex; }
+
+        .modal-content {
+            background: #faf6f0;
+            border: 3px dashed var(--stitch-border);
+            border-radius: 12px;
+            padding: 16px 14px;
+            width: 100%;
+            max-width: 330px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            position: relative;
+            text-align: center;
+        }
+
+        .modal-close-btn {
+            position: absolute;
+            top: 8px; right: 10px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: var(--main-pink);
+            cursor: pointer;
+            border: none;
+            background: none;
+        }
+
+        .modal-header-sub {
+            font-size: 0.55rem;
+            letter-spacing: 1px;
+            color: var(--text-sub);
+            font-weight: 700;
+        }
+
+        .modal-title-main {
+            font-size: 0.95rem;
+            font-weight: 900;
+            color: #27ae60;
+            margin: 3px 0;
+        }
+
+        .modal-date-badge {
+            display: inline-block;
+            background: #d9536f;
+            color: white;
+            font-size: 0.58rem;
+            font-weight: bold;
+            padding: 2px 8px;
+            border-radius: 10px;
+            margin-bottom: 12px;
+        }
+
+        .gift-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 4px;
+            margin-bottom: 12px;
+        }
+
+        .gift-box {
+            background: #ffffff;
+            border: 1px solid #ebdcd0;
+            border-radius: 6px;
+            padding: 6px 2px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .gift-icon {
+            font-size: 1.2rem;
+            margin-bottom: 3px;
+        }
+
+        .gift-text {
+            font-size: 0.48rem;
+            font-weight: bold;
+            color: var(--text-dark);
+            line-height: 1.1;
+            word-break: keep-all;
+        }
+
+        .modal-notice {
+            font-size: 0.52rem;
+            color: var(--text-sub);
+            text-align: left;
+            line-height: 1.35;
+            background: #ffffff;
+            padding: 6px 8px;
+            border-radius: 4px;
+            border: 1px solid #f0eae1;
         }
     </style>
 </head>
@@ -402,7 +650,9 @@
 
 <div class="container">
     <header>
-        <img src="letmeflyrogo.png" alt="LET ME FLY 로고" class="header-logo" oncontextmenu="return false;">
+        <div class="header-logo-wrap" id="logo-wrap">
+            <img src="letmeflyrogo.png" alt="LET ME FLY" class="header-logo" id="header-logo-img" onerror="handleLogoError()">
+        </div>
         <p class="contact-info">문의는 @hillpeakk 로 연락 주세요.</p>
     </header>
 
@@ -429,7 +679,7 @@
             </div>
 
             <div class="filter-box">
-                <div style="font-size: 0.65rem; display: flex; justify-content: space-between;">
+                <div style="font-size: 0.62rem; display: flex; justify-content: space-between;">
                     <span>배우 필터 (최대 2명)</span>
                     <span style="color: var(--main-pink); cursor: pointer; font-weight:bold;" onclick="clearFilter()">초기화</span>
                 </div>
@@ -514,48 +764,95 @@
                 <div class="leg-item"><div class="leg-box" style="background:var(--seat-r);"></div> R석</div>
                 <div class="leg-item"><div class="leg-box" style="background:var(--seat-s);"></div> S석</div>
                 <div class="leg-item"><div class="leg-box" style="background:var(--seat-hold);"></div> 미판매보류석</div>
-                <div class="leg-item"><div class="leg-box" style="background:var(--seat-v1);"></div> 1회 관람</div>
-                <div class="leg-item"><div class="leg-box" style="background:var(--seat-v2);"></div> 2회 관람</div>
-                <div class="leg-item"><div class="leg-box" style="background:var(--seat-v3);"></div> 3회+ 관람</div>
+                <div class="leg-item"><div class="leg-box" style="background:var(--seat-v1);"></div> 1회</div>
+                <div class="leg-item"><div class="leg-box" style="background:var(--seat-v2);"></div> 2회</div>
+                <div class="leg-item"><div class="leg-box" style="background:var(--seat-v3);"></div> 3회+</div>
             </div>
 
-            <!-- 1층 -->
             <div class="floor-header">1F</div>
             <div class="map-container">
                 <div class="sec-header-row">
-                    <span style="width:105px;">A</span>
-                    <span style="width:14px;"></span>
-                    <span style="width:135px;">B</span>
-                    <span style="width:14px;"></span>
-                    <span style="width:105px;">C</span>
+                    <span style="width:28%;">A</span>
+                    <span style="width:10px;"></span>
+                    <span style="width:36%;">B</span>
+                    <span style="width:10px;"></span>
+                    <span style="width:28%;">C</span>
                 </div>
                 <div id="map-1f"></div>
             </div>
 
-            <!-- 2층 -->
             <div class="floor-header">2F</div>
             <div class="map-container">
                 <div class="sec-header-row">
-                    <span style="width:105px;">D</span>
-                    <span style="width:14px;"></span>
-                    <span style="width:170px;">E</span>
-                    <span style="width:14px;"></span>
-                    <span style="width:120px;">F</span>
+                    <span style="width:28%;">D</span>
+                    <span style="width:10px;"></span>
+                    <span style="width:44%;">E</span>
+                    <span style="width:10px;"></span>
+                    <span style="width:28%;">F</span>
                 </div>
                 <div id="map-2f"></div>
             </div>
         </details>
     </div>
+
+    <!-- 캐스팅 보드 -->
+    <div class="card">
+        <details open>
+            <summary>🧁 캐스팅 보드</summary>
+            <div class="cast-board-container" id="cast-board-container"></div>
+        </details>
+    </div>
+</div>
+
+<!-- 미래탐사 꾸러미 증정 모달 팝업 -->
+<div class="modal-overlay" id="gift-modal">
+    <div class="modal-content">
+        <button class="modal-close-btn" onclick="closeGiftModal()">×</button>
+        <div class="modal-header-sub">PREVIEW WELCOME GIFT</div>
+        <div class="modal-title-main">미래탐사 꾸러미 증정</div>
+        <div class="modal-date-badge">2026.10.6 (TUE) ~ 10.11 (SUN)</div>
+
+        <div style="font-size: 0.60rem; font-weight: bold; margin-bottom: 6px; color: var(--main-pink);">| 미래탐사 꾸러미 구성 |</div>
+
+        <div class="gift-grid">
+            <div class="gift-box">
+                <div class="gift-icon">🔖</div>
+                <div class="gift-text">대사 책갈피 1종</div>
+            </div>
+            <div class="gift-box">
+                <div class="gift-icon">🏷️</div>
+                <div class="gift-text">미래탐사 스티커팩</div>
+            </div>
+            <div class="gift-box">
+                <div class="gift-icon">🎟️</div>
+                <div class="gift-text">남원 수선집 쿠폰팩</div>
+            </div>
+            <div class="gift-box">
+                <div class="gift-icon">📷</div>
+                <div class="gift-text">대원증 포토카드 세트</div>
+            </div>
+        </div>
+
+        <div class="modal-notice">
+            • 프리뷰 기간 유료 관람객 분들께 미래 탐사 꾸러미를 증정합니다.<br>
+            • 매표소에서 티켓 수령 시 유료 티켓 1매당 1SET 증정합니다.<br>
+            • 꾸러미 구성과 관련된 세부 내용은 추후 공지 예정입니다.
+        </div>
+    </div>
 </div>
 
 <script>
-    /* 보안 강화: 우클릭, 개발자 도구 단축키 방지 */
+    function handleLogoError() {
+        const wrap = document.getElementById('logo-wrap');
+        wrap.innerHTML = '<span class="fallback-title">🚀 LET ME FLY</span>';
+    }
+
     document.addEventListener('contextmenu', e => e.preventDefault());
     document.addEventListener('keydown', e => {
         if (
-            e.keyCode === 123 || // F12
-            (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74 || e.keyCode === 67)) || // Ctrl+Shift+I/J/C
-            (e.ctrlKey && (e.keyCode === 85 || e.keyCode === 83)) // Ctrl+U / Ctrl+S
+            e.keyCode === 123 || 
+            (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74 || e.keyCode === 67)) || 
+            (e.ctrlKey && (e.keyCode === 85 || e.keyCode === 83))
         ) {
             e.preventDefault();
             return false;
@@ -563,24 +860,24 @@
     });
 
     const schedules = [
-        { date: "10/06(화)", time: "19:30", cast: ["오의식", "김지현", "안지환", "나하나"], evt: "프리뷰" },
-        { date: "10/07(수)", time: "19:30", cast: ["안재욱", "배해선", "윤재호", "홍지희"], evt: "프리뷰" },
-        { date: "10/08(목)", time: "19:30", cast: ["이희준", "윤공주", "윤소호", "이수빈"], evt: "프리뷰" },
-        { date: "10/09(금)", time: "14:00", cast: ["이형훈", "배해선", "안지환", "박슬기"], evt: "프리뷰" },
-        { date: "10/09(금)", time: "18:00", cast: ["안재욱", "배해선", "윤소호", "나하나"], evt: "프리뷰" },
-        { date: "10/10(토)", time: "15:00", cast: ["오의식", "윤공주", "윤재호", "홍지희"], evt: "프리뷰" },
-        { date: "10/10(토)", time: "19:00", cast: ["이형훈", "윤공주", "안지환", "박슬기"], evt: "프리뷰" },
-        { date: "10/11(일)", time: "14:00", cast: ["안재욱", "김지현", "윤소호", "이수빈"], evt: "프리뷰" },
-        { date: "10/11(일)", time: "18:00", cast: ["이희준", "김지현", "윤재호", "나하나"], evt: "프리뷰" },
-        { date: "10/13(화)", time: "19:30", cast: ["오의식", "윤공주", "윤소호", "박슬기"], evt: "-" },
+        { date: "10/06(화)", time: "19:30", cast: ["오의식", "김지현", "안지환", "나하나"], evt: "꾸러미 증정" },
+        { date: "10/07(수)", time: "19:30", cast: ["안재욱", "배해선", "윤재호", "홍지희"], evt: "꾸러미 증정" },
+        { date: "10/08(목)", time: "19:30", cast: ["이희준", "윤공주", "윤소호", "이수빈"], evt: "꾸러미 증정" },
+        { date: "10/09(금)", time: "14:00", cast: ["이형훈", "배해선", "안지환", "박슬기"], evt: "꾸러미 증정" },
+        { date: "10/09(금)", time: "18:00", cast: ["안재욱", "배해선", "윤소호", "나하나"], evt: "꾸러미 증정" },
+        { date: "10/10(토)", time: "15:00", cast: ["오의식", "윤공주", "윤재호", "홍지희"], evt: "꾸러미 증정" },
+        { date: "10/10(토)", time: "19:00", cast: ["이형훈", "윤공주", "안지환", "박슬기"], evt: "꾸러미 증정" },
+        { date: "10/11(일)", time: "14:00", cast: ["안재욱", "김지현", "윤소호", "이수빈"], evt: "꾸러미 증정" },
+        { date: "10/11(일)", time: "18:00", cast: ["이희준", "김지현", "윤재호", "나하나"], evt: "꾸러미 증정" },
+        { date: "10/13(화)", time: "19:30", cast: ["오의식", "윤공주", "윤소호", "박슬기"], evt: "커튼콜" },
         { date: "10/14(수)", time: "15:00", cast: ["이희준", "김지현", "안지환", "이수빈"], evt: "마티네" },
-        { date: "10/14(수)", time: "19:30", cast: ["안재욱", "김지현", "윤재호", "나하나"], evt: "-" },
-        { date: "10/15(목)", time: "19:30", cast: ["안재욱", "윤공주", "안지환", "홍지희"], evt: "-" },
-        { date: "10/16(금)", time: "19:30", cast: ["이희준", "배해선", "윤소호", "나하나"], evt: "-" },
+        { date: "10/14(수)", time: "19:30", cast: ["안재욱", "김지현", "윤재호", "나하나"], evt: "커튼콜" },
+        { date: "10/15(목)", time: "19:30", cast: ["안재욱", "윤공주", "안지환", "홍지희"], evt: "커튼콜" },
+        { date: "10/16(금)", time: "19:30", cast: ["이희준", "배해선", "윤소호", "나하나"], evt: "커튼콜" },
         { date: "10/17(토)", time: "15:00", cast: ["이형훈", "배해선", "윤재호", "이수빈"], evt: "전관" },
-        { date: "10/17(토)", time: "19:00", cast: ["오의식", "김지현", "안지환", "박슬기"], evt: "-" },
-        { date: "10/18(일)", time: "14:00", cast: ["안재욱", "배해선", "윤소호", "이수빈"], evt: "-" },
-        { date: "10/18(일)", time: "18:00", cast: ["이희준", "윤공주", "윤재호", "홍지희"], evt: "-" },
+        { date: "10/17(토)", time: "19:00", cast: ["오의식", "김지현", "안지환", "박슬기"], evt: "커튼콜" },
+        { date: "10/18(일)", time: "14:00", cast: ["안재욱", "배해선", "윤소호", "이수빈"], evt: "커튼콜" },
+        { date: "10/18(일)", time: "18:00", cast: ["이희준", "윤공주", "윤재호", "홍지희"], evt: "커튼콜" },
         { date: "10/20(화)", time: "19:30", cast: ["오의식", "김지현", "안지환", "나하나"], evt: "전관" },
         { date: "10/21(수)", time: "15:00", cast: ["이희준", "윤공주", "윤소호", "박슬기"], evt: "전관" },
         { date: "10/21(수)", time: "19:30", cast: ["안재욱", "배해선", "윤재호", "홍지희"], evt: "전관" },
@@ -627,6 +924,13 @@
         renderSch();
     }
 
+    function openGiftModal() {
+        document.getElementById('gift-modal').classList.add('active');
+    }
+    function closeGiftModal() {
+        document.getElementById('gift-modal').classList.remove('active');
+    }
+
     function renderSch() {
         const tbody = document.getElementById('sch-tbody');
         tbody.innerHTML = '';
@@ -639,13 +943,19 @@
             };
 
             let badgeHtml = s.evt;
-            if(s.evt.includes('프리뷰')) badgeHtml = `<span class="badge-evt bg-prev">${s.evt}</span>`;
-            else if(s.evt.includes('마티네')) badgeHtml = `<span class="badge-evt bg-mat">${s.evt}</span>`;
-            else if(s.evt.includes('전관')) badgeHtml = `<span class="badge-evt bg-all">${s.evt}</span>`;
+            if(s.evt === '꾸러미 증정') {
+                badgeHtml = `<span class="badge-evt bg-gift" onclick="event.stopPropagation(); openGiftModal();">${s.evt}</span>`;
+            } else if(s.evt === '커튼콜') {
+                badgeHtml = `<span class="badge-evt bg-ccall">${s.evt}</span>`;
+            } else if(s.evt.includes('마티네')) {
+                badgeHtml = `<span class="badge-evt bg-mat">${s.evt}</span>`;
+            } else if(s.evt.includes('전관')) {
+                badgeHtml = `<span class="badge-evt bg-all">${s.evt}</span>`;
+            }
 
             const castHtmls = s.cast.map(actor => {
                 if (originalIndex <= 3 && firstShowIndices[actor] === originalIndex) {
-                    return `${actor}<span class="tag-first">첫공</span>`;
+                    return `<span class="tag-first-box">${actor}</span>`;
                 }
                 return actor;
             });
@@ -709,15 +1019,15 @@
             rowDiv.className = 'seat-row';
 
             const aDiv = document.createElement('div');
-            aDiv.style.cssText = "display:flex; gap:1px; justify-content:flex-end; width:105px; flex-shrink:0;";
+            aDiv.className = 'sec-group sec-a';
             row.a.forEach(st => aDiv.appendChild(createSeatBtn(st, '1층 A구역', row.r, 'R석')));
 
             const bDiv = document.createElement('div');
-            bDiv.style.cssText = "display:flex; gap:1px; justify-content:center; width:135px; flex-shrink:0;";
+            bDiv.className = 'sec-group sec-b';
             for(let n=1; n<=14; n++) bDiv.appendChild(createSeatBtn({t:'r', n:n}, '1층 B구역', row.r, 'R석'));
 
             const cDiv = document.createElement('div');
-            cDiv.style.cssText = "display:flex; gap:1px; justify-content:flex-start; width:105px; flex-shrink:0;";
+            cDiv.className = 'sec-group sec-c';
             row.c.forEach(st => cDiv.appendChild(createSeatBtn(st, '1층 C구역', row.r, 'R석')));
 
             rowDiv.appendChild(aDiv);
@@ -776,11 +1086,11 @@
             rowDiv.className = 'seat-row';
 
             const dDiv = document.createElement('div');
-            dDiv.style.cssText = "display:flex; gap:1px; justify-content:flex-end; width:105px; flex-shrink:0;";
+            dDiv.className = 'sec-group sec-d';
             row.d.forEach(st => dDiv.appendChild(createSeatBtn(st, '2층 D구역', row.r, 'S석')));
 
             const eDiv = document.createElement('div');
-            eDiv.style.cssText = "display:flex; gap:1px; justify-content:center; width:170px; flex-shrink:0;";
+            eDiv.className = 'sec-group sec-e';
             
             for(let n=1; n<=18; n++) {
                 if(row.r === 1) {
@@ -797,7 +1107,7 @@
             }
 
             const fDiv = document.createElement('div');
-            fDiv.style.cssText = "display:flex; gap:1px; justify-content:flex-start; width:120px; flex-shrink:0;";
+            fDiv.className = 'sec-group sec-f';
             row.f.forEach(st => fDiv.appendChild(createSeatBtn(st, '2층 F구역', row.r, 'S석')));
 
             rowDiv.appendChild(dDiv);
@@ -867,7 +1177,6 @@
         });
     }
 
-    /* LocalStorage 관련 데이터 로드 및 저장 함수 */
     function loadData() {
         const saved = localStorage.getItem('lmf_history_data');
         return saved ? JSON.parse(saved) : [];
@@ -906,11 +1215,11 @@
     };
 
     function parseSeatInfo(seatStr) {
-        if (!seatStr) return { floor: 99, area: 'Z', row: 99, num: 99 };
+        if (!seatStr) return { floor: 99, row: 99, area: 'Z', num: 99 };
         
         const floorMatch = seatStr.match(/(\d+)층/);
-        const areaMatch = seatStr.match(/([A-Z])구역/);
         const rowMatch = seatStr.match(/(\d+)열/);
+        const areaMatch = seatStr.match(/([A-Z])구역/);
         const numMatch = seatStr.match(/(\d+|h\d+)번/);
 
         let numVal = 99;
@@ -924,16 +1233,33 @@
 
         return {
             floor: floorMatch ? parseInt(floorMatch[1], 10) : 99,
-            area: areaMatch ? areaMatch[1] : 'Z',
             row: rowMatch ? parseInt(rowMatch[1], 10) : 99,
+            area: areaMatch ? areaMatch[1] : 'Z',
             num: numVal
         };
     }
 
+    function parseShowDateTime(dateStr) {
+        if (!dateStr) return new Date(0);
+        const match = dateStr.match(/(\d+)\/(\d+)\([^)]+\)\s*(\d+):(\d+)/);
+        if (match) {
+            const currentYear = new Date().getFullYear();
+            const month = parseInt(match[1], 10) - 1;
+            const day = parseInt(match[2], 10);
+            const hour = parseInt(match[3], 10);
+            const minute = parseInt(match[4], 10);
+            return new Date(currentYear, month, day, hour, minute);
+        }
+        return new Date(0);
+    }
+
     function sortAndRenderHistory() {
         historyData.sort((a, b) => {
-            if (a.date !== b.date) {
-                return a.date.localeCompare(b.date);
+            const timeA = parseShowDateTime(a.date).getTime();
+            const timeB = parseShowDateTime(b.date).getTime();
+
+            if (timeA !== timeB) {
+                return timeA - timeB;
             }
 
             const sA = parseSeatInfo(a.seat);
@@ -946,6 +1272,7 @@
         });
 
         renderHistory();
+        renderCastBoard();
     }
 
     function renderHistory() {
@@ -954,6 +1281,8 @@
         let total = 0;
         let activeCount = 0;
         
+        const now = new Date();
+
         historyData.forEach(h => {
             if (h.status !== '양도') {
                 total += h.price;
@@ -961,14 +1290,18 @@
             }
 
             const item = document.createElement('div');
-            item.className = 'history-item';
+            
+            const showTime = parseShowDateTime(h.date);
+            const isPast = showTime.getTime() > 0 && showTime < now;
+            
+            item.className = `history-item ${isPast ? 'past' : ''}`;
             
             const isTransferred = h.status === '양도';
-            const priceTextStyle = isTransferred ? 'text-decoration: line-through; color:#aaa;' : '';
+            const priceTextStyle = isTransferred ? 'text-decoration: line-through; opacity:0.6;' : '';
 
             item.innerHTML = `
                 <div class="history-row">
-                    <b style="color:var(--text-dark);">${h.date}</b>
+                    <b class="hist-date">${h.date}</b>
                     <div>
                         <select class="status-select" onchange="updateStatus(${h.id}, this.value)">
                             <option value="-" ${h.status==='-'?'selected':''}>-</option>
@@ -976,11 +1309,11 @@
                             <option value="양수" ${h.status==='양수'?'selected':''}>양수</option>
                             <option value="나눔" ${h.status==='나눔'?'selected':''}>나눔</option>
                         </select>
-                        <b style="${priceTextStyle}">${h.price.toLocaleString()}원</b>
+                        <b class="hist-price" style="${priceTextStyle}">${h.price.toLocaleString()}원</b>
                     </div>
                 </div>
-                <div class="history-row" style="margin-top:4px;">
-                    <span style="color:var(--text-sub);">${h.seat} | ${h.cast}</span>
+                <div class="history-row" style="margin-top:3px;">
+                    <span class="hist-info">${h.seat} | ${h.cast}</span>
                     <span style="color:#d9536f; cursor:pointer; font-weight:bold;" onclick="delHist(${h.id})">삭제</span>
                 </div>
             `;
@@ -999,6 +1332,7 @@
         }
         renderHistory();
         applySeatColors();
+        renderCastBoard();
     }
 
     function delHist(id) {
@@ -1006,6 +1340,83 @@
         saveData();
         sortAndRenderHistory();
         applySeatColors();
+    }
+
+    const castRoles = [
+        { roleName: "노인남원", actors: ["안재욱", "이희준", "오의식", "이형훈"] },
+        { roleName: "선희", actors: ["배해선", "윤공주", "김지현"] },
+        { roleName: "청년남원", actors: ["윤소호", "안지환", "윤재호"] },
+        { roleName: "정분", actors: ["홍지희", "나하나", "이수빈", "박슬기"] }
+    ];
+
+    function renderCastBoard() {
+        const container = document.getElementById('cast-board-container');
+        if (!container) return;
+        
+        container.innerHTML = '';
+
+        // 회차별 총 공연 횟수
+        const totalActorShows = {};
+        schedules.forEach(sch => {
+            sch.cast.forEach(act => {
+                totalActorShows[act] = (totalActorShows[act] || 0) + 1;
+            });
+        });
+
+        // 사용자 관극 횟수 (같은 날짜/시간 회차는 무조건 1번만 카운팅)
+        const userActorShows = {};
+        const visitedShows = new Set(); // 이미 카운트한 회차(일자/시간) 저장
+
+        historyData.forEach(h => {
+            if (h.status !== '양도' && h.cast && h.date) {
+                const dateKey = h.date.trim(); // 일자/시간을 고유 키로 사용
+                
+                // 동일한 회차가 아직 계산되지 않은 경우에만 카운팅
+                if (!visitedShows.has(dateKey)) {
+                    visitedShows.add(dateKey);
+                    
+                    const castList = h.cast.split(',').map(c => c.trim());
+                    castList.forEach(act => {
+                        userActorShows[act] = (userActorShows[act] || 0) + 1;
+                    });
+                }
+            }
+        });
+
+        castRoles.forEach(roleGroup => {
+            const roleSection = document.createElement('div');
+            roleSection.className = 'cast-role-section';
+
+            const roleTitle = document.createElement('div');
+            roleTitle.className = 'cast-role-title';
+            roleTitle.textContent = roleGroup.roleName;
+            roleSection.appendChild(roleTitle);
+
+            const grid = document.createElement('div');
+            grid.className = 'cast-role-grid';
+
+            roleGroup.actors.forEach(actorName => {
+                const card = document.createElement('div');
+                card.className = 'cast-card';
+
+                const imgSrc = `${actorName}.png`;
+                const totalCount = totalActorShows[actorName] || 0;
+                const watchedCount = userActorShows[actorName] || 0;
+
+                card.innerHTML = `
+                    <div class="cast-img-wrap">
+                        <img src="${imgSrc}" class="cast-img" alt="${actorName}" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div style="display:none; width:100%; height:100%; background:#fdf3f4; color:var(--main-pink); font-size:0.85rem; font-weight:bold; align-items:center; justify-content:center;">${actorName[0]}</div>
+                    </div>
+                    <div class="cast-name">${actorName}</div>
+                    <div class="cast-count-text">Total ${watchedCount}/${totalCount}</div>
+                `;
+                grid.appendChild(card);
+            });
+
+            roleSection.appendChild(grid);
+            container.appendChild(roleSection);
+        });
     }
 
     renderSch();
