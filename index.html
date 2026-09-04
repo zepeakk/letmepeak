@@ -1342,7 +1342,7 @@
         { roleName: "정분", actors: ["홍지희", "나하나", "이수빈", "박슬기"] }
     ];
 
-    // 배우 한글 이름 -> 영문 이미지 파일명 매핑
+    // 배우 한글 이름 -> png 확장자 매핑 (images/ 폴더와 루트 폴더 양쪽 모두 대응)
     const actorImageMap = {
         "안재욱": "ahn.png",
         "이희준": "lee.png",
@@ -1407,16 +1407,14 @@
                 const card = document.createElement('div');
                 card.className = 'cast-card';
 
-                // 매핑된 영문 이미지 파일명 사용 (상대 경로 ./ 명시)
                 const fileName = actorImageMap[actorName] || `${actorName}.png`;
-                const imgSrc = `./${fileName}`;
-                
                 const totalCount = totalActorShows[actorName] || 0;
                 const watchedCount = userActorShows[actorName] || 0;
 
                 card.innerHTML = `
                     <div class="cast-img-wrap">
-                        <img src="${imgSrc}" class="cast-img" alt="${actorName}" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <img src="./${fileName}" class="cast-img" alt="${actorName}" 
+                             onerror="if(!this.dataset.fallback){this.dataset.fallback='true'; this.src='images/${fileName}';} else {this.style.display='none'; this.nextElementSibling.style.display='flex';}">
                         <div style="display:none; width:100%; height:100%; background:#fdf3f4; color:var(--main-pink); font-size:0.85rem; font-weight:bold; align-items:center; justify-content:center;">${actorName[0]}</div>
                     </div>
                     <div class="cast-name">${actorName}</div>
