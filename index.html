@@ -201,6 +201,7 @@
         .bg-ccall { background: #8e44ad; }
         .bg-mat { background: #27ae60; }
         .bg-all { background: #2980b9; }
+        .bg-gray { background: #7f8c8d; } /* 그래이공DAY 뱃지 회색으로 수정 */
 
         .tag-first-box {
             display: inline-block;
@@ -834,6 +835,34 @@
     </div>
 </div>
 
+<div class="modal-overlay" id="graygong-modal">
+    <div class="modal-content">
+        <button class="modal-close-btn" onclick="closeGraygongModal()">×</button>
+        <div class="modal-header-sub">혜화로운 공연생활 X YES24티켓</div>
+        <div class="modal-title-main" style="color: #7f8c8d;">그래이공DAY 전관 혜택</div>
+        <div class="modal-date-badge" style="background: #7f8c8d;">10/20(화) ~ 10/21(수)</div>
+
+        <div class="gift-grid" style="grid-template-columns: repeat(2, 1fr); gap: 6px;">
+            <div class="gift-box" style="padding: 8px 4px;">
+                <div class="gift-icon">🎤</div>
+                <div class="gift-text" style="font-size: 0.55rem; line-height: 1.2;">무대인사 & 럭키드로우<br><span style="font-weight: normal; font-size: 0.45rem; color: #7d7373;">(약 25분 내외 / 짧은 포토타임)</span></div>
+            </div>
+            <div class="gift-box" style="padding: 8px 4px;">
+                <div class="gift-icon">🎁</div>
+                <div class="gift-text" style="font-size: 0.55rem; line-height: 1.2;">소소한 선물 +<br>3,000원 할인 쿠폰</div>
+            </div>
+        </div>
+
+        <div class="modal-notice">
+            • <b>전관 혜택 1:</b> 공연 종료 후 당일 출연 배우들의 무대인사와 럭키드로우 행사 진행 (약 25분 내외)<br>
+            &nbsp;&nbsp;* 행사 종료 전 짧은 포토타임이 있으며 이때만 촬영 가능!<br>
+            • <b>전관 혜택 2:</b> 예매자 전원에게 그래이공DAY에서 마련한 소소한 선물 + 예스24 티켓 3,000원 할인 쿠폰 증정<br>
+            &nbsp;&nbsp;* 3,000원 할인 쿠폰은 예매 완료된 계정에 생성 (공연 종료 후 일주일 이내)<br>
+            &nbsp;&nbsp;* 쿠폰 지급 완료 후 예매자들에게 지급 완료 안내 문자를 보내드릴 예정입니다.
+        </div>
+    </div>
+</div>
+
 <script>
     function handleLogoError() {
         const wrap = document.getElementById('logo-wrap');
@@ -863,7 +892,7 @@
         { date: "10/11(일)", time: "14:00", cast: ["안재욱", "김지현", "윤소호", "이수빈"], evt: "꾸러미 증정" },
         { date: "10/11(일)", time: "18:00", cast: ["이희준", "김지현", "윤재호", "나하나"], evt: "꾸러미 증정" },
         { date: "10/13(화)", time: "19:30", cast: ["오의식", "윤공주", "윤소호", "박슬기"], evt: "커튼콜" },
-        { date: "10/14(수)", time: "15:00", cast: ["이희준", "김지현", "안지환", "이수빈"], evt: "마티네" },
+        { date: "10/14(수)", time: "15:00", cast: ["이희준", "김지현", "안지환", "이수빈"], evt: "-" },
         { date: "10/14(수)", time: "19:30", cast: ["안재욱", "김지현", "윤재호", "나하나"], evt: "커튼콜" },
         { date: "10/15(목)", time: "19:30", cast: ["안재욱", "윤공주", "안지환", "홍지희"], evt: "커튼콜" },
         { date: "10/16(금)", time: "19:30", cast: ["이희준", "배해선", "윤소호", "나하나"], evt: "커튼콜" },
@@ -871,9 +900,9 @@
         { date: "10/17(토)", time: "19:00", cast: ["오의식", "김지현", "안지환", "박슬기"], evt: "커튼콜" },
         { date: "10/18(일)", time: "14:00", cast: ["안재욱", "배해선", "윤소호", "이수빈"], evt: "커튼콜" },
         { date: "10/18(일)", time: "18:00", cast: ["이희준", "윤공주", "윤재호", "홍지희"], evt: "커튼콜" },
-        { date: "10/20(화)", time: "19:30", cast: ["오의식", "김지현", "안지환", "나하나"], evt: "전관" },
-        { date: "10/21(수)", time: "15:00", cast: ["이희준", "윤공주", "윤소호", "박슬기"], evt: "전관" },
-        { date: "10/21(수)", time: "19:30", cast: ["안재욱", "배해선", "윤재호", "홍지희"], evt: "전관" },
+        { date: "10/20(화)", time: "19:30", cast: ["오의식", "김지현", "안지환", "나하나"], evt: "그래이공DAY" },
+        { date: "10/21(수)", time: "15:00", cast: ["이희준", "윤공주", "윤소호", "박슬기"], evt: "그래이공DAY" },
+        { date: "10/21(수)", time: "19:30", cast: ["안재욱", "배해선", "윤재호", "홍지희"], evt: "그래이공DAY" },
         { date: "10/22(목)", time: "19:30", cast: ["이형훈", "김지현", "윤소호", "이수빈"], evt: "-" },
         { date: "10/23(금)", time: "19:30", cast: ["안재욱", "김지현", "안지환", "홍지희"], evt: "-" },
         { date: "10/24(토)", time: "15:00", cast: ["오의식", "배해선", "윤재호", "이수빈"], evt: "-" },
@@ -924,6 +953,13 @@
         document.getElementById('gift-modal').classList.remove('active');
     }
 
+    function openGraygongModal() {
+        document.getElementById('graygong-modal').classList.add('active');
+    }
+    function closeGraygongModal() {
+        document.getElementById('graygong-modal').classList.remove('active');
+    }
+
     function renderSch() {
         const tbody = document.getElementById('sch-tbody');
         tbody.innerHTML = '';
@@ -940,6 +976,8 @@
                 badgeHtml = `<span class="badge-evt bg-gift" onclick="event.stopPropagation(); openGiftModal();">${s.evt}</span>`;
             } else if(s.evt === '커튼콜') {
                 badgeHtml = `<span class="badge-evt bg-ccall">${s.evt}</span>`;
+            } else if(s.evt === '그래이공DAY') {
+                badgeHtml = `<span class="badge-evt bg-gray" onclick="event.stopPropagation(); openGraygongModal();">${s.evt}</span>`;
             } else if(s.evt.includes('마티네')) {
                 badgeHtml = `<span class="badge-evt bg-mat">${s.evt}</span>`;
             } else if(s.evt.includes('전관')) {
@@ -1342,7 +1380,6 @@
         { roleName: "정분", actors: ["홍지희", "나하나", "이수빈", "박슬기"] }
     ];
 
-    // 배우 한글 이름 -> png 확장자 매핑 (images/ 폴더와 루트 폴더 양쪽 모두 대응)
     const actorImageMap = {
         "안재욱": "ahn.png",
         "이희준": "lee.png",
