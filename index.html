@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>뮤지컬 렛미플라이 관극 정산판</title>
+    <!-- html2canvas 라이브러리 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
         :root {
             --bg-paper: #f5efe6;
@@ -108,6 +110,12 @@
             letter-spacing: -0.2px;
         }
 
+        .contact-info a {
+            color: #a09999;
+            text-decoration: underline;
+            font-weight: bold;
+        }
+
         .card {
             background: var(--card-bg);
             border-radius: var(--radius);
@@ -198,10 +206,10 @@
             cursor: pointer;
         }
         .bg-gift { background: #16a085; }
-        .bg-ccall { background: #8e44ad; }
-        .bg-mat { background: #27ae60; }
+        .bg-lucky { background: #e67e22; }
+        .bg-special { background: #27ae60; }
         .bg-all { background: #2980b9; }
-        .bg-gray { background: #7f8c8d; } /* 그래이공DAY 뱃지 회색으로 수정 */
+        .bg-gray { background: #7f8c8d; }
 
         .tag-first-box {
             display: inline-block;
@@ -422,6 +430,8 @@
             flex-direction: column;
             gap: 12px;
             margin-top: 10px;
+            padding: 10px;
+            background: transparent;
         }
 
         .cast-role-section {
@@ -649,11 +659,11 @@
 <body oncontextmenu="return false;" ondragstart="return false;" onselectstart="return false;">
 
 <div class="container">
-    <header>
+    <header id="main-header">
         <div class="header-logo-wrap" id="logo-wrap">
             <img src="./letmeflyrogo.png" alt="LET ME FLY" class="header-logo" id="header-logo-img" onerror="handleLogoError()">
         </div>
-        <p class="contact-info">문의는 @hillpeakk 로 연락 주세요.</p>
+        <p class="contact-info">문의는 <a href="https://x.com/hillpeakk?s=11" target="_blank">@hillpeakk</a> 로 연락 주세요.</p>
     </header>
 
     <div class="card">
@@ -835,6 +845,31 @@
     </div>
 </div>
 
+<div class="modal-overlay" id="lucky-modal">
+    <div class="modal-content">
+        <button class="modal-close-btn" onclick="closeLuckyModal()">×</button>
+        <div class="modal-header-sub">EVENT WEEK</div>
+        <div class="modal-title-main" style="color: #e67e22;">럭키드로우 / 커튼콜위크</div>
+        <div class="modal-date-badge" style="background: #e67e22;">10/13(화) ~ 10/18(일) (8회차)</div>
+
+        <div class="gift-grid" style="grid-template-columns: repeat(2, 1fr); gap: 6px;">
+            <div class="gift-box" style="padding: 8px 4px;">
+                <div class="gift-icon">🎲</div>
+                <div class="gift-text" style="font-size: 0.55rem; line-height: 1.2;">럭키드로우<br><span style="font-weight: normal; font-size: 0.45rem; color: #7d7373;">유료티켓 1장당 1회 참여 가능</span></div>
+            </div>
+            <div class="gift-box" style="padding: 8px 4px;">
+                <div class="gift-icon">👏</div>
+                <div class="gift-text" style="font-size: 0.55rem; line-height: 1.2;">커튼콜위크<br><span style="font-weight: normal; font-size: 0.45rem; color: #7d7373;">해당 기간 커튼콜 촬영 가능</span></div>
+            </div>
+        </div>
+
+        <div class="modal-notice">
+            • <b>럭키드로우:</b> 유료티켓 1장당 1회 참여하실 수 있습니다.<br>
+            • 상품구성 등 자세한 내용은 추후 공지 예정입니다.
+        </div>
+    </div>
+</div>
+
 <div class="modal-overlay" id="graygong-modal">
     <div class="modal-content">
         <button class="modal-close-btn" onclick="closeGraygongModal()">×</button>
@@ -859,6 +894,28 @@
             • <b>전관 혜택 2:</b> 예매자 전원에게 그래이공DAY에서 마련한 소소한 선물 + 예스24 티켓 3,000원 할인 쿠폰 증정<br>
             &nbsp;&nbsp;* 3,000원 할인 쿠폰은 예매 완료된 계정에 생성 (공연 종료 후 일주일 이내)<br>
             &nbsp;&nbsp;* 쿠폰 지급 완료 후 예매자들에게 지급 완료 안내 문자를 보내드릴 예정입니다.
+        </div>
+    </div>
+</div>
+
+<div class="modal-overlay" id="special-modal">
+    <div class="modal-content">
+        <button class="modal-close-btn" onclick="closeSpecialModal()">×</button>
+        <div class="modal-header-sub">SPECIAL EVENT</div>
+        <div class="modal-title-main" style="color: #27ae60;">스페셜 커튼콜 데이</div>
+        <div class="modal-date-badge" style="background: #27ae60;">10/22(목) ~ 10/25(일) (6회차)</div>
+
+        <div class="gift-grid" style="grid-template-columns: repeat(1, 1fr); gap: 6px;">
+            <div class="gift-box" style="padding: 8px 4px;">
+                <div class="gift-icon">🎬</div>
+                <div class="gift-text" style="font-size: 0.55rem; line-height: 1.2;">스페셜 커튼콜 진행<br><span style="font-weight: normal; font-size: 0.45rem; color: #7d7373;">사진 및 동영상 촬영 가능</span></div>
+            </div>
+        </div>
+
+        <div class="modal-notice">
+            • <b>스페셜 커튼콜 데이:</b> 시연 넘버 리스트 등 자세한 내용은 추후 공지 예정입니다.<br>
+            • 사진 및 동영상 촬영은 스페셜 커튼콜에만 가능합니다.<br>
+            &nbsp;&nbsp;* 기존 커튼콜은 촬영 불가
         </div>
     </div>
 </div>
@@ -891,24 +948,42 @@
         { date: "10/10(토)", time: "19:00", cast: ["이형훈", "윤공주", "안지환", "박슬기"], evt: "꾸러미 증정" },
         { date: "10/11(일)", time: "14:00", cast: ["안재욱", "김지현", "윤소호", "이수빈"], evt: "꾸러미 증정" },
         { date: "10/11(일)", time: "18:00", cast: ["이희준", "김지현", "윤재호", "나하나"], evt: "꾸러미 증정" },
-        { date: "10/13(화)", time: "19:30", cast: ["오의식", "윤공주", "윤소호", "박슬기"], evt: "커튼콜" },
-        { date: "10/14(수)", time: "15:00", cast: ["이희준", "김지현", "안지환", "이수빈"], evt: "-" },
-        { date: "10/14(수)", time: "19:30", cast: ["안재욱", "김지현", "윤재호", "나하나"], evt: "커튼콜" },
-        { date: "10/15(목)", time: "19:30", cast: ["안재욱", "윤공주", "안지환", "홍지희"], evt: "커튼콜" },
-        { date: "10/16(금)", time: "19:30", cast: ["이희준", "배해선", "윤소호", "나하나"], evt: "커튼콜" },
-        { date: "10/17(토)", time: "15:00", cast: ["이형훈", "배해선", "윤재호", "이수빈"], evt: "전관" },
-        { date: "10/17(토)", time: "19:00", cast: ["오의식", "김지현", "안지환", "박슬기"], evt: "커튼콜" },
-        { date: "10/18(일)", time: "14:00", cast: ["안재욱", "배해선", "윤소호", "이수빈"], evt: "커튼콜" },
-        { date: "10/18(일)", time: "18:00", cast: ["이희준", "윤공주", "윤재호", "홍지희"], evt: "커튼콜" },
+        { date: "10/13(화)", time: "19:30", cast: ["오의식", "윤공주", "윤소호", "박슬기"], evt: "럭드/컷콜" },
+        { date: "10/14(수)", time: "15:00", cast: ["이희준", "김지현", "안지환", "이수빈"], evt: "럭드/컷콜" },
+        { date: "10/14(수)", time: "19:30", cast: ["안재욱", "김지현", "윤재호", "나하나"], evt: "럭드/컷콜" },
+        { date: "10/15(목)", time: "19:30", cast: ["안재욱", "윤공주", "안지환", "홍지희"], evt: "럭드/컷콜" },
+        { date: "10/16(금)", time: "19:30", cast: ["이희준", "배해선", "윤소호", "나하나"], evt: "럭드/컷콜" },
+        { date: "10/17(토)", time: "15:00", cast: ["이형훈", "배해선", "윤재호", "이수빈"], evt: "럭드/컷콜" },
+        { date: "10/17(토)", time: "19:00", cast: ["오의식", "김지현", "안지환", "박슬기"], evt: "럭드/컷콜" },
+        { date: "10/18(일)", time: "14:00", cast: ["안재욱", "배해선", "윤소호", "이수빈"], evt: "럭드/컷콜" },
+        { date: "10/18(일)", time: "18:00", cast: ["이희준", "윤공주", "윤재호", "홍지희"], evt: "럭드/컷콜" },
         { date: "10/20(화)", time: "19:30", cast: ["오의식", "김지현", "안지환", "나하나"], evt: "그래이공DAY" },
         { date: "10/21(수)", time: "15:00", cast: ["이희준", "윤공주", "윤소호", "박슬기"], evt: "그래이공DAY" },
         { date: "10/21(수)", time: "19:30", cast: ["안재욱", "배해선", "윤재호", "홍지희"], evt: "그래이공DAY" },
-        { date: "10/22(목)", time: "19:30", cast: ["이형훈", "김지현", "윤소호", "이수빈"], evt: "-" },
-        { date: "10/23(금)", time: "19:30", cast: ["안재욱", "김지현", "안지환", "홍지희"], evt: "-" },
-        { date: "10/24(토)", time: "15:00", cast: ["오의식", "배해선", "윤재호", "이수빈"], evt: "-" },
-        { date: "10/24(토)", time: "19:00", cast: ["이희준", "배해선", "윤소호", "홍지희"], evt: "-" },
-        { date: "10/25(일)", time: "14:00", cast: ["안재욱", "윤공주", "윤재호", "박슬기"], evt: "-" },
-        { date: "10/25(일)", time: "18:00", cast: ["이형훈", "윤공주", "안지환", "나하나"], evt: "-" }
+        { date: "10/22(목)", time: "19:30", cast: ["이형훈", "김지현", "윤소호", "이수빈"], evt: "스페셜커튼콜" },
+        { date: "10/23(금)", time: "19:30", cast: ["안재욱", "김지현", "안지환", "홍지희"], evt: "스페셜커튼콜" },
+        { date: "10/24(토)", time: "15:00", cast: ["오의식", "배해선", "윤재호", "이수빈"], evt: "스페셜커튼콜" },
+        { date: "10/24(토)", time: "19:00", cast: ["이희준", "배해선", "윤소호", "홍지희"], evt: "스페셜커튼콜" },
+        { date: "10/25(일)", time: "14:00", cast: ["안재욱", "윤공주", "윤재호", "박슬기"], evt: "스페셜커튼콜" },
+        { date: "10/25(일)", time: "18:00", cast: ["이형훈", "윤공주", "안지환", "나하나"], evt: "스페셜커튼콜" },
+        { date: "10/27(화)", time: "19:30", cast: ["오의식", "김지현", "윤소호", "홍지희"], evt: "-" },
+        { date: "10/28(수)", time: "15:00", cast: ["이형훈", "윤공주", "윤재호", "이수빈"], evt: "-" },
+        { date: "10/28(수)", time: "19:30", cast: ["안재욱", "배해선", "윤소호", "나하나"], evt: "-" },
+        { date: "10/29(목)", time: "19:30", cast: ["이희준", "배해선", "안지환", "박슬기"], evt: "-" },
+        { date: "10/30(금)", time: "19:30", cast: ["이희준", "김지현", "윤소호", "이수빈"], evt: "-" },
+        { date: "10/31(토)", time: "15:00", cast: ["안재욱", "윤공주", "안지환", "홍지희"], evt: "-" },
+        { date: "10/31(토)", time: "19:00", cast: ["오의식", "윤공주", "안지환", "박슬기"], evt: "-" },
+        { date: "11/01(일)", time: "14:00", cast: ["안재욱", "김지현", "윤재호", "나하나"], evt: "-" },
+        { date: "11/01(일)", time: "18:00", cast: ["이희준", "김지현", "윤재호", "홍지희"], evt: "-" },
+        { date: "11/03(화)", time: "19:30", cast: ["오의식", "김지현", "안지환", "나하나"], evt: "-" },
+        { date: "11/04(수)", time: "15:00", cast: ["안재욱", "배해선", "윤재호", "박슬기"], evt: "-" },
+        { date: "11/04(수)", time: "19:30", cast: ["이희준", "윤공주", "윤소호", "이수빈"], evt: "-" },
+        { date: "11/05(목)", time: "19:30", cast: ["오의식", "김지현", "안지환", "나하나"], evt: "-" },
+        { date: "11/06(금)", time: "19:30", cast: ["안재욱", "윤공주", "윤소호", "홍지희"], evt: "-" },
+        { date: "11/07(토)", time: "15:00", cast: ["오의식", "배해선", "윤재호", "이수빈"], evt: "-" },
+        { date: "11/07(토)", time: "19:00", cast: ["안재욱", "김지현", "안지환", "이수빈"], evt: "-" },
+        { date: "11/08(일)", time: "14:00", cast: ["이형훈", "배해선", "윤재호", "홍지희"], evt: "-" },
+        { date: "11/08(일)", time: "18:00", cast: ["이형훈", "윤공주", "윤소호", "박슬기"], evt: "-" }
     ];
 
     const firstShowIndices = {};
@@ -923,11 +998,11 @@
     });
 
     let filter = [];
-    const mainActors = ["안재욱", "이희준", "오의식", "이형훈", "배해선", "윤공주", "김지현", "윤소호", "안지환", "윤재호", "홍지희", "나하나", "이수빈", "박슬기❤️"];
+    const mainActors = ["안재욱", "이희준", "오의식", "이형훈", "배해선", "윤공주", "김지현", "윤소호", "안지환", "윤재호", "홍지희", "나하나", "이수빈", "박슬기♡"];
 
     const filterBox = document.getElementById('filter-btns');
     mainActors.forEach(act => {
-        const rawName = act.replace('❤️', '');
+        const rawName = act.replace(/[^가-힣]/g, '');
         const btn = document.createElement('button');
         btn.className = 'btn-filter';
         btn.textContent = act;
@@ -953,11 +1028,25 @@
         document.getElementById('gift-modal').classList.remove('active');
     }
 
+    function openLuckyModal() {
+        document.getElementById('lucky-modal').classList.add('active');
+    }
+    function closeLuckyModal() {
+        document.getElementById('lucky-modal').classList.remove('active');
+    }
+
     function openGraygongModal() {
         document.getElementById('graygong-modal').classList.add('active');
     }
     function closeGraygongModal() {
         document.getElementById('graygong-modal').classList.remove('active');
+    }
+
+    function openSpecialModal() {
+        document.getElementById('special-modal').classList.add('active');
+    }
+    function closeSpecialModal() {
+        document.getElementById('special-modal').classList.remove('active');
     }
 
     function renderSch() {
@@ -974,12 +1063,12 @@
             let badgeHtml = s.evt;
             if(s.evt === '꾸러미 증정') {
                 badgeHtml = `<span class="badge-evt bg-gift" onclick="event.stopPropagation(); openGiftModal();">${s.evt}</span>`;
-            } else if(s.evt === '커튼콜') {
-                badgeHtml = `<span class="badge-evt bg-ccall">${s.evt}</span>`;
+            } else if(s.evt === '럭드/컷콜') {
+                badgeHtml = `<span class="badge-evt bg-lucky" onclick="event.stopPropagation(); openLuckyModal();">${s.evt}</span>`;
             } else if(s.evt === '그래이공DAY') {
                 badgeHtml = `<span class="badge-evt bg-gray" onclick="event.stopPropagation(); openGraygongModal();">${s.evt}</span>`;
-            } else if(s.evt.includes('마티네')) {
-                badgeHtml = `<span class="badge-evt bg-mat">${s.evt}</span>`;
+            } else if(s.evt === '스페셜커튼콜') {
+                badgeHtml = `<span class="badge-evt bg-special" onclick="event.stopPropagation(); openSpecialModal();">${s.evt}</span>`;
             } else if(s.evt.includes('전관')) {
                 badgeHtml = `<span class="badge-evt bg-all">${s.evt}</span>`;
             }
@@ -1367,10 +1456,12 @@
     }
 
     function delHist(id) {
-        historyData = historyData.filter(h => h.id !== id);
-        saveData();
-        sortAndRenderHistory();
-        applySeatColors();
+        if (confirm("정말로 이 기록을 삭제하시겠습니까?")) {
+            historyData = historyData.filter(h => h.id !== id);
+            saveData();
+            sortAndRenderHistory();
+            applySeatColors();
+        }
     }
 
     const castRoles = [
