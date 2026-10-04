@@ -180,8 +180,8 @@
         table.schedule-tbl th:nth-child(3),
         table.schedule-tbl th:nth-child(4),
         table.schedule-tbl th:nth-child(5),
-        table.schedule-tbl th:nth-child(6) { width: 15%; }
-        table.schedule-tbl th:nth-child(7) { width: 14%; }
+        table.schedule-tbl th:nth-child(6) { width: 14%; }
+        table.schedule-tbl th:nth-child(7) { width: 18%; }
 
         table.schedule-tbl td {
             padding: 5px 1px;
@@ -197,7 +197,7 @@
         table.schedule-tbl tr:hover { background: #fff0f2; }
 
         .badge-evt {
-            font-size: 0.48rem;
+            font-size: 0.46rem;
             padding: 1px 3px;
             border-radius: 3px;
             color: white;
@@ -576,6 +576,8 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.2);
             position: relative;
             text-align: center;
+            max-height: 85vh;
+            overflow-y: auto;
         }
 
         .modal-close-btn {
@@ -632,7 +634,7 @@
         }
 
         .gift-icon {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             margin-bottom: 3px;
         }
 
@@ -653,6 +655,32 @@
             padding: 6px 8px;
             border-radius: 4px;
             border: 1px solid #f0eae1;
+        }
+
+        /* 모달 내 스콜 테이블 */
+        .modal-tbl {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.58rem;
+            margin-bottom: 10px;
+            background: #fff;
+            border-radius: 4px;
+            overflow: hidden;
+            border: 1px solid #ebdcd0;
+        }
+        .modal-tbl th {
+            background: #f0eae1;
+            padding: 4px;
+            color: var(--text-dark);
+        }
+        .modal-tbl td {
+            padding: 4px;
+            border-top: 1px solid #f2e8df;
+            color: #333;
+        }
+        .modal-tbl tr.highlight-row {
+            background-color: #fff0f2;
+            font-weight: bold;
         }
     </style>
 </head>
@@ -809,6 +837,7 @@
     </div>
 </div>
 
+<!-- 모달 1: 프리뷰 선물 -->
 <div class="modal-overlay" id="gift-modal">
     <div class="modal-content">
         <button class="modal-close-btn" onclick="closeGiftModal()">×</button>
@@ -845,31 +874,40 @@
     </div>
 </div>
 
+<!-- 모달 2: 럭키드로우 / 커튼콜위크 -->
 <div class="modal-overlay" id="lucky-modal">
     <div class="modal-content">
         <button class="modal-close-btn" onclick="closeLuckyModal()">×</button>
-        <div class="modal-header-sub">EVENT WEEK</div>
-        <div class="modal-title-main" style="color: #e67e22;">럭키드로우 / 커튼콜위크</div>
+        <div class="modal-header-sub">LUCKY DRAW & CURTAIN CALL WEEK</div>
+        <div class="modal-title-main" style="color: #e67e22;">럭키드로우 & 커튼콜위크</div>
         <div class="modal-date-badge" style="background: #e67e22;">10/13(화) ~ 10/18(일) (8회차)</div>
 
-        <div class="gift-grid" style="grid-template-columns: repeat(2, 1fr); gap: 6px;">
-            <div class="gift-box" style="padding: 8px 4px;">
-                <div class="gift-icon">🎲</div>
-                <div class="gift-text" style="font-size: 0.55rem; line-height: 1.2;">럭키드로우<br><span style="font-weight: normal; font-size: 0.45rem; color: #7d7373;">유료티켓 1장당 1회 참여 가능</span></div>
+        <div style="font-size: 0.58rem; font-weight: bold; margin-bottom: 6px; color: #e67e22;">| 럭키드로우 상품 구성 |</div>
+        <div class="gift-grid" style="grid-template-columns: repeat(2, 1fr); gap: 4px; margin-bottom: 8px;">
+            <div class="gift-box" style="align-items: flex-start; padding: 5px 6px; text-align: left;">
+                <div class="gift-text">• 사인 프로그램북 <span style="font-weight:normal; color:#7d7373;">(당일 캐스트 4인)</span></div>
+                <div class="gift-text">• 폴라로이드 사진 <span style="font-weight:normal; color:#7d7373;">(당일 캐스트 4인)</span></div>
+                <div class="gift-text">• 친필 대사티켓</div>
+                <div class="gift-text">• MD 교환권</div>
             </div>
-            <div class="gift-box" style="padding: 8px 4px;">
-                <div class="gift-icon">👏</div>
-                <div class="gift-text" style="font-size: 0.55rem; line-height: 1.2;">커튼콜위크<br><span style="font-weight: normal; font-size: 0.45rem; color: #7d7373;">해당 기간 커튼콜 촬영 가능</span></div>
+            <div class="gift-box" style="align-items: flex-start; padding: 5px 6px; text-align: left;">
+                <div class="gift-text">• 렛미플라이 OST</div>
+                <div class="gift-text">• R석 예매권 / S석 예매권</div>
+                <div class="gift-text">• 40% 할인권 / 50% 할인권</div>
             </div>
         </div>
 
         <div class="modal-notice">
-            • <b>럭키드로우:</b> 유료티켓 1장당 1회 참여하실 수 있습니다.<br>
-            • 상품구성 등 자세한 내용은 추후 공지 예정입니다.
+            • <b>커튼콜위크:</b> 해당 기간 커튼콜 촬영이 가능합니다.<br>
+            • <b>장소:</b> MD 부스<br>
+            • <b>참여방법:</b> 당일 회차 유료티켓 1매당 1회 참여 가능 (뒷면 확인 도장 날인)<br>
+            • <b>MD부스 운영시간:</b> 공연 시작 1시간 전 ~ 10분 전 / 공연 종료 후 약 10분간<br>
+            • 증정품은 당일 MD부스 운영 시간에만 수령 가능하며, 교환 불가합니다.
         </div>
     </div>
 </div>
 
+<!-- 모달 3: 그래이공DAY -->
 <div class="modal-overlay" id="graygong-modal">
     <div class="modal-content">
         <button class="modal-close-btn" onclick="closeGraygongModal()">×</button>
@@ -898,24 +936,33 @@
     </div>
 </div>
 
+<!-- 모달 4: 스페셜 커튼콜 데이 -->
 <div class="modal-overlay" id="special-modal">
     <div class="modal-content">
         <button class="modal-close-btn" onclick="closeSpecialModal()">×</button>
-        <div class="modal-header-sub">SPECIAL EVENT</div>
+        <div class="modal-header-sub">SPECIAL CURTAIN CALL DAY</div>
         <div class="modal-title-main" style="color: #27ae60;">스페셜 커튼콜 데이</div>
-        <div class="modal-date-badge" style="background: #27ae60;">10/22(목) ~ 10/25(일) (6회차)</div>
+        <div class="modal-date-badge" id="special-modal-date" style="background: #27ae60;">10/22(목) ~ 10/25(일)</div>
 
-        <div class="gift-grid" style="grid-template-columns: repeat(1, 1fr); gap: 6px;">
-            <div class="gift-box" style="padding: 8px 4px;">
-                <div class="gift-icon">🎬</div>
-                <div class="gift-text" style="font-size: 0.55rem; line-height: 1.2;">스페셜 커튼콜 진행<br><span style="font-weight: normal; font-size: 0.45rem; color: #7d7373;">사진 및 동영상 촬영 가능</span></div>
-            </div>
-        </div>
+        <table class="modal-tbl">
+            <thead>
+                <tr>
+                    <th>회차</th>
+                    <th>넘버</th>
+                    <th>출연진</th>
+                </tr>
+            </thead>
+            <tbody id="special-tbl-body">
+                <!-- 스크립트 dynamic 생성 -->
+            </tbody>
+        </table>
 
         <div class="modal-notice">
-            • <b>스페셜 커튼콜 데이:</b> 시연 넘버 리스트 등 자세한 내용은 추후 공지 예정입니다.<br>
-            • 사진 및 동영상 촬영은 스페셜 커튼콜에만 가능합니다.<br>
-            &nbsp;&nbsp;* 기존 커튼콜은 촬영 불가
+            • 본 공연 커튼콜이 종료되고 무대 정리 후 스페셜 커튼콜 무대가 이어집니다.<br>
+            • 본 공연 커튼콜 촬영은 불가하며, <b>스페셜 커튼콜만 플래시 없이 사진 및 영상 촬영 가능</b>합니다.<br>
+            • 커튼콜을 제외한 공연장 내 사전 협의되지 않은 사진, 영상 촬영 및 녹음은 불가합니다.<br>
+            • 촬영을 위한 좌석 이동 및 삼각대, 모노포트, 보조광 등의 촬영도구 설치는 불가하며 연사 촬영은 자제 부탁드립니다.<br>
+            • 중간 퇴장 시 스페셜 커튼콜 장면에서 재입장은 불가합니다.
         </div>
     </div>
 </div>
@@ -937,6 +984,15 @@
             return false;
         }
     });
+
+    const specialCallList = [
+        { date: "10/22(목)", time: "19:30", number: "세상은 변해가", cast: "윤소호, 이수빈" },
+        { date: "10/23(금)", time: "19:30", number: "세상은 변해가", cast: "안지환, 홍지희" },
+        { date: "10/24(토)", time: "15:00", number: "정분아", cast: "윤재호" },
+        { date: "10/24(토)", time: "19:00", number: "정분아", cast: "윤소호" },
+        { date: "10/25(일)", time: "14:00", number: "세상은 변해가", cast: "윤재호, 박슬기" },
+        { date: "10/25(일)", time: "18:00", number: "정분아", cast: "안지환" }
+    ];
 
     const schedules = [
         { date: "10/06(화)", time: "19:30", cast: ["오의식", "김지현", "안지환", "나하나"], evt: "꾸러미 증정" },
@@ -960,12 +1016,12 @@
         { date: "10/20(화)", time: "19:30", cast: ["오의식", "김지현", "안지환", "나하나"], evt: "그래이공DAY" },
         { date: "10/21(수)", time: "15:00", cast: ["이희준", "윤공주", "윤소호", "박슬기"], evt: "그래이공DAY" },
         { date: "10/21(수)", time: "19:30", cast: ["안재욱", "배해선", "윤재호", "홍지희"], evt: "그래이공DAY" },
-        { date: "10/22(목)", time: "19:30", cast: ["이형훈", "김지현", "윤소호", "이수빈"], evt: "스페셜커튼콜" },
-        { date: "10/23(금)", time: "19:30", cast: ["안재욱", "김지현", "안지환", "홍지희"], evt: "스페셜커튼콜" },
-        { date: "10/24(토)", time: "15:00", cast: ["오의식", "배해선", "윤재호", "이수빈"], evt: "스페셜커튼콜" },
-        { date: "10/24(토)", time: "19:00", cast: ["이희준", "배해선", "윤소호", "홍지희"], evt: "스페셜커튼콜" },
-        { date: "10/25(일)", time: "14:00", cast: ["안재욱", "윤공주", "윤재호", "박슬기"], evt: "스페셜커튼콜" },
-        { date: "10/25(일)", time: "18:00", cast: ["이형훈", "윤공주", "안지환", "나하나"], evt: "스페셜커튼콜" },
+        { date: "10/22(목)", time: "19:30", cast: ["이형훈", "김지현", "윤소호", "이수빈"], evt: "스콜-세상은 변해가" },
+        { date: "10/23(금)", time: "19:30", cast: ["안재욱", "김지현", "안지환", "홍지희"], evt: "스콜-세상은 변해가" },
+        { date: "10/24(토)", time: "15:00", cast: ["오의식", "배해선", "윤재호", "이수빈"], evt: "스콜-정분아" },
+        { date: "10/24(토)", time: "19:00", cast: ["이희준", "배해선", "윤소호", "홍지희"], evt: "스콜-정분아" },
+        { date: "10/25(일)", time: "14:00", cast: ["안재욱", "윤공주", "윤재호", "박슬기"], evt: "스콜-세상은 변해가" },
+        { date: "10/25(일)", time: "18:00", cast: ["이형훈", "윤공주", "안지환", "나하나"], evt: "스콜-정분아" },
         { date: "10/27(화)", time: "19:30", cast: ["오의식", "김지현", "윤소호", "홍지희"], evt: "-" },
         { date: "10/28(수)", time: "15:00", cast: ["이형훈", "윤공주", "윤재호", "이수빈"], evt: "-" },
         { date: "10/28(수)", time: "19:30", cast: ["안재욱", "배해선", "윤소호", "나하나"], evt: "-" },
@@ -1042,7 +1098,23 @@
         document.getElementById('graygong-modal').classList.remove('active');
     }
 
-    function openSpecialModal() {
+    function openSpecialModal(targetDate, targetTime) {
+        const tbody = document.getElementById('special-tbl-body');
+        tbody.innerHTML = '';
+
+        specialCallList.forEach(item => {
+            const tr = document.createElement('tr');
+            if (targetDate && targetTime && item.date === targetDate && item.time === targetTime) {
+                tr.className = 'highlight-row';
+            }
+            tr.innerHTML = `
+                <td>${item.date} ${item.time}</td>
+                <td>${item.number}</td>
+                <td>${item.cast}</td>
+            `;
+            tbody.appendChild(tr);
+        });
+
         document.getElementById('special-modal').classList.add('active');
     }
     function closeSpecialModal() {
@@ -1067,8 +1139,8 @@
                 badgeHtml = `<span class="badge-evt bg-lucky" onclick="event.stopPropagation(); openLuckyModal();">${s.evt}</span>`;
             } else if(s.evt === '그래이공DAY') {
                 badgeHtml = `<span class="badge-evt bg-gray" onclick="event.stopPropagation(); openGraygongModal();">${s.evt}</span>`;
-            } else if(s.evt === '스페셜커튼콜') {
-                badgeHtml = `<span class="badge-evt bg-special" onclick="event.stopPropagation(); openSpecialModal();">${s.evt}</span>`;
+            } else if(s.evt.startsWith('스콜-')) {
+                badgeHtml = `<span class="badge-evt bg-special" onclick="event.stopPropagation(); openSpecialModal('${s.date}', '${s.time}');">${s.evt}</span>`;
             } else if(s.evt.includes('전관')) {
                 badgeHtml = `<span class="badge-evt bg-all">${s.evt}</span>`;
             }
