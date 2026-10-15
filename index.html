@@ -232,6 +232,27 @@
             vertical-align: middle;
         }
 
+        .tag-last-box {
+            display: inline-block;
+            border: 1px dashed #2980b9;
+            background-color: #f0f8ff;
+            color: #2980b9;
+            padding: 1px 3px;
+            border-radius: 4px;
+            font-weight: bold;
+            position: relative;
+        }
+        .tag-last-box::after {
+            content: '막공';
+            font-size: 0.40rem;
+            color: #ffffff;
+            background-color: #2980b9;
+            border-radius: 2px;
+            padding: 0 2px;
+            margin-left: 2px;
+            vertical-align: middle;
+        }
+
         /* 배우 필터 */
         .filter-box {
             margin-top: 8px;
@@ -1034,12 +1055,39 @@
         { date: "11/03(화)", time: "19:30", cast: ["오의식", "김지현", "안지환", "나하나"], evt: "-" },
         { date: "11/04(수)", time: "15:00", cast: ["안재욱", "배해선", "윤재호", "박슬기"], evt: "-" },
         { date: "11/04(수)", time: "19:30", cast: ["이희준", "윤공주", "윤소호", "이수빈"], evt: "-" },
-        { date: "11/05(목)", time: "19:30", cast: ["오의식", "김지현", "안지환", "나하나"], evt: "-" },
+        { date: "11/05(목)", time: "19:30", cast: ["오의식", "김지현", "안지환", "나하나"], evt: "-", lastActors: ["나하나"] },
         { date: "11/06(금)", time: "19:30", cast: ["안재욱", "윤공주", "윤소호", "홍지희"], evt: "-" },
         { date: "11/07(토)", time: "15:00", cast: ["오의식", "배해선", "윤재호", "이수빈"], evt: "-" },
         { date: "11/07(토)", time: "19:00", cast: ["안재욱", "김지현", "안지환", "이수빈"], evt: "-" },
         { date: "11/08(일)", time: "14:00", cast: ["이형훈", "배해선", "윤재호", "홍지희"], evt: "-" },
-        { date: "11/08(일)", time: "18:00", cast: ["이형훈", "윤공주", "윤소호", "박슬기"], evt: "-" }
+        { date: "11/08(일)", time: "18:00", cast: ["이형훈", "윤공주", "윤소호", "박슬기"], evt: "-" },
+        { date: "11/10(화)", time: "19:30", cast: ["오의식", "김지현", "안지환", "이수빈"], evt: "전관" },
+        { date: "11/11(수)", time: "15:00", cast: ["이희준", "윤공주", "윤재호", "박슬기"], evt: "전관" },
+        { date: "11/11(수)", time: "19:30", cast: ["안재욱", "배해선", "윤소호", "홍지희"], evt: "전관" },
+        { date: "11/12(목)", time: "19:30", cast: ["이형훈", "배해선", "윤재호", "박슬기"], evt: "-" },
+        { date: "11/13(금)", time: "19:30", cast: ["안재욱", "김지현", "안지환", "홍지희"], evt: "-" },
+        { date: "11/14(토)", time: "15:00", cast: ["오의식", "배해선", "윤소호", "이수빈"], evt: "-" },
+        { date: "11/14(토)", time: "19:00", cast: ["안재욱", "김지현", "윤소호", "이수빈"], evt: "-" },
+        { date: "11/15(일)", time: "14:00", cast: ["이형훈", "윤공주", "윤재호", "홍지희"], evt: "-" },
+        { date: "11/15(일)", time: "18:00", cast: ["안재욱", "윤공주", "안지환", "홍지희"], evt: "-" },
+        { date: "11/17(화)", time: "19:30", cast: ["오의식", "김지현", "안지환", "박슬기"], evt: "-" },
+        { date: "11/18(수)", time: "15:00", cast: ["안재욱", "배해선", "윤소호", "홍지희"], evt: "-" },
+        { date: "11/18(수)", time: "19:30", cast: ["이희준", "배해선", "안지환", "홍지희"], evt: "-" },
+        { date: "11/19(목)", time: "19:30", cast: ["안재욱", "윤공주", "윤재호", "박슬기"], evt: "-" },
+        { date: "11/20(금)", time: "19:30", cast: ["이희준", "배해선", "윤소호", "이수빈"], evt: "-" },
+        { date: "11/21(토)", time: "15:00", cast: ["이형훈", "김지현", "윤재호", "홍지희"], evt: "-" },
+        { date: "11/21(토)", time: "19:00", cast: ["오의식", "김지현", "윤소호", "홍지희"], evt: "-" },
+        { date: "11/22(일)", time: "14:00", cast: ["이희준", "윤공주", "윤재호", "박슬기"], evt: "-" },
+        { date: "11/22(일)", time: "18:00", cast: ["안재욱", "윤공주", "안지환", "이수빈"], evt: "-" },
+        { date: "11/24(화)", time: "19:30", cast: ["오의식", "김지현", "윤소호", "박슬기"], evt: "-" },
+        { date: "11/25(수)", time: "15:00", cast: ["이희준", "윤공주", "안지환", "홍지희"], evt: "-" },
+        { date: "11/25(수)", time: "19:30", cast: ["안재욱", "윤공주", "윤재호", "홍지희"], evt: "-" },
+        { date: "11/26(목)", time: "19:30", cast: ["안재욱", "배해선", "윤소호", "이수빈"], evt: "-" },
+        { date: "11/27(금)", time: "19:30", cast: ["이희준", "김지현", "윤재호", "박슬기"], evt: "-" },
+        { date: "11/28(토)", time: "15:00", cast: ["오의식", "배해선", "안지환", "이수빈"], evt: "-" },
+        { date: "11/28(토)", time: "19:00", cast: ["이형훈", "배해선", "윤재호", "박슬기"], evt: "-" },
+        { date: "11/29(일)", time: "14:00", cast: ["안재욱", "윤공주", "윤소호", "이수빈"], evt: "-" },
+        { date: "11/29(일)", time: "18:00", cast: ["이희준", "윤공주", "안지환", "박슬기"], evt: "-" }
     ];
 
     const firstShowIndices = {};
@@ -1146,6 +1194,9 @@
             }
 
             const castHtmls = s.cast.map(actor => {
+                if (s.lastActors && s.lastActors.includes(actor)) {
+                    return `<span class="tag-last-box">${actor}</span>`;
+                }
                 if (originalIndex <= 3 && firstShowIndices[actor] === originalIndex) {
                     return `<span class="tag-first-box">${actor}</span>`;
                 }
