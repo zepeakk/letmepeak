@@ -210,6 +210,8 @@
         .bg-special { background: #27ae60; }
         .bg-all { background: #2980b9; }
         .bg-gray { background: #7f8c8d; }
+        .bg-talk { background: #8e44ad; }
+        .bg-link { background: #d35400; }
 
         .tag-first-box {
             display: inline-block;
@@ -652,6 +654,12 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            position: relative;
+        }
+
+        .gift-box.highlight-box {
+            border: 2px solid #e74c3c;
+            background: #fff5f5;
         }
 
         .gift-icon {
@@ -777,6 +785,10 @@
                             <option value="20">조기예매 할인 (20%)</option>
                             <option value="20">재관람 할인 (20%)</option>
                             <option value="20">마티네 할인 (20%)</option>
+                            <option value="40">단골손님 (40%)</option>
+                            <option value="40">타임세일 (40%)</option>
+                            <option value="45">타임세일 (45%)</option>
+                            <option value="50">타임세일 (50%)</option>
                             <option value="custom">직접 입력</option>
                         </select>
                     </div>
@@ -983,7 +995,76 @@
             • 본 공연 커튼콜 촬영은 불가하며, <b>스페셜 커튼콜만 플래시 없이 사진 및 영상 촬영 가능</b>합니다.<br>
             • 커튼콜을 제외한 공연장 내 사전 협의되지 않은 사진, 영상 촬영 및 녹음은 불가합니다.<br>
             • 촬영을 위한 좌석 이동 및 삼각대, 모노포트, 보조광 등의 촬영도구 설치는 불가하며 연사 촬영은 자제 부탁드립니다.<br>
-            • 중간 퇴장 시 스페셜 커튼콜 장면에서 재입장은 불가합니다.
+            • <b>본 공연 종료 후 무대정리 시간에 입장이 가능합니다. 공연 종료 10분 전까지 도착 및 대기 부탁드립니다.</b><br>
+            • <b>스페셜 커튼콜이 시작되면 입장이 불가합니다.</b>
+        </div>
+    </div>
+</div>
+
+<!-- 모달 5: 관객과의 대화 -->
+<div class="modal-overlay" id="talk-modal">
+    <div class="modal-content">
+        <button class="modal-close-btn" onclick="closeTalkModal()">×</button>
+        <div class="modal-title-main" style="color: #8e44ad; margin-top: 6px;">관객과의 대화</div>
+
+        <div class="gift-grid" style="grid-template-columns: repeat(2, 1fr); gap: 6px; margin-bottom: 8px;">
+            <div class="gift-box" id="talk-box-1027" style="padding: 6px; text-align: center;">
+                <div style="font-size: 0.62rem; font-weight: bold; color: #8e44ad;">10/27(화) 19:30</div>
+                <div class="gift-text" style="margin-top: 3px;">오의식, 김지현, 윤소호, 홍지희</div>
+                <div class="gift-text" style="color: #7d7373; font-weight: normal; margin-top: 2px;">조민형 작가, 민찬홍 작곡가</div>
+            </div>
+            <div class="gift-box" id="talk-box-1029" style="padding: 6px; text-align: center;">
+                <div style="font-size: 0.62rem; font-weight: bold; color: #8e44ad;">10/29(목) 19:30</div>
+                <div class="gift-text" style="margin-top: 3px;">이희준, 배해선, 안지환, 박슬기</div>
+                <div class="gift-text" style="color: #7d7373; font-weight: normal; margin-top: 2px;">이대웅 연출, 홍유선 안무,<br>민활란 음악감독</div>
+            </div>
+        </div>
+
+        <div style="font-size: 0.58rem; color: #8e44ad; font-weight: bold; margin-bottom: 6px;">해당 회차 공연 종료 후 관객과의 대화가 진행됩니다.</div>
+
+        <div class="modal-notice">
+            • 해당 회차 공연 종료 후 관객과의 대화가 진행되며, 해당 회차 공연 관람자에 한하여 참석 가능합니다.<br>
+            • 본 공연 종료 후 무대정리 시간에 입장이 가능합니다.<br>
+            • 공연 종료 10분 전까지 도착 및 대기 부탁드립니다.<br>
+            • 원활한 진행을 위해 사전질문 접수로 진행될 예정이며, 관련 안내는 다음 페이지를 참고 부탁드립니다.<br>
+            • 당일 출연진은 배우 및 제작사의 사정에 의해 변동될 수 있습니다.<br>
+            • 관객과의 대화 중에는 사전 협의되지 않은 녹취 및 사진, 영상 촬영이 제한됩니다. 별도로 포토타임이 준비되어 있으니 참고 부탁드립니다.
+        </div>
+    </div>
+</div>
+
+<!-- 모달 6: 링크 스페셜 데이 -->
+<div class="modal-overlay" id="link-modal">
+    <div class="modal-content">
+        <button class="modal-close-btn" onclick="closeLinkModal()">×</button>
+        <div class="modal-header-sub">LINK SPECIAL DAY</div>
+        <div class="modal-title-main" style="color: #d35400;">LINK SPECIAL DAY</div>
+        <div class="modal-date-badge" style="background: #d35400;">11/10(화) ~ 11/11(수)</div>
+
+        <div class="gift-grid" style="grid-template-columns: repeat(2, 1fr); gap: 6px; margin-bottom: 8px;">
+            <div class="gift-box" style="padding: 6px; text-align: left;">
+                <div style="font-size: 0.50rem; color: var(--main-pink); font-weight: bold;">Special Benefit 01</div>
+                <div class="gift-text" style="font-size: 0.62rem; margin-top: 2px;">전석 35% 할인</div>
+            </div>
+            <div class="gift-box" style="padding: 6px; text-align: left;">
+                <div style="font-size: 0.50rem; color: var(--main-pink); font-weight: bold;">Special Benefit 02</div>
+                <div class="gift-text" style="font-size: 0.62rem; margin-top: 2px;">스페셜MD 증정</div>
+                <div class="gift-text" style="font-weight: normal; color: #7d7373;">당일 캐스트 포토카드, 스페셜 MD</div>
+            </div>
+            <div class="gift-box" style="padding: 6px; text-align: left;">
+                <div style="font-size: 0.50rem; color: var(--main-pink); font-weight: bold;">Special Benefit 03</div>
+                <div class="gift-text" style="font-size: 0.62rem; margin-top: 2px;">추가 할인쿠폰</div>
+                <div class="gift-text" style="font-weight: normal; color: #7d7373;">해당 회차 예매 시 사용가능한 4,000원 쿠폰</div>
+            </div>
+            <div class="gift-box" style="padding: 6px; text-align: left;">
+                <div style="font-size: 0.50rem; color: var(--main-pink); font-weight: bold;">Special Benefit 04</div>
+                <div class="gift-text" style="font-size: 0.62rem; margin-top: 2px;">무대인사, 럭키드로우, 포토타임</div>
+            </div>
+        </div>
+
+        <div class="modal-notice">
+            • 해당 이벤트 회차 예매자 분들께 준비된 혜택을 제공합니다.<br>
+            • 자세한 사항은 예매처 상세 페이지를 확인해 주세요.
         </div>
     </div>
 </div>
@@ -1034,7 +1115,7 @@
         { date: "10/17(토)", time: "19:00", cast: ["오의식", "김지현", "안지환", "박슬기"], evt: "럭드/컷콜" },
         { date: "10/18(일)", time: "14:00", cast: ["안재욱", "배해선", "윤소호", "이수빈"], evt: "럭드/컷콜" },
         { date: "10/18(일)", time: "18:00", cast: ["이희준", "윤공주", "윤재호", "홍지희"], evt: "럭드/컷콜" },
-        { date: "10/20(화)", time: "19:30", cast: ["오의식", "김지현", "안지환", "나하나"], evt: "그래이공DAY" },
+        { date: "10/20(화)", time: "19:30", cast: ["오의식", "김지현", "안지환", "나하나"], evt: "그래이공DAY", lastActors: ["나하나"] },
         { date: "10/21(수)", time: "15:00", cast: ["이희준", "윤공주", "윤소호", "박슬기"], evt: "그래이공DAY" },
         { date: "10/21(수)", time: "19:30", cast: ["안재욱", "배해선", "윤재호", "홍지희"], evt: "그래이공DAY" },
         { date: "10/22(목)", time: "19:30", cast: ["이형훈", "김지현", "윤소호", "이수빈"], evt: "스콜-세상은 변해가" },
@@ -1042,28 +1123,28 @@
         { date: "10/24(토)", time: "15:00", cast: ["오의식", "배해선", "윤재호", "이수빈"], evt: "스콜-정분아" },
         { date: "10/24(토)", time: "19:00", cast: ["이희준", "배해선", "윤소호", "홍지희"], evt: "스콜-정분아" },
         { date: "10/25(일)", time: "14:00", cast: ["안재욱", "윤공주", "윤재호", "박슬기"], evt: "스콜-세상은 변해가" },
-        { date: "10/25(일)", time: "18:00", cast: ["이형훈", "윤공주", "안지환", "나하나"], evt: "스콜-정분아" },
-        { date: "10/27(화)", time: "19:30", cast: ["오의식", "김지현", "윤소호", "홍지희"], evt: "-" },
+        { date: "10/25(일)", time: "18:00", cast: ["이형훈", "윤공주", "안지환", "홍지희"], evt: "스콜-정분아" },
+        { date: "10/27(화)", time: "19:30", cast: ["오의식", "김지현", "윤소호", "홍지희"], evt: "관객과의 대화" },
         { date: "10/28(수)", time: "15:00", cast: ["이형훈", "윤공주", "윤재호", "이수빈"], evt: "-" },
-        { date: "10/28(수)", time: "19:30", cast: ["안재욱", "배해선", "윤소호", "나하나"], evt: "-" },
-        { date: "10/29(목)", time: "19:30", cast: ["이희준", "배해선", "안지환", "박슬기"], evt: "-" },
+        { date: "10/28(수)", time: "19:30", cast: ["안재욱", "배해선", "윤소호", "이수빈"], evt: "-" },
+        { date: "10/29(목)", time: "19:30", cast: ["이희준", "배해선", "안지환", "박슬기"], evt: "관객과의 대화" },
         { date: "10/30(금)", time: "19:30", cast: ["이희준", "김지현", "윤소호", "이수빈"], evt: "-" },
         { date: "10/31(토)", time: "15:00", cast: ["안재욱", "윤공주", "안지환", "홍지희"], evt: "-" },
         { date: "10/31(토)", time: "19:00", cast: ["오의식", "윤공주", "안지환", "박슬기"], evt: "-" },
-        { date: "11/01(일)", time: "14:00", cast: ["안재욱", "김지현", "윤재호", "나하나"], evt: "-" },
+        { date: "11/01(일)", time: "14:00", cast: ["안재욱", "김지현", "윤재호", "홍지희"], evt: "-" },
         { date: "11/01(일)", time: "18:00", cast: ["이희준", "김지현", "윤재호", "홍지희"], evt: "-" },
-        { date: "11/03(화)", time: "19:30", cast: ["오의식", "김지현", "안지환", "나하나"], evt: "-" },
+        { date: "11/03(화)", time: "19:30", cast: ["오의식", "김지현", "안지환", "박슬기"], evt: "-" },
         { date: "11/04(수)", time: "15:00", cast: ["안재욱", "배해선", "윤재호", "박슬기"], evt: "-" },
         { date: "11/04(수)", time: "19:30", cast: ["이희준", "윤공주", "윤소호", "이수빈"], evt: "-" },
-        { date: "11/05(목)", time: "19:30", cast: ["오의식", "김지현", "안지환", "나하나"], evt: "-", lastActors: ["나하나"] },
+        { date: "11/05(목)", time: "19:30", cast: ["오의식", "김지현", "안지환", "홍지희"], evt: "-" },
         { date: "11/06(금)", time: "19:30", cast: ["안재욱", "윤공주", "윤소호", "홍지희"], evt: "-" },
         { date: "11/07(토)", time: "15:00", cast: ["오의식", "배해선", "윤재호", "이수빈"], evt: "-" },
         { date: "11/07(토)", time: "19:00", cast: ["안재욱", "김지현", "안지환", "이수빈"], evt: "-" },
         { date: "11/08(일)", time: "14:00", cast: ["이형훈", "배해선", "윤재호", "홍지희"], evt: "-" },
         { date: "11/08(일)", time: "18:00", cast: ["이형훈", "윤공주", "윤소호", "박슬기"], evt: "-" },
-        { date: "11/10(화)", time: "19:30", cast: ["오의식", "김지현", "안지환", "이수빈"], evt: "전관" },
-        { date: "11/11(수)", time: "15:00", cast: ["이희준", "윤공주", "윤재호", "박슬기"], evt: "전관" },
-        { date: "11/11(수)", time: "19:30", cast: ["안재욱", "배해선", "윤소호", "홍지희"], evt: "전관" },
+        { date: "11/10(화)", time: "19:30", cast: ["오의식", "김지현", "안지환", "이수빈"], evt: "링크스페셜데이" },
+        { date: "11/11(수)", time: "15:00", cast: ["이희준", "윤공주", "윤재호", "박슬기"], evt: "링크스페셜데이" },
+        { date: "11/11(수)", time: "19:30", cast: ["안재욱", "배해선", "윤소호", "홍지희"], evt: "링크스페셜데이" },
         { date: "11/12(목)", time: "19:30", cast: ["이형훈", "배해선", "윤재호", "박슬기"], evt: "-" },
         { date: "11/13(금)", time: "19:30", cast: ["안재욱", "김지현", "안지환", "홍지희"], evt: "-" },
         { date: "11/14(토)", time: "15:00", cast: ["오의식", "배해선", "윤소호", "이수빈"], evt: "-" },
@@ -1169,6 +1250,32 @@
         document.getElementById('special-modal').classList.remove('active');
     }
 
+    function openTalkModal(targetDate) {
+        const box27 = document.getElementById('talk-box-1027');
+        const box29 = document.getElementById('talk-box-1029');
+        
+        box27.classList.remove('highlight-box');
+        box29.classList.remove('highlight-box');
+
+        if (targetDate && targetDate.includes('10/27')) {
+            box27.classList.add('highlight-box');
+        } else if (targetDate && targetDate.includes('10/29')) {
+            box29.classList.add('highlight-box');
+        }
+
+        document.getElementById('talk-modal').classList.add('active');
+    }
+    function closeTalkModal() {
+        document.getElementById('talk-modal').classList.remove('active');
+    }
+
+    function openLinkModal() {
+        document.getElementById('link-modal').classList.add('active');
+    }
+    function closeLinkModal() {
+        document.getElementById('link-modal').classList.remove('active');
+    }
+
     function renderSch() {
         const tbody = document.getElementById('sch-tbody');
         tbody.innerHTML = '';
@@ -1189,6 +1296,10 @@
                 badgeHtml = `<span class="badge-evt bg-gray" onclick="event.stopPropagation(); openGraygongModal();">${s.evt}</span>`;
             } else if(s.evt.startsWith('스콜-')) {
                 badgeHtml = `<span class="badge-evt bg-special" onclick="event.stopPropagation(); openSpecialModal('${s.date}', '${s.time}');">${s.evt}</span>`;
+            } else if(s.evt === '관객과의 대화') {
+                badgeHtml = `<span class="badge-evt bg-talk" onclick="event.stopPropagation(); openTalkModal('${s.date}');">${s.evt}</span>`;
+            } else if(s.evt === '링크스페셜데이') {
+                badgeHtml = `<span class="badge-evt bg-link" onclick="event.stopPropagation(); openLinkModal();">${s.evt}</span>`;
             } else if(s.evt.includes('전관')) {
                 badgeHtml = `<span class="badge-evt bg-all">${s.evt}</span>`;
             }
@@ -1235,7 +1346,8 @@
         priceEl.readOnly = true;
         const grade = document.getElementById('f-grade').value;
         const base = (grade === 'R석') ? 88000 : 66000;
-        priceEl.value = (base * (1 - Number(dis)/100)) + 2000;
+        const calculated = (base * (1 - Number(dis)/100)) + 2000;
+        priceEl.value = Math.floor(calculated);
     }
 
     function renderMap() {
