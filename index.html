@@ -176,16 +176,16 @@
             white-space: nowrap;
         }
 
-        table.schedule-tbl th:nth-child(1) { width: 15%; }
+        table.schedule-tbl th:nth-child(1) { width: 14%; }
         table.schedule-tbl th:nth-child(2) { width: 10%; }
         table.schedule-tbl th:nth-child(3),
         table.schedule-tbl th:nth-child(4),
         table.schedule-tbl th:nth-child(5),
-        table.schedule-tbl th:nth-child(6) { width: 12.5%; }
-        table.schedule-tbl th:nth-child(7) { width: 25%; }
+        table.schedule-tbl th:nth-child(6) { width: 12%; }
+        table.schedule-tbl th:nth-child(7) { width: 28%; }
 
         table.schedule-tbl td {
-            padding: 4px 0;
+            padding: 4px 1px;
             border-bottom: 1px solid #f2e8df;
             cursor: pointer;
             line-height: 1.15;
@@ -197,6 +197,14 @@
 
         table.schedule-tbl tr:hover { background: #fff0f2; }
 
+        .evt-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 2px;
+        }
+
         .badge-evt {
             font-size: 0.44rem;
             padding: 1px 3px;
@@ -205,7 +213,7 @@
             font-weight: bold;
             display: inline-block;
             cursor: pointer;
-            margin: 1px 0;
+            margin: 0;
             white-space: nowrap;
         }
         .bg-gift { background: #16a085; }
@@ -1433,7 +1441,7 @@
             let badgeHtml = '';
             const evts = s.evt.split('/');
             
-            evts.forEach((evtItem, idx) => {
+            evts.forEach((evtItem) => {
                 let singleBadge = evtItem;
                 if(evtItem === '꾸러미 증정') {
                     singleBadge = `<span class="badge-evt bg-gift" onclick="event.stopPropagation(); openGiftModal();">${evtItem}</span>`;
@@ -1459,7 +1467,6 @@
                     singleBadge = evtItem;
                 }
                 
-                if(idx > 0) badgeHtml += ' ';
                 badgeHtml += singleBadge;
             });
 
@@ -1480,7 +1487,7 @@
                 <td>${castHtmls[1]}</td>
                 <td>${castHtmls[2]}</td>
                 <td>${castHtmls[3]}</td>
-                <td>${badgeHtml}</td>
+                <td><div class="evt-container">${badgeHtml}</div></td>
             `;
             tbody.appendChild(tr);
         });
