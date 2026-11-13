@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>뮤지컬 렛미플라이 관극 정산판</title>
+    <!-- PNG 저장 전용 레트로 감성 폰트 (고운돋움) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
     <!-- html2canvas 라이브러리 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
@@ -67,8 +71,8 @@
 
         header {
             text-align: center;
-            padding: 10px 0 6px 0;
-            margin-bottom: 10px;
+            padding: 4px 0 2px 0;
+            margin-bottom: 8px;
             background: transparent;
             display: flex;
             flex-direction: column;
@@ -80,14 +84,14 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 4px 0;
+            padding: 0;
         }
 
         .header-logo {
             width: auto;
             max-width: 240px;
             height: auto;
-            max-height: 100px;
+            max-height: 85px;
             object-fit: contain;
             display: block;
             margin: 0 auto;
@@ -106,7 +110,7 @@
         .contact-info {
             font-size: 8px;
             color: #a09999;
-            margin-top: 6px;
+            margin-top: 4px;
             letter-spacing: -0.2px;
         }
 
@@ -155,6 +159,7 @@
             border: 1px solid #ebdcd0;
             border-radius: 6px;
             background: #ffffff;
+            position: relative;
         }
 
         table.schedule-tbl {
@@ -170,7 +175,7 @@
             top: 0;
             background: #f0eae1;
             padding: 5px 0;
-            z-index: 1;
+            z-index: 2;
             border-bottom: 1px solid #dcd1c4;
             font-weight: 700;
             white-space: nowrap;
@@ -197,6 +202,18 @@
 
         table.schedule-tbl tr:hover { background: #fff0f2; }
 
+        /* 오늘 공연 한 줄 연보라색 하이라이트 */
+        table.schedule-tbl tr.today-show {
+            background-color: #f3ebff !important;
+        }
+        table.schedule-tbl tr.today-show:hover {
+            background-color: #eadcff !important;
+        }
+        table.schedule-tbl tr.today-show td:first-child {
+            box-shadow: inset 3px 0 0 #9b59b6;
+            color: #6c3483;
+        }
+
         .evt-container {
             display: flex;
             flex-wrap: wrap;
@@ -221,11 +238,13 @@
         .bg-special { background: #27ae60; }
         .bg-special2 { background: #008080; }
         .bg-all { background: #2980b9; }
+        .bg-corp { background: #636e72; }
         .bg-gray { background: #7f8c8d; }
         .bg-talk { background: #6c5ce7; }
         .bg-link { background: #8e44ad; }
         .bg-cc { background: #e67e22; }
         .bg-spticket { background: #d35400; }
+        .bg-sugar { background: #e84393; }
 
         .tag-first-box {
             display: inline-block;
@@ -345,7 +364,7 @@
             cursor: pointer;
         }
 
-        /* 좌석 배치도 */
+        /* 웹 페이지 좌석 배치도 */
         .stage {
             background: #d8ceca;
             color: #fff;
@@ -702,7 +721,6 @@
             border: 1px solid #f0eae1;
         }
 
-        /* 모달 내 스콜 테이블 */
         .modal-tbl {
             width: 100%;
             border-collapse: collapse;
@@ -743,6 +761,414 @@
             background: #27ae60;
             color: #fff;
         }
+
+        /* 슈가데이 모달 전용 스타일 */
+        .sugar-benefit-card {
+            background: #ffffff;
+            border: 1px solid #ebdcd0;
+            border-radius: 6px;
+            padding: 7px 8px;
+            margin-bottom: 6px;
+            text-align: center;
+        }
+        .sugar-benefit-title {
+            font-size: 0.68rem;
+            font-weight: 800;
+            color: var(--text-dark);
+        }
+        .sugar-benefit-title span {
+            color: #e84393;
+        }
+        .sugar-benefit-sub {
+            font-size: 0.53rem;
+            color: var(--text-sub);
+            margin-top: 2px;
+            line-height: 1.3;
+        }
+        .sugar-detail-box {
+            background: #fff9fb;
+            border: 1px dashed #e88a99;
+            border-radius: 5px;
+            padding: 6px 8px;
+            margin-top: 6px;
+            text-align: left;
+            font-size: 0.52rem;
+            color: var(--text-dark);
+            line-height: 1.4;
+        }
+        .sugar-detail-box b {
+            color: #d9536f;
+        }
+
+        /* 하단 달기지 저장 메뉴 */
+        .png-menu-card {
+            margin-top: 12px;
+            text-align: center;
+        }
+
+        .btn-png-menu {
+            background: #ffffff;
+            color: var(--main-pink);
+            border: 1.5px solid var(--stitch-border);
+            padding: 6px 16px;
+            font-size: 0.78rem;
+            font-weight: bold;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-png-menu:hover {
+            background: var(--main-pink);
+            color: #ffffff;
+            border-color: var(--main-pink);
+        }
+
+        /* ----------------------------------------------------
+           ⭐ 10년차 디자이너 최종 PNG 캡처 캔버스 (720px x 780px)
+        ---------------------------------------------------- */
+        .export-canvas-wrapper {
+            position: absolute;
+            left: -9999px;
+            top: -9999px;
+            width: 720px;
+            height: 780px;
+            background-color: #fcf7f0;
+            box-sizing: border-box;
+            padding: 16px 16px 16px 16px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow: hidden;
+        }
+
+        .export-canvas-wrapper * {
+            box-shadow: none;
+            outline: none;
+            font-family: 'Gowun Dodum', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        }
+
+        /* 상단·중단·하단 여백에 감성적으로 배치한 렛미플라이 배경 아트워크 SVG */
+        .export-bg-svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 720px;
+            height: 780px;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* 우측 상단에서 시작해 테두리를 감싸는 한 땀 바느질 & 바늘·실 SVG */
+        .export-stitch-svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 720px;
+            height: 780px;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        /* letmeflyrogo2.png 적용 헤더 */
+        .export-header {
+            text-align: center;
+            height: 105px;
+            margin-top: 0px;
+            margin-bottom: 14px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2;
+        }
+
+        .export-header-logo {
+            width: auto !important;
+            max-width: 560px !important;
+            height: 105px !important;
+            object-fit: contain;
+        }
+
+        .export-main-body {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            justify-content: space-between;
+            gap: 10px;
+            z-index: 2;
+        }
+
+        .export-cast-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            width: 100%;
+            gap: 6px;
+            padding: 0 2px;
+        }
+
+        .export-role-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .export-role-title {
+            font-size: 0.88rem;
+            font-weight: 900;
+            color: #d9536f;
+            text-align: center;
+            margin-bottom: 4px;
+            letter-spacing: -0.3px;
+        }
+
+        .export-role-grid {
+            display: flex;
+            justify-content: center;
+            gap: 4px;
+        }
+
+        /* 배우 이미지 동그라미: 연보라색 바느질(점선) 테두리 + 위성/별 포인트 */
+        .export-cast-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 93px;
+        }
+
+        .star-portrait-frame {
+            position: relative;
+            width: 90px;
+            height: 90px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .star-portrait-img {
+            width: 84px;
+            height: 84px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 2px dashed #b39ddb;
+            background-color: #f8f5fc;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* 화질 손실 방지를 위해 scale 강제 확대를 제거하고 선명도 최적화 */
+        .star-portrait-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center 15%;
+            image-rendering: -webkit-optimize-contrast;
+            image-rendering: high-quality;
+        }
+
+        .star-accent-svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 90px;
+            height: 90px;
+            pointer-events: none;
+            z-index: 3;
+        }
+
+        .export-cast-name {
+            font-size: 0.82rem;
+            font-weight: 900;
+            color: #3e3636;
+            margin-top: 2px;
+            line-height: 1.15;
+            letter-spacing: -0.3px;
+        }
+
+        .export-cast-count {
+            font-size: 0.68rem;
+            color: #d9536f;
+            font-weight: 800;
+            line-height: 1.1;
+        }
+
+        /* 하단 좌석배치도 & 달빛/벤치 영역 */
+        .export-bottom-row {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 10px;
+            margin-top: 4px;
+            padding: 0 2px;
+        }
+
+        .export-seat-section {
+            flex: 1.52;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .export-legend-top {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 2px;
+            font-size: 0.58rem;
+            font-weight: bold;
+            color: var(--text-dark);
+        }
+        .export-leg-item { display: flex; align-items: center; gap: 3px; }
+        .export-leg-box { width: 8px; height: 8px; border-radius: 2px; }
+
+        .export-stage {
+            background: #d8ceca;
+            color: #ffffff;
+            text-align: center;
+            font-size: 0.64rem;
+            font-weight: bold;
+            padding: 2px 0;
+            width: 100%;
+            border-radius: 3px;
+            letter-spacing: 3px;
+            margin-bottom: 3px;
+        }
+
+        .export-map-wrap {
+            width: 100%;
+        }
+
+        .export-floor-title {
+            font-size: 0.62rem;
+            font-weight: bold;
+            color: #d9536f;
+            margin: 1px 0;
+        }
+
+        .export-map-wrap .seat-row {
+            height: 8.8px !important;
+            margin-bottom: 1.5px !important;
+        }
+        .export-map-wrap .s-btn {
+            width: 8.2px !important;
+            height: 8.2px !important;
+            font-size: 0.36rem !important;
+            line-height: 8.2px !important;
+            border-radius: 1.5px !important;
+        }
+        .export-map-wrap .row-label {
+            font-size: 0.50rem !important;
+            width: 11px !important;
+        }
+        .export-map-wrap .sec-header-row {
+            font-size: 0.60rem !important;
+        }
+        .export-map-wrap .spacer-row {
+            height: 4px !important;
+        }
+
+        /* 총 관극 횟수 & 대각선 보름달·달빛·벤치 영역 */
+        .export-stats-section {
+            flex: 0.88;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+            background: transparent !important;
+            padding: 4px 0 2px 0;
+            min-height: 255px;
+        }
+
+        /* 보름달을 2026.10.06 텍스트 높이와 정확히 맞춘 대각선 조명 SVG */
+        .moon-diagonal-beam-svg {
+            position: absolute;
+            top: -12px;
+            left: -4px;
+            width: 245px;
+            height: 245px;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* 공연 기간 & 서울 달기지 기준 문구 */
+        .export-show-meta {
+            position: relative;
+            z-index: 2;
+            align-self: flex-end;
+            text-align: right;
+            margin-right: 2px;
+            margin-top: 2px;
+            margin-bottom: 66px;
+            color: #8c7b70;
+            line-height: 1.32;
+            letter-spacing: -0.25px;
+        }
+
+        .export-show-meta-date {
+            font-size: 0.60rem;
+            font-weight: 700;
+            color: #7d6d63;
+        }
+
+        .export-show-meta-place {
+            font-size: 0.55rem;
+            font-weight: 400;
+            color: #96867b;
+        }
+
+        /* 달빛이 향하는 길목: 감성 영문 문구 */
+        .export-moon-quote {
+            position: relative;
+            z-index: 2;
+            font-family: Georgia, 'Times New Roman', serif !important;
+            font-style: italic;
+            font-size: 0.68rem;
+            font-weight: 400;
+            color: #9e7b36;
+            letter-spacing: 0.2px;
+            margin-bottom: 5px;
+            text-align: center;
+            width: 100%;
+            opacity: 0.92;
+        }
+
+        .export-stat-title {
+            position: relative;
+            z-index: 2;
+            font-size: 0.80rem;
+            font-weight: 800;
+            color: #4a3f35;
+            margin-bottom: 2px;
+            text-align: center;
+            width: 100%;
+            letter-spacing: -0.3px;
+        }
+
+        .export-stat-number {
+            position: relative;
+            z-index: 3;
+            font-size: 2.35rem;
+            font-weight: 900;
+            color: #d9536f;
+            line-height: 0.92;
+            text-align: center;
+            width: 100%;
+            margin-bottom: -5px;
+        }
+
+        .bench-groundflower-svg {
+            position: relative;
+            z-index: 2;
+            width: 230px;
+            height: 68px;
+            display: block;
+            margin: 0 auto;
+        }
     </style>
 </head>
 <body oncontextmenu="return false;" ondragstart="return false;" onselectstart="return false;">
@@ -750,16 +1176,16 @@
 <div class="container">
     <header id="main-header">
         <div class="header-logo-wrap" id="logo-wrap">
-            <img src="./letmeflyrogo.png" alt="LET ME FLY" class="header-logo" id="header-logo-img" onerror="handleLogoError()">
+            <img src="./letmeflyrogo2.png" alt="LET ME FLY" class="header-logo" id="header-logo-img" onerror="if(!this.dataset.fallback){this.dataset.fallback='true'; this.src='./letmeflyrogo.png';} else {handleLogoError();}">
         </div>
         <p class="contact-info">문의는 <a href="https://x.com/hillpeakk?s=11" target="_blank">@hillpeakk</a> 로 연락 주세요.</p>
     </header>
 
     <div class="card">
-        <details open>
+        <details open id="schedule-details">
             <summary>🧁 회차별 스케줄</summary>
 
-            <div class="table-container">
+            <div class="table-container" id="schedule-scroll-box">
                 <table class="schedule-tbl">
                     <thead>
                         <tr>
@@ -900,9 +1326,16 @@
             <div class="cast-board-container" id="cast-board-container"></div>
         </details>
     </div>
+
+    <!-- 하단 달기지 저장 메뉴 -->
+    <div class="png-menu-card">
+        <button type="button" class="btn-png-menu" onclick="exportToPNG()">
+            <span>🌕</span> 달기지 저장
+        </button>
+    </div>
 </div>
 
-<!-- 모달 1: 프리뷰 선물 -->
+<!-- 모달 1~9 -->
 <div class="modal-overlay" id="gift-modal">
     <div class="modal-content">
         <button class="modal-close-btn" onclick="closeGiftModal()">×</button>
@@ -939,7 +1372,6 @@
     </div>
 </div>
 
-<!-- 모달 2: 럭키드로우 / 커튼콜위크 -->
 <div class="modal-overlay" id="lucky-modal">
     <div class="modal-content">
         <button class="modal-close-btn" onclick="closeLuckyModal()">×</button>
@@ -972,7 +1404,6 @@
     </div>
 </div>
 
-<!-- 모달 3: 그래이공DAY -->
 <div class="modal-overlay" id="graygong-modal">
     <div class="modal-content">
         <button class="modal-close-btn" onclick="closeGraygongModal()">×</button>
@@ -1001,7 +1432,6 @@
     </div>
 </div>
 
-<!-- 모달 4: 스페셜 커튼콜 데이 -->
 <div class="modal-overlay" id="special-modal">
     <div class="modal-content">
         <button class="modal-close-btn" onclick="closeSpecialModal()">×</button>
@@ -1022,9 +1452,7 @@
                     <th>출연진</th>
                 </tr>
             </thead>
-            <tbody id="special-tbl-body">
-                <!-- 스크립트 dynamic 생성 -->
-            </tbody>
+            <tbody id="special-tbl-body"></tbody>
         </table>
 
         <div class="modal-notice">
@@ -1037,7 +1465,6 @@
     </div>
 </div>
 
-<!-- 모달 5: 관객과의 대화 -->
 <div class="modal-overlay" id="talk-modal">
     <div class="modal-content">
         <button class="modal-close-btn" onclick="closeTalkModal()">×</button>
@@ -1069,7 +1496,6 @@
     </div>
 </div>
 
-<!-- 모달 6: 링크 스페셜 데이 -->
 <div class="modal-overlay" id="link-modal">
     <div class="modal-content">
         <button class="modal-close-btn" onclick="closeLinkModal()">×</button>
@@ -1105,7 +1531,6 @@
     </div>
 </div>
 
-<!-- 모달 7: 커튼콜위크 -->
 <div class="modal-overlay" id="cc-modal">
     <div class="modal-content">
         <button class="modal-close-btn" onclick="closeCCModal()">×</button>
@@ -1120,7 +1545,6 @@
     </div>
 </div>
 
-<!-- 모달 8: 스페셜 티켓 증정 위크 -->
 <div class="modal-overlay" id="spticket-modal">
     <div class="modal-content">
         <button class="modal-close-btn" onclick="closeSpTicketModal()">×</button>
@@ -1130,6 +1554,319 @@
 
         <div class="modal-notice">
             • 라디오 메모리티켓 증정
+        </div>
+    </div>
+</div>
+
+<!-- 모달 9: 슈가데이(NOL) -->
+<div class="modal-overlay" id="sugar-modal">
+    <div class="modal-content">
+        <button class="modal-close-btn" onclick="closeSugarModal()">×</button>
+        <div class="modal-header-sub">MUSICAL LET ME FLY X NOL</div>
+        <div class="modal-title-main" style="color: #e84393;">슈가데이 (NOL)</div>
+        <div class="modal-date-badge" style="background: #e84393;">12/17(목) 19시 30분 공연 (총 1회차, 1인 4매)</div>
+
+        <div class="sugar-benefit-card">
+            <div class="sugar-benefit-title">슈가데이 할인 <span>전석 40%</span></div>
+            <div class="sugar-benefit-sub">12/17(목) 19시 30분 공연 (총 1회차, 1인 4매)</div>
+        </div>
+
+        <div class="sugar-benefit-card">
+            <div class="sugar-benefit-title">추가 할인쿠폰 <span>5,000원 증정</span></div>
+            <div class="sugar-benefit-sub">예매 1건 당 쿠폰 1매 적용</div>
+        </div>
+
+        <div class="sugar-benefit-card">
+            <div class="sugar-benefit-title">무대인사 &amp; 럭키드로우 &amp; 포토타임</div>
+            <div class="sugar-detail-box">
+                • <b>무대인사 &amp; 포토타임:</b> 사진 및 영상 촬영 가능 (단, 삼각대 및 플래시 사용 불가, 좌석 이동 불가)<br><br>
+                • <b>럭키드로우:</b> 공연 종료 후 추첨을 통해 선물 증정<br>
+                &nbsp;&nbsp;- 당일 회차 출연진의 사인이 담긴 프로그램북<br>
+                &nbsp;&nbsp;- 당일 회차 출연진의 폴라로이드 사진 1매 (당일 회차 출연진 중 랜덤 증정)<br>
+                &nbsp;&nbsp;- 뮤지컬 &lt;렛미플라이&gt; R석 관람권 (1인 2매)<br>
+                &nbsp;&nbsp;- NOL 포인트 지급(지류권)
+            </div>
+        </div>
+
+        <div class="sugar-benefit-card">
+            <div class="sugar-benefit-title">'또봄 쿠폰' <span>3,000원 증정</span></div>
+            <div class="sugar-benefit-sub">12/18(금)-1/3(일) 공연 사용 가능 (1인 1매)</div>
+        </div>
+
+        <div class="modal-notice">
+            ※ 상기 할인을 포함하여 그 외 관련 세부 내용은 NOL 예매페이지를 참고해 주시기 바랍니다.
+        </div>
+    </div>
+</div>
+
+<!-- ⭐ 10년차 디자이너 최종 PNG 캡처 캔버스 (720px x 780px) -->
+<div id="export-canvas" class="export-canvas-wrapper">
+    <!-- 상·중·하단 여백을 감성적으로 채운 렛미플라이 배경 일러스트 -->
+    <svg class="export-bg-svg" width="720" height="780" viewBox="0 0 720 780" xmlns="http://www.w3.org/2000/svg">
+        <g stroke="#e88a99" stroke-width="1.15" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="0.28">
+            <!-- 좌측 상단 여백: 라디오 & 주파수 -->
+            <g transform="translate(36, 32) rotate(-8)">
+                <rect x="0" y="10" width="32" height="20" rx="3.5" fill="#fdf3f4" stroke="#d9536f"/>
+                <line x1="7" y1="10" x2="22" y2="1" stroke="#d9536f"/>
+                <circle cx="10" cy="20" r="4.5" stroke="#d9536f"/>
+                <line x1="19" y1="16" x2="27" y2="16" stroke="#d9536f"/>
+                <line x1="19" y1="20" x2="27" y2="20" stroke="#d9536f"/>
+                <line x1="19" y1="24" x2="27" y2="24" stroke="#d9536f"/>
+                <path d="M 36 14 Q 41 20, 36 26" stroke="#d9536f"/>
+            </g>
+
+            <!-- 좌측 상단 보조: 초승달 & 별 -->
+            <g transform="translate(115, 76) rotate(-14)">
+                <path d="M 12 2 C 6 4, 4 13, 10 17 C 7 13, 8 6, 12 2 Z" fill="#fdf3f4" stroke="#d9536f"/>
+                <path d="M 19 6 L 19 11 M 16.5 8.5 L 21.5 8.5" stroke="#70a1ff"/>
+            </g>
+
+            <!-- 우측 상단 여백(바늘 아래쪽): 토성 행성 & 반짝이 -->
+            <g transform="translate(596, 62) rotate(12)">
+                <circle cx="22" cy="20" r="12" stroke="#70a1ff" fill="#f2f7ff"/>
+                <ellipse cx="22" cy="20" rx="22" ry="6" transform="rotate(-20 22 20)" stroke="#d9536f"/>
+                <path d="M 48 5 L 48 11 M 45 8 L 51 8" stroke="#d9536f"/>
+            </g>
+
+            <!-- 중앙 왼쪽 여백: 수선집 실패(실타래) -->
+            <g transform="translate(24, 272) rotate(-14)">
+                <rect x="4" y="4" width="16" height="22" rx="2" fill="#fdf3f4"/>
+                <line x1="1" y1="4" x2="23" y2="4" stroke-width="1.5"/>
+                <line x1="1" y1="26" x2="23" y2="26" stroke-width="1.5"/>
+                <line x1="4" y1="10" x2="20" y2="12"/>
+                <line x1="4" y1="16" x2="20" y2="18"/>
+                <path d="M 20 22 C 30 24, 26 35, 38 33" stroke-dasharray="2 2"/>
+            </g>
+
+            <!-- 1줄과 2줄 사이 좌측 중간 여백: 단추 2개 -->
+            <g transform="translate(185, 276)">
+                <circle cx="8" cy="8" r="6" stroke="#70a1ff" fill="#f2f7ff"/>
+                <circle cx="6.5" cy="6.5" r="0.8" fill="#70a1ff"/>
+                <circle cx="9.5" cy="6.5" r="0.8" fill="#70a1ff"/>
+                <circle cx="6.5" cy="9.5" r="0.8" fill="#70a1ff"/>
+                <circle cx="9.5" cy="9.5" r="0.8" fill="#70a1ff"/>
+                <path d="M 18 9 Q 32 3, 46 10" stroke-dasharray="2.5 2.5"/>
+            </g>
+
+            <!-- 1줄과 2줄 사이 중앙 빈 여백: 컵케이크 -->
+            <g transform="translate(342, 274) rotate(6)">
+                <path d="M 4 16 C 4 5, 17 5, 17 16 C 17 5, 30 5, 30 16 L 26 28 L 8 28 Z" fill="#fdf3f4"/>
+                <path d="M 8 28 L 11 40 L 23 40 L 26 28"/>
+                <circle cx="17" cy="4" r="2" fill="#e88a99"/>
+            </g>
+
+            <!-- 1줄과 2줄 사이 우측 중간 여백: 작은 우주선/별똥별 -->
+            <g transform="translate(502, 278) rotate(-18)">
+                <path d="M 2 14 Q 18 6, 36 12" stroke-dasharray="2.5 2.5"/>
+                <path d="M 40 6 L 40 13 M 36.5 9.5 L 43.5 9.5" stroke="#d9536f"/>
+            </g>
+
+            <!-- 우측 중단 여백: 재단 가위 -->
+            <g transform="translate(664, 268) rotate(22)">
+                <path d="M 6 6 L 26 26 M 26 6 L 6 26"/>
+                <circle cx="3" cy="3" r="3.5"/>
+                <circle cx="29" cy="3" r="3.5"/>
+            </g>
+
+            <!-- 하단 좌석배치도 위쪽 여백: 열기구/우주탐사 기구 -->
+            <g transform="translate(26, 468) rotate(-12)">
+                <path d="M 12 2 C 20 2, 24 12, 12 22 C 0 12, 4 2, 12 2 Z" fill="#f2f7ff" stroke="#70a1ff"/>
+                <line x1="7" y1="22" x2="9" y2="28" stroke="#70a1ff"/>
+                <line x1="17" y1="22" x2="15" y2="28" stroke="#70a1ff"/>
+                <rect x="8" y="28" width="8" height="5" rx="1" stroke="#d9536f"/>
+            </g>
+
+            <!-- 하단 좌석배치도 위 우측 여백: 라디오 음표/별 -->
+            <g transform="translate(392, 468)">
+                <circle cx="8" cy="14" r="3" stroke="#d9536f"/>
+                <path d="M 11 14 L 11 4 L 18 2 L 18 12" stroke="#d9536f"/>
+                <circle cx="15" cy="12" r="3" stroke="#d9536f"/>
+                <path d="M 26 5 L 26 11 M 23 8 L 29 8" stroke="#70a1ff"/>
+            </g>
+
+            <!-- 하단 좌석배치도 1F 좌측 상단 빈칸 여백: 단추 & 점선 궤적 -->
+            <g transform="translate(24, 526)">
+                <circle cx="12" cy="12" r="6.5" stroke="#d9536f" fill="#fdf3f4"/>
+                <circle cx="10" cy="10" r="0.9" fill="#d9536f"/>
+                <circle cx="14" cy="10" r="0.9" fill="#d9536f"/>
+                <circle cx="10" cy="14" r="0.9" fill="#d9536f"/>
+                <circle cx="14" cy="14" r="0.9" fill="#d9536f"/>
+                <path d="M 22 14 Q 38 6, 54 14" stroke-dasharray="2.5 2.5"/>
+            </g>
+
+            <!-- 하단 좌석배치도 1F 우측 상단 빈칸 여백: 작은 컵케이크 -->
+            <g transform="translate(415, 518) rotate(8) scale(0.8)">
+                <path d="M 4 16 C 4 5, 17 5, 17 16 C 17 5, 30 5, 30 16 L 26 28 L 8 28 Z" fill="#fdf3f4"/>
+                <path d="M 8 28 L 11 40 L 23 40 L 26 28"/>
+                <circle cx="17" cy="4" r="2" fill="#e88a99"/>
+            </g>
+
+            <!-- 하단 좌석배치도 2F 좌측 상단 빈칸 여백: 작은 행성 -->
+            <g transform="translate(20, 682) rotate(-15) scale(0.75)">
+                <circle cx="18" cy="16" r="10" stroke="#70a1ff" fill="#f2f7ff"/>
+                <ellipse cx="18" cy="16" rx="18" ry="5" transform="rotate(-18 18 16)" stroke="#d9536f"/>
+            </g>
+
+            <!-- 하단 우측 여백(벤치 오른쪽 위·아래): 반짝이 별과 실선 곡선 -->
+            <g transform="translate(658, 505)">
+                <path d="M 10 2 L 10 10 M 6 6 L 14 6" stroke="#70a1ff"/>
+                <path d="M 24 24 L 24 30 M 21 27 L 27 27" stroke="#d9536f"/>
+                <path d="M 4 38 Q 18 32, 32 42" stroke-dasharray="2.5 2.5"/>
+            </g>
+            <g transform="translate(664, 625) rotate(15) scale(0.85)">
+                <rect x="4" y="4" width="14" height="20" rx="2" fill="#fdf3f4"/>
+                <line x1="1" y1="4" x2="21" y2="4" stroke-width="1.4"/>
+                <line x1="1" y1="24" x2="21" y2="24" stroke-width="1.4"/>
+                <path d="M 18 20 C 26 22, 22 30, 32 29" stroke-dasharray="2 2"/>
+            </g>
+
+            <!-- 은은하게 흩뿌려진 작은 별 점들 -->
+            <circle cx="195" cy="82" r="1.5" fill="#e88a99"/>
+            <circle cx="515" cy="78" r="1.5" fill="#70a1ff"/>
+            <circle cx="120" cy="288" r="1.5" fill="#70a1ff"/>
+            <circle cx="605" cy="292" r="1.5" fill="#e88a99"/>
+            <circle cx="240" cy="472" r="1.5" fill="#e88a99"/>
+            <circle cx="458" cy="672" r="1.5" fill="#70a1ff"/>
+            <circle cx="675" cy="715" r="1.5" fill="#e88a99"/>
+        </g>
+    </svg>
+
+    <!-- 우측 상단 모서리에서 시작해 테두리를 감싸는 한 땀 바느질 & 바늘·실 SVG -->
+    <svg class="export-stitch-svg" width="720" height="780" viewBox="0 0 720 780" xmlns="http://www.w3.org/2000/svg">
+        <path d="M 676 10 L 10 10 L 10 770 L 710 770 L 710 54" 
+              fill="none" 
+              stroke="#e88a99" 
+              stroke-width="1.4" 
+              stroke-dasharray="4.2 2.6" 
+              stroke-linecap="round" 
+              stroke-linejoin="round" />
+        
+        <path d="M 710 54 C 701 46, 692 38, 684 30" 
+              fill="none" 
+              stroke="#e88a99" 
+              stroke-width="1.3" 
+              stroke-linecap="round" />
+        
+        <g transform="translate(678, 24) rotate(-135)">
+            <path d="M -18 0 L 12 0 L 16 0 L 12 -1.2 L -18 -1.2 Z" fill="#8e9aa0" />
+            <ellipse cx="-13" cy="-0.6" rx="2.5" ry="0.5" fill="#fcf7f0" />
+            <path d="M -13 -0.6 C -19 -5, -27 3.5, -35 -1.2" fill="none" stroke="#e88a99" stroke-width="1.1" stroke-linecap="round" />
+        </g>
+        
+        <circle cx="676" cy="10" r="1.5" fill="#d9536f" />
+    </svg>
+
+    <!-- letmeflyrogo2.png 적용 헤더 -->
+    <div class="export-header">
+        <img src="./letmeflyrogo2.png" alt="LET ME FLY" class="export-header-logo" onerror="this.src='./letmeflyrogo.png';">
+    </div>
+    
+    <div class="export-main-body">
+        <!-- 1열: 노인남원 / 선희 -->
+        <div class="export-cast-row" id="export-cast-row-1"></div>
+
+        <!-- 2열: 청년남원 / 정분 -->
+        <div class="export-cast-row" id="export-cast-row-2"></div>
+
+        <!-- 3열: 좌석배치도 & 보름달(2026.10.06 높이에 수평 정렬) + 대각선 달빛 + 벤치 -->
+        <div class="export-bottom-row">
+            <div class="export-seat-section">
+                <div class="export-legend-top">
+                    <div class="export-leg-item"><div class="export-leg-box" style="background:var(--seat-v1);"></div> 1회</div>
+                    <div class="export-leg-item"><div class="export-leg-box" style="background:var(--seat-v2);"></div> 2회</div>
+                    <div class="export-leg-item"><div class="export-leg-box" style="background:var(--seat-v3);"></div> 3회+</div>
+                </div>
+                <div class="export-stage">STAGE</div>
+                <div class="export-map-wrap">
+                    <div class="export-floor-title">1F</div>
+                    <div id="export-map-1f"></div>
+                    <div class="export-floor-title" style="margin-top:1px;">2F</div>
+                    <div id="export-map-2f"></div>
+                </div>
+            </div>
+
+            <div class="export-stats-section">
+                <!-- 보름달을 2026.10.06. 날짜 높이에 맞춰 살짝 아래(x=44, y=48)로 배치하고 우측 하단 벤치 방향으로 달빛이 비추는 SVG -->
+                <svg class="moon-diagonal-beam-svg" viewBox="0 0 245 245" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="moonDiagBeam" x1="15%" y1="18%" x2="72%" y2="85%">
+                            <stop offset="0%" stop-color="#ffe066" stop-opacity="0.34"/>
+                            <stop offset="52%" stop-color="#ffec99" stop-opacity="0.16"/>
+                            <stop offset="100%" stop-color="#fff9db" stop-opacity="0"/>
+                        </linearGradient>
+                    </defs>
+
+                    <!-- 보름달(x=44, y=48)에서 대각선 아래 숫자·벤치(x=122, y=195) 방향으로 퍼지는 부드러운 노란 달빛 -->
+                    <polygon points="26,58 62,36 205,190 54,190" fill="url(#moonDiagBeam)"/>
+
+                    <!-- 좌측 상단 보름달: 2026.10.06. 날짜 높이와 나란히 맞춤 (x=44, y=48) -->
+                    <g transform="translate(44, 48)" stroke="#d9a738" fill="none" stroke-linecap="round">
+                        <circle cx="0" cy="0" r="20" stroke-width="1.5"/>
+                        <circle cx="0" cy="0" r="17.8" stroke-width="0.6" stroke-dasharray="3 2" opacity="0.7"/>
+                        <!-- 달 표면 크레이터 라인 스케치 -->
+                        <path d="M -7 -6 A 4.4 4.4 0 1 1 -2 -10" stroke-width="1.1"/>
+                        <circle cx="7" cy="-5" r="2.8" stroke-width="1.1"/>
+                        <circle cx="-5" cy="7" r="3.6" stroke-width="1.1"/>
+                        <path d="M 4 6 A 3 3 0 0 0 9.5 8.5" stroke-width="1"/>
+                        <circle cx="1" cy="1" r="1.2" stroke-width="1"/>
+                        <!-- 달 주변 반짝이는 작은 별 -->
+                        <path d="M -23 -13 L -23 -8 M -25.5 -10.5 L -20.5 -10.5" stroke-width="1.1"/>
+                        <path d="M 24 -16 L 24 -11 M 21.5 -13.5 L 26.5 -13.5" stroke-width="1"/>
+                    </g>
+                </svg>
+
+                <!-- 보름달 바로 오른쪽 옆에 나란히 배치된 공연 기간 & 서울 달기지 기준 문구 -->
+                <div class="export-show-meta">
+                    <div class="export-show-meta-date">2026.10.06.-2027.01.03. Let Me Fly</div>
+                    <div class="export-show-meta-place">서울 달기지 기준 (두산아트센터 연강홀)</div>
+                </div>
+
+                <!-- 달빛이 향하는 길목: 감성 영문 문구 -->
+                <div class="export-moon-quote">We choose to go to the moon</div>
+
+                <!-- 벤치 정중앙 기준 정렬 텍스트 -->
+                <div class="export-stat-title">총 관극 횟수 / 전체 스케줄</div>
+                
+                <!-- 벤치 정중앙 위에 앉은 숫자 -->
+                <div class="export-stat-number"><span id="export-sch-ratio">0/100</span></div>
+                
+                <!-- 텍스트·숫자와 중심축이 일치하는 평벤치 + 아담한 하얀 꽃 -->
+                <svg class="bench-groundflower-svg" viewBox="0 0 230 68" xmlns="http://www.w3.org/2000/svg">
+                    <!-- 바닥 잔디/점선 -->
+                    <path d="M 18 60 Q 115 58, 212 60" fill="none" stroke="#d5c6b8" stroke-width="1.3" stroke-linecap="round" stroke-dasharray="3 3"/>
+                    
+                    <!-- 등받이 없는 평벤치 (정중앙 x=115 대칭: 좌측 끝 37 ~ 우측 끝 193) -->
+                    <g stroke-linecap="round" stroke-linejoin="round">
+                        <!-- 왼쪽 철제 다리 -->
+                        <path d="M 53 32 L 49 59 M 67 32 L 69 59 M 51 46 L 68 46" fill="none" stroke="#5c5353" stroke-width="1.8"/>
+                        <!-- 오른쪽 철제 다리 -->
+                        <path d="M 163 32 L 161 59 M 177 32 L 181 59 M 162 46 L 179 46" fill="none" stroke="#5c5353" stroke-width="1.8"/>
+                        
+                        <!-- 벤치 상판 (정중앙 x=115) -->
+                        <polygon points="43,24 187,24 193,30 37,30" fill="#edd7c3" stroke="#8c6d56" stroke-width="1.4"/>
+                        <rect x="37" y="30" width="156" height="4.5" rx="1.5" fill="#d9b99b" stroke="#8c6d56" stroke-width="1.4"/>
+                        <!-- 나무 결 -->
+                        <line x1="59" y1="27" x2="95" y2="27" stroke="#b59479" stroke-width="0.9"/>
+                        <line x1="133" y1="27" x2="167" y2="27" stroke="#b59479" stroke-width="0.9"/>
+                    </g>
+
+                    <!-- 벤치 오른쪽 다리 옆 바닥에 작고 아담하게 피어난 하얀 꽃 한 송이 -->
+                    <g transform="translate(191, 36) scale(0.68)">
+                        <path d="M 4 35 Q 2 22, 6 11" fill="none" stroke="#6b9674" stroke-width="1.6" stroke-linecap="round"/>
+                        <path d="M 3 29 C -4 25, -7 28, -2 32 C 0 33, 2 31, 3 29 Z" fill="#b7d8be" stroke="#6b9674" stroke-width="1.1" stroke-linejoin="round"/>
+                        <path d="M 4 24 C 11 19, 15 22, 10 26 C 8 27, 5 26, 4 24 Z" fill="#b7d8be" stroke="#6b9674" stroke-width="1.1" stroke-linejoin="round"/>
+
+                        <g transform="translate(6, 10)">
+                            <ellipse cx="0" cy="-7" rx="3.4" ry="5.5" fill="#ffffff" stroke="#a69f98" stroke-width="1.1"/>
+                            <ellipse cx="6.6" cy="-2.2" rx="3.4" ry="5.5" transform="rotate(72 6.6 -2.2)" fill="#ffffff" stroke="#a69f98" stroke-width="1.1"/>
+                            <ellipse cx="4.1" cy="5.6" rx="3.4" ry="5.5" transform="rotate(144 4.1 5.6)" fill="#ffffff" stroke="#a69f98" stroke-width="1.1"/>
+                            <ellipse cx="-4.1" cy="5.6" rx="3.4" ry="5.5" transform="rotate(216 -4.1 5.6)" fill="#ffffff" stroke="#a69f98" stroke-width="1.1"/>
+                            <ellipse cx="-6.6" cy="-2.2" rx="3.4" ry="5.5" transform="rotate(288 -6.6 -2.2)" fill="#ffffff" stroke="#a69f98" stroke-width="1.1"/>
+                            <circle cx="0" cy="0" r="2.6" fill="#ffd166" stroke="#c9962c" stroke-width="1"/>
+                        </g>
+                    </g>
+                </svg>
+            </div>
         </div>
     </div>
 </div>
@@ -1245,7 +1982,6 @@
         { date: "11/28(토)", time: "19:00", cast: ["이형훈", "배해선", "윤재호", "박슬기"], evt: "-" },
         { date: "11/29(일)", time: "14:00", cast: ["안재욱", "윤공주", "윤소호", "이수빈"], evt: "-" },
         { date: "11/29(일)", time: "18:00", cast: ["이희준", "윤공주", "안지환", "박슬기"], evt: "-" },
-        /* 12월 스케줄 */
         { date: "12/01(화)", time: "19:30", cast: ["이희준", "윤공주", "안지환", "이수빈"], evt: "-" },
         { date: "12/02(수)", time: "15:00", cast: ["안재욱", "배해선", "윤소호", "홍지희"], evt: "-" },
         { date: "12/02(수)", time: "19:30", cast: ["이희준", "배해선", "안지환", "홍지희"], evt: "-" },
@@ -1267,10 +2003,10 @@
         { date: "12/13(일)", time: "18:00", cast: ["오의식", "김지현", "안지환", "박슬기"], evt: "-" },
         { date: "12/15(화)", time: "19:30", cast: ["안재욱", "배해선", "안지환", "홍지희"], evt: "-" },
         { date: "12/16(수)", time: "19:30", cast: ["이희준", "윤공주", "안지환", "이수빈"], evt: "-" },
-        { date: "12/17(목)", time: "19:30", cast: ["오의식", "김지현", "윤재호", "박슬기"], evt: "전관" },
+        { date: "12/17(목)", time: "19:30", cast: ["오의식", "김지현", "윤재호", "박슬기"], evt: "슈가데이(nol)" },
         { date: "12/18(금)", time: "15:00", cast: ["이희준", "배해선", "윤소호", "홍지희"], evt: "-" },
         { date: "12/18(금)", time: "19:30", cast: ["이형훈", "배해선", "안지환", "박슬기"], evt: "-" },
-        { date: "12/19(토)", time: "15:00", cast: ["안재욱", "윤공주", "윤재호", "이수빈"], evt: "전관" },
+        { date: "12/19(토)", time: "15:00", cast: ["안재욱", "윤공주", "윤재호", "이수빈"], evt: "기업 전관 마감" },
         { date: "12/19(토)", time: "19:00", cast: ["이형훈", "윤공주", "윤소호", "홍지희"], evt: "-" },
         { date: "12/20(일)", time: "14:00", cast: ["안재욱", "배해선", "안지환", "박슬기"], evt: "-" },
         { date: "12/20(일)", time: "18:00", cast: ["오의식", "윤공주", "안지환", "이수빈"], evt: "-" }
@@ -1311,26 +2047,14 @@
         renderSch();
     }
 
-    function openGiftModal() {
-        document.getElementById('gift-modal').classList.add('active');
-    }
-    function closeGiftModal() {
-        document.getElementById('gift-modal').classList.remove('active');
-    }
+    function openGiftModal() { document.getElementById('gift-modal').classList.add('active'); }
+    function closeGiftModal() { document.getElementById('gift-modal').classList.remove('active'); }
 
-    function openLuckyModal() {
-        document.getElementById('lucky-modal').classList.add('active');
-    }
-    function closeLuckyModal() {
-        document.getElementById('lucky-modal').classList.remove('active');
-    }
+    function openLuckyModal() { document.getElementById('lucky-modal').classList.add('active'); }
+    function closeLuckyModal() { document.getElementById('lucky-modal').classList.remove('active'); }
 
-    function openGraygongModal() {
-        document.getElementById('graygong-modal').classList.add('active');
-    }
-    function closeGraygongModal() {
-        document.getElementById('graygong-modal').classList.remove('active');
-    }
+    function openGraygongModal() { document.getElementById('graygong-modal').classList.add('active'); }
+    function closeGraygongModal() { document.getElementById('graygong-modal').classList.remove('active'); }
 
     let activeSpecialTab = 1;
     let targetSpecialDate = '';
@@ -1383,9 +2107,7 @@
         });
     }
 
-    function closeSpecialModal() {
-        document.getElementById('special-modal').classList.remove('active');
-    }
+    function closeSpecialModal() { document.getElementById('special-modal').classList.remove('active'); }
 
     function openTalkModal(targetDate) {
         const box27 = document.getElementById('talk-box-1027');
@@ -1402,37 +2124,90 @@
 
         document.getElementById('talk-modal').classList.add('active');
     }
-    function closeTalkModal() {
-        document.getElementById('talk-modal').classList.remove('active');
+    function closeTalkModal() { document.getElementById('talk-modal').classList.remove('active'); }
+
+    function openLinkModal() { document.getElementById('link-modal').classList.add('active'); }
+    function closeLinkModal() { document.getElementById('link-modal').classList.remove('active'); }
+
+    function openCCModal() { document.getElementById('cc-modal').classList.add('active'); }
+    function closeCCModal() { document.getElementById('cc-modal').classList.remove('active'); }
+
+    function openSpTicketModal() { document.getElementById('spticket-modal').classList.add('active'); }
+    function closeSpTicketModal() { document.getElementById('spticket-modal').classList.remove('active'); }
+
+    function openSugarModal() { document.getElementById('sugar-modal').classList.add('active'); }
+    function closeSugarModal() { document.getElementById('sugar-modal').classList.remove('active'); }
+
+    /* 네이버 시계 기준(한국 표준시 KST) 오늘 날짜 계산 */
+    function getKSTTodayInfo() {
+        const now = new Date();
+        const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
+        const kst = new Date(utc + (9 * 3600000));
+        const month = kst.getMonth() + 1;
+        const day = kst.getDate();
+        const mm = String(month).padStart(2, '0');
+        const dd = String(day).padStart(2, '0');
+        return {
+            year: kst.getFullYear(),
+            month,
+            day,
+            mmdd: `${mm}/${dd}`,
+            dateObj: new Date(2026, month - 1, day)
+        };
     }
 
-    function openLinkModal() {
-        document.getElementById('link-modal').classList.add('active');
-    }
-    function closeLinkModal() {
-        document.getElementById('link-modal').classList.remove('active');
-    }
-
-    function openCCModal() {
-        document.getElementById('cc-modal').classList.add('active');
-    }
-    function closeCCModal() {
-        document.getElementById('cc-modal').classList.remove('active');
+    function parseScheduleDateOnly(dateStr) {
+        const match = dateStr.match(/(\d+)\/(\d+)/);
+        if (!match) return new Date(2026, 0, 1);
+        const m = parseInt(match[1], 10);
+        const d = parseInt(match[2], 10);
+        const y = (m === 1) ? 2027 : 2026;
+        return new Date(y, m - 1, d);
     }
 
-    function openSpTicketModal() {
-        document.getElementById('spticket-modal').classList.add('active');
-    }
-    function closeSpTicketModal() {
-        document.getElementById('spticket-modal').classList.remove('active');
+    /* 오늘 날짜(또는 가장 가까운 미래 회차) 줄로 스크롤 위치 자동 이동 */
+    function scrollToTodaySchedule() {
+        const scrollBox = document.getElementById('schedule-scroll-box');
+        if (!scrollBox) return;
+
+        const targetRow = scrollBox.querySelector('tr.today-show') || scrollBox.querySelector('tr.upcoming-first-show');
+        const thead = scrollBox.querySelector('thead');
+        const headerHeight = thead ? thead.offsetHeight : 0;
+
+        if (targetRow) {
+            scrollBox.scrollTop = Math.max(0, targetRow.offsetTop - headerHeight);
+        } else {
+            scrollBox.scrollTop = 0;
+        }
     }
 
     function renderSch() {
         const tbody = document.getElementById('sch-tbody');
         tbody.innerHTML = '';
-        schedules.filter(s => filter.every(a => s.cast.includes(a))).forEach((s) => {
+
+        const todayInfo = getKSTTodayInfo();
+        const todayMidnight = todayInfo.dateObj.getTime();
+        const todayMmdd = todayInfo.mmdd;
+
+        // 전체 스케줄은 그대로 유지하고 배우 필터만 적용
+        const targetSchedules = schedules.filter(s => filter.every(a => s.cast.includes(a)));
+        let foundUpcomingFirst = false;
+
+        targetSchedules.forEach((s) => {
             const originalIndex = schedules.indexOf(s);
             const tr = document.createElement('tr');
+            const rowDateMidnight = parseScheduleDateOnly(s.date).getTime();
+
+            // 오늘 날짜 공연일 경우 한 줄 연보라색 하이라이트 클래스 부여
+            if (s.date.startsWith(todayMmdd)) {
+                tr.classList.add('today-show');
+            }
+            // 오늘 공연이 없는 날(예: 월요일 휴관)일 때 가장 가까운 다음 공연 회차 표시
+            if (!foundUpcomingFirst && rowDateMidnight >= todayMidnight) {
+                tr.classList.add('upcoming-first-show');
+                foundUpcomingFirst = true;
+            }
+
             tr.onclick = () => {
                 document.getElementById('f-date').value = `${s.date} ${s.time}`;
                 document.getElementById('f-cast').value = s.cast.join(', ');
@@ -1457,6 +2232,10 @@
                     singleBadge = `<span class="badge-evt bg-talk" onclick="event.stopPropagation(); openTalkModal('${s.date}');">${evtItem}</span>`;
                 } else if(evtItem === '링크스페셜데이') {
                     singleBadge = `<span class="badge-evt bg-link" onclick="event.stopPropagation(); openLinkModal();">${evtItem}</span>`;
+                } else if(evtItem === '슈가데이(nol)') {
+                    singleBadge = `<span class="badge-evt bg-sugar" onclick="event.stopPropagation(); openSugarModal();">${evtItem}</span>`;
+                } else if(evtItem === '기업 전관 마감') {
+                    singleBadge = `<span class="badge-evt bg-corp">${evtItem}</span>`;
                 } else if(evtItem === '전관') {
                     singleBadge = `<span class="badge-evt bg-all">${evtItem}</span>`;
                 } else if(evtItem === '커튼콜' || evtItem === '컷콜') {
@@ -1491,7 +2270,16 @@
             `;
             tbody.appendChild(tr);
         });
+
+        requestAnimationFrame(scrollToTodaySchedule);
     }
+
+    // 접혀있던 스케줄 카드를 다시 펼칠 때도 오늘 날짜 위치로 자동 정렬
+    document.getElementById('schedule-details').addEventListener('toggle', function() {
+        if (this.open) {
+            requestAnimationFrame(scrollToTodaySchedule);
+        }
+    });
 
     function pickSeat(seat, grade) {
         document.getElementById('f-seat').value = seat;
@@ -1764,12 +2552,12 @@
         if (!dateStr) return new Date(0);
         const match = dateStr.match(/(\d+)\/(\d+)\([^)]+\)\s*(\d+):(\d+)/);
         if (match) {
-            const currentYear = new Date().getFullYear();
             const month = parseInt(match[1], 10) - 1;
             const day = parseInt(match[2], 10);
             const hour = parseInt(match[3], 10);
             const minute = parseInt(match[4], 10);
-            return new Date(currentYear, month, day, hour, minute);
+            const year = (month === 0) ? 2027 : 2026;
+            return new Date(year, month, day, hour, minute);
         }
         return new Date(0);
     }
@@ -1954,6 +2742,121 @@
 
             roleSection.appendChild(grid);
             container.appendChild(roleSection);
+        });
+    }
+
+    function exportToPNG() {
+        const row1 = document.getElementById('export-cast-row-1');
+        const row2 = document.getElementById('export-cast-row-2');
+        row1.innerHTML = '';
+        row2.innerHTML = '';
+
+        const totalActorShows = {};
+        schedules.forEach(sch => {
+            sch.cast.forEach(act => {
+                totalActorShows[act] = (totalActorShows[act] || 0) + 1;
+            });
+        });
+
+        const userActorShows = {};
+        const visitedShows = new Set();
+        historyData.forEach(h => {
+            if (h.status !== '양도' && h.cast && h.date) {
+                const dateKey = h.date.trim();
+                if (!visitedShows.has(dateKey)) {
+                    visitedShows.add(dateKey);
+                    const castList = h.cast.split(',').map(c => c.trim());
+                    castList.forEach(act => {
+                        userActorShows[act] = (userActorShows[act] || 0) + 1;
+                    });
+                }
+            }
+        });
+
+        function createRoleHtmlGroup(roleGroup) {
+            const roleDiv = document.createElement('div');
+            roleDiv.className = 'export-role-group';
+
+            const roleTitle = document.createElement('div');
+            roleTitle.className = 'export-role-title';
+            roleTitle.textContent = roleGroup.roleName;
+            roleDiv.appendChild(roleTitle);
+
+            const grid = document.createElement('div');
+            grid.className = 'export-role-grid';
+
+            roleGroup.actors.forEach(actorName => {
+                const card = document.createElement('div');
+                card.className = 'export-cast-card';
+
+                const fileName = actorImageMap[actorName] || `${actorName}.png`;
+                const totalCount = totalActorShows[actorName] || 0;
+                const watchedCount = userActorShows[actorName] || 0;
+
+                card.innerHTML = `
+                    <div class="star-portrait-frame">
+                        <div class="star-portrait-img">
+                            <img src="./${fileName}" alt="${actorName}" 
+                                 onerror="if(!this.dataset.fallback){this.dataset.fallback='true'; this.src='images/${fileName}';}">
+                        </div>
+                        <svg class="star-accent-svg" viewBox="0 0 90 90" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="78" cy="18" r="2.6" fill="#70a1ff" stroke="#ffffff" stroke-width="0.9"/>
+                            <path d="M 14 13 L 14 20 M 10.5 16.5 L 17.5 16.5" stroke="#9575cd" stroke-width="1.25" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <div class="export-cast-name">${actorName}</div>
+                    <div class="export-cast-count">${watchedCount}/${totalCount}</div>
+                `;
+                grid.appendChild(card);
+            });
+
+            roleDiv.appendChild(grid);
+            return roleDiv;
+        }
+
+        row1.appendChild(createRoleHtmlGroup(castRoles[0]));
+        row1.appendChild(createRoleHtmlGroup(castRoles[1]));
+
+        row2.appendChild(createRoleHtmlGroup(castRoles[2]));
+        row2.appendChild(createRoleHtmlGroup(castRoles[3]));
+
+        const export1f = document.getElementById('export-map-1f');
+        const export2f = document.getElementById('export-map-2f');
+        export1f.innerHTML = '';
+        export2f.innerHTML = '';
+
+        const map1fOrig = document.getElementById('map-1f');
+        const map2fOrig = document.getElementById('map-2f');
+
+        if (map1fOrig) export1f.appendChild(map1fOrig.cloneNode(true));
+        if (map2fOrig) export2f.appendChild(map2fOrig.cloneNode(true));
+
+        let activeCount = 0;
+        historyData.forEach(h => {
+            if (h.status !== '양도') activeCount++;
+        });
+
+        const totalSchedules = schedules.length; 
+        document.getElementById('export-sch-ratio').textContent = `${activeCount}/${totalSchedules}`;
+
+        const today = new Date();
+        const year = today.getFullYear();
+        const month = String(today.getMonth() + 1).padStart(2, '0');
+        const day = String(today.getDate()).padStart(2, '0');
+        const dateStr = `${year}-${month}-${day}`;
+
+        const canvasTarget = document.getElementById('export-canvas');
+
+        html2canvas(canvasTarget, {
+            scale: 4,
+            useCORS: true,
+            imageTimeout: 0,
+            backgroundColor: '#fcf7f0'
+        }).then(canvas => {
+            const link = document.createElement('a');
+            link.download = `렛미플라이 정산판 (${dateStr}).png`;
+            link.href = canvas.toDataURL('image/png', 1.0);
+            link.click();
         });
     }
 
