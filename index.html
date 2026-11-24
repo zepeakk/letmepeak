@@ -216,7 +216,7 @@
 
         .evt-container {
             display: flex;
-            flex-wrap: wrap;
+            flex-wrap: nowrap;
             justify-content: center;
             align-items: center;
             gap: 2px;
@@ -245,6 +245,9 @@
         .bg-cc { background: #e67e22; }
         .bg-spticket { background: #d35400; }
         .bg-sugar { background: #e84393; }
+        .bg-ddakji { background: #9b59b6; }
+        .bg-tbong { background: #c0392b; }
+        .bg-300dc { background: #d48806; }
 
         .tag-first-box {
             display: inline-block;
@@ -1335,7 +1338,7 @@
     </div>
 </div>
 
-<!-- 모달 1~9 -->
+<!-- 모달 1~12 -->
 <div class="modal-overlay" id="gift-modal">
     <div class="modal-content">
         <button class="modal-close-btn" onclick="closeGiftModal()">×</button>
@@ -1599,6 +1602,63 @@
     </div>
 </div>
 
+<!-- 모달 10: 300회 기념 주간 - 딱지 스티커 SET 증정 -->
+<div class="modal-overlay" id="ddakji-modal">
+    <div class="modal-content">
+        <button class="modal-close-btn" onclick="closeDdakjiModal()">×</button>
+        <div class="modal-header-sub">300회 기념 주간 EVENT</div>
+        <div class="modal-title-main" style="color: #9b59b6;">딱지 스티커 SET 증정</div>
+        <div class="modal-date-badge" style="background: #9b59b6;">11/24(화) - 11/26(목) 4회차</div>
+
+        <div class="sugar-benefit-card">
+            <div class="sugar-benefit-title">남원 수선 + 써니네 배지타블 <span>딱지 스티커 증정</span></div>
+            <div class="sugar-benefit-sub">11/24(화) - 11/26(목) 4회차</div>
+        </div>
+
+        <div class="modal-notice">
+            • 유료티켓 구매자에 한하여 티켓 1매당 1SET 증정
+        </div>
+    </div>
+</div>
+
+<!-- 모달 11: 300회 기념 주간 - 스페셜 티켓봉투 + 탑승권 증정 -->
+<div class="modal-overlay" id="tbong-modal">
+    <div class="modal-content">
+        <button class="modal-close-btn" onclick="closeTbongModal()">×</button>
+        <div class="modal-header-sub">300회 기념 주간 EVENT</div>
+        <div class="modal-title-main" style="color: #c0392b;">스페셜 티켓봉투 + 탑승권 증정</div>
+        <div class="modal-date-badge" style="background: #c0392b;">11/27(금) - 11/29(일) 5회차</div>
+
+        <div class="sugar-benefit-card">
+            <div class="sugar-benefit-title">스페셜 티켓봉투 + <span>탑승권 증정</span></div>
+            <div class="sugar-benefit-sub">11/27(금) - 11/29(일) 5회차</div>
+        </div>
+
+        <div class="modal-notice">
+            • 유료티켓 구매자에 한하여 티켓 1매당 1SET 증정
+        </div>
+    </div>
+</div>
+
+<!-- 모달 12: 300회 기념 현장할인 -->
+<div class="modal-overlay" id="dc300-modal">
+    <div class="modal-content">
+        <button class="modal-close-btn" onclick="close300DcModal()">×</button>
+        <div class="modal-header-sub">300회 기념 주간 SPECIAL DISCOUNT</div>
+        <div class="modal-title-main" style="color: #d48806;">300회 기념 현장할인</div>
+        <div class="modal-date-badge" style="background: #d48806;">11/27(금) - 11/29(일) 5회차</div>
+
+        <div class="sugar-benefit-card">
+            <div class="sugar-benefit-title">현장할인 R/S석 각 30장 한정 <span>30,000원</span></div>
+            <div class="sugar-benefit-sub">11/27(금) - 11/29(일) 5회차</div>
+        </div>
+
+        <div class="modal-notice">
+            • 회차별, R/S석 각 30장 한정 30,000원 현장할인
+        </div>
+    </div>
+</div>
+
 <!-- ⭐ 10년차 디자이너 최종 PNG 캡처 캔버스 (720px x 780px) -->
 <div id="export-canvas" class="export-canvas-wrapper">
     <!-- 상·중·하단 여백을 감성적으로 채운 렛미플라이 배경 일러스트 -->
@@ -1828,7 +1888,7 @@
                 <div class="export-stat-title">총 관극 횟수 / 전체 스케줄</div>
                 
                 <!-- 벤치 정중앙 위에 앉은 숫자 -->
-                <div class="export-stat-number"><span id="export-sch-ratio">0/100</span></div>
+                <div class="export-stat-number"><span id="export-sch-ratio">0/119</span></div>
                 
                 <!-- 텍스트·숫자와 중심축이 일치하는 평벤치 + 아담한 하얀 꽃 -->
                 <svg class="bench-groundflower-svg" viewBox="0 0 230 68" xmlns="http://www.w3.org/2000/svg">
@@ -1973,15 +2033,15 @@
         { date: "11/21(토)", time: "19:00", cast: ["오의식", "김지현", "윤소호", "홍지희"], evt: "스콜-여행" },
         { date: "11/22(일)", time: "14:00", cast: ["이희준", "윤공주", "윤재호", "박슬기"], evt: "-" },
         { date: "11/22(일)", time: "18:00", cast: ["안재욱", "윤공주", "안지환", "이수빈"], evt: "스콜-여행" },
-        { date: "11/24(화)", time: "19:30", cast: ["오의식", "김지현", "윤소호", "박슬기"], evt: "-" },
-        { date: "11/25(수)", time: "15:00", cast: ["이희준", "윤공주", "안지환", "홍지희"], evt: "-" },
-        { date: "11/25(수)", time: "19:30", cast: ["안재욱", "윤공주", "윤재호", "홍지희"], evt: "-" },
-        { date: "11/26(목)", time: "19:30", cast: ["안재욱", "배해선", "윤소호", "이수빈"], evt: "-" },
-        { date: "11/27(금)", time: "19:30", cast: ["이희준", "김지현", "윤재호", "박슬기"], evt: "-" },
-        { date: "11/28(토)", time: "15:00", cast: ["오의식", "배해선", "안지환", "이수빈"], evt: "-" },
-        { date: "11/28(토)", time: "19:00", cast: ["이형훈", "배해선", "윤재호", "박슬기"], evt: "-" },
-        { date: "11/29(일)", time: "14:00", cast: ["안재욱", "윤공주", "윤소호", "이수빈"], evt: "-" },
-        { date: "11/29(일)", time: "18:00", cast: ["이희준", "윤공주", "안지환", "박슬기"], evt: "-" },
+        { date: "11/24(화)", time: "19:30", cast: ["오의식", "김지현", "윤소호", "박슬기"], evt: "딱지 스티커 증정" },
+        { date: "11/25(수)", time: "15:00", cast: ["이희준", "윤공주", "안지환", "홍지희"], evt: "딱지 스티커 증정" },
+        { date: "11/25(수)", time: "19:30", cast: ["안재욱", "윤공주", "윤재호", "홍지희"], evt: "딱지 스티커 증정" },
+        { date: "11/26(목)", time: "19:30", cast: ["안재욱", "배해선", "윤소호", "이수빈"], evt: "딱지 스티커 증정" },
+        { date: "11/27(금)", time: "19:30", cast: ["이희준", "김지현", "윤재호", "박슬기"], evt: "스페셜 증정/300회 할인" },
+        { date: "11/28(토)", time: "15:00", cast: ["오의식", "배해선", "안지환", "이수빈"], evt: "스페셜 증정/300회 할인" },
+        { date: "11/28(토)", time: "19:00", cast: ["이형훈", "배해선", "윤재호", "박슬기"], evt: "스페셜 증정/300회 할인" },
+        { date: "11/29(일)", time: "14:00", cast: ["안재욱", "윤공주", "윤소호", "이수빈"], evt: "스페셜 증정/300회 할인" },
+        { date: "11/29(일)", time: "18:00", cast: ["이희준", "윤공주", "안지환", "박슬기"], evt: "스페셜 증정/300회 할인" },
         { date: "12/01(화)", time: "19:30", cast: ["이희준", "윤공주", "안지환", "이수빈"], evt: "-" },
         { date: "12/02(수)", time: "15:00", cast: ["안재욱", "배해선", "윤소호", "홍지희"], evt: "-" },
         { date: "12/02(수)", time: "19:30", cast: ["이희준", "배해선", "안지환", "홍지희"], evt: "-" },
@@ -2009,7 +2069,27 @@
         { date: "12/19(토)", time: "15:00", cast: ["안재욱", "윤공주", "윤재호", "이수빈"], evt: "기업 전관 마감" },
         { date: "12/19(토)", time: "19:00", cast: ["이형훈", "윤공주", "윤소호", "홍지희"], evt: "-" },
         { date: "12/20(일)", time: "14:00", cast: ["안재욱", "배해선", "안지환", "박슬기"], evt: "-" },
-        { date: "12/20(일)", time: "18:00", cast: ["오의식", "윤공주", "안지환", "이수빈"], evt: "-" }
+        { date: "12/20(일)", time: "18:00", cast: ["오의식", "윤공주", "안지환", "이수빈"], evt: "-" },
+        { date: "12/22(화)", time: "19:30", cast: ["이희준", "윤공주", "윤소호", "박슬기"], evt: "-" },
+        { date: "12/23(수)", time: "19:30", cast: ["안재욱", "김지현", "윤재호", "이수빈"], evt: "전관" },
+        { date: "12/24(목)", time: "15:00", cast: ["이형훈", "김지현", "안지환", "홍지희"], evt: "-" },
+        { date: "12/24(목)", time: "19:30", cast: ["오의식", "김지현", "안지환", "홍지희"], evt: "-" },
+        { date: "12/25(금)", time: "14:00", cast: ["이희준", "배해선", "윤소호", "박슬기"], evt: "-" },
+        { date: "12/25(금)", time: "18:00", cast: ["안재욱", "배해선", "안지환", "박슬기"], evt: "-" },
+        { date: "12/26(토)", time: "15:00", cast: ["이희준", "김지현", "윤재호", "이수빈"], evt: "-" },
+        { date: "12/26(토)", time: "19:00", cast: ["안재욱", "김지현", "윤소호", "이수빈"], evt: "-" },
+        { date: "12/27(일)", time: "14:00", cast: ["이희준", "배해선", "윤재호", "홍지희"], evt: "-" },
+        { date: "12/27(일)", time: "18:00", cast: ["오의식", "윤공주", "안지환", "박슬기"], evt: "-" },
+        { date: "12/29(화)", time: "19:30", cast: ["이희준", "윤공주", "안지환", "홍지희"], evt: "-" },
+        { date: "12/30(수)", time: "15:00", cast: ["안재욱", "김지현", "윤재호", "박슬기"], evt: "-" },
+        { date: "12/30(수)", time: "19:30", cast: ["이희준", "김지현", "안지환", "이수빈"], evt: "-" },
+        { date: "12/31(목)", time: "19:30", cast: ["오의식", "배해선", "윤소호", "박슬기"], evt: "-" },
+        { date: "01/01(금)", time: "14:00", cast: ["이희준", "김지현", "윤재호", "홍지희"], evt: "-" },
+        { date: "01/01(금)", time: "18:00", cast: ["안재욱", "배해선", "안지환", "홍지희"], evt: "-" },
+        { date: "01/02(토)", time: "15:00", cast: ["이형훈", "윤공주", "윤소호", "이수빈"], evt: "-", lastActors: ["이형훈"] },
+        { date: "01/02(토)", time: "19:00", cast: ["이희준", "배해선", "안지환", "박슬기"], evt: "-", lastActors: ["이희준", "배해선", "안지환", "박슬기"] },
+        { date: "01/03(일)", time: "14:00", cast: ["오의식", "김지현", "윤재호", "이수빈"], evt: "-", lastActors: ["오의식", "김지현", "윤재호", "이수빈"] },
+        { date: "01/03(일)", time: "18:00", cast: ["안재욱", "윤공주", "윤소호", "홍지희"], evt: "-", lastActors: ["안재욱", "윤공주", "윤소호", "홍지희"] }
     ];
 
     const firstShowIndices = {};
@@ -2138,6 +2218,15 @@
     function openSugarModal() { document.getElementById('sugar-modal').classList.add('active'); }
     function closeSugarModal() { document.getElementById('sugar-modal').classList.remove('active'); }
 
+    function openDdakjiModal() { document.getElementById('ddakji-modal').classList.add('active'); }
+    function closeDdakjiModal() { document.getElementById('ddakji-modal').classList.remove('active'); }
+
+    function openTbongModal() { document.getElementById('tbong-modal').classList.add('active'); }
+    function closeTbongModal() { document.getElementById('tbong-modal').classList.remove('active'); }
+
+    function open300DcModal() { document.getElementById('dc300-modal').classList.add('active'); }
+    function close300DcModal() { document.getElementById('dc300-modal').classList.remove('active'); }
+
     /* 네이버 시계 기준(한국 표준시 KST) 오늘 날짜 계산 */
     function getKSTTodayInfo() {
         const now = new Date();
@@ -2234,6 +2323,12 @@
                     singleBadge = `<span class="badge-evt bg-link" onclick="event.stopPropagation(); openLinkModal();">${evtItem}</span>`;
                 } else if(evtItem === '슈가데이(nol)') {
                     singleBadge = `<span class="badge-evt bg-sugar" onclick="event.stopPropagation(); openSugarModal();">${evtItem}</span>`;
+                } else if(evtItem === '딱지 스티커 증정') {
+                    singleBadge = `<span class="badge-evt bg-ddakji" onclick="event.stopPropagation(); openDdakjiModal();">${evtItem}</span>`;
+                } else if(evtItem === '스페셜 증정') {
+                    singleBadge = `<span class="badge-evt bg-tbong" onclick="event.stopPropagation(); openTbongModal();">${evtItem}</span>`;
+                } else if(evtItem === '300회 할인') {
+                    singleBadge = `<span class="badge-evt bg-300dc" onclick="event.stopPropagation(); open300DcModal();">${evtItem}</span>`;
                 } else if(evtItem === '기업 전관 마감') {
                     singleBadge = `<span class="badge-evt bg-corp">${evtItem}</span>`;
                 } else if(evtItem === '전관') {
